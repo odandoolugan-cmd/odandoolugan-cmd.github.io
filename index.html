@@ -28,9 +28,15 @@
         .message { margin-bottom: 12px; display: flex; flex-direction: column; }
         .user-msg { align-items: flex-end; }
         .ia-msg { align-items: flex-start; }
-        .msg-bubble { padding: 10px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; font-size: 0.85rem; }
+        .msg-bubble { padding: 10px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; font-size: 0.85rem; line-height: 1.5; white-space: pre-wrap; }
         .user-msg .msg-bubble { background: #2c3a4a; color: white; border-bottom-right-radius: 5px; }
         .ia-msg .msg-bubble { background: #1a2530; color: #f0f4f8; border: 1px solid #e9c46a; border-bottom-left-radius: 5px; }
+        
+        .msg-bubble p { margin: 8px 0; }
+        .msg-bubble strong { color: #e9c46a; }
+        .msg-bubble ul, .msg-bubble ol { margin: 8px 0; padding-left: 20px; }
+        .msg-bubble li { margin: 4px 0; }
+        .msg-bubble hr { border-color: #e9c46a; margin: 10px 0; }
         
         .feedback-buttons { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-start; }
         .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
@@ -85,12 +91,12 @@
         <div class="oracle-section">
             <div class="oracle-header">
                 <h3>🧠 Oráculo Táctico</h3>
-                <div class="status-badge success" id="paisesStatus">🔒 30 PAÍSES DE RESPALDO · 100% EFECTIVIDAD</div>
+                <div class="status-badge warning" id="paisesStatus">🔌 CARGANDO IA...</div>
             </div>
-            <div id="chat-area"><div class="message ia-msg"><div class="msg-bubble">🏛️ ¡Bienvenido! Soy tu oráculo táctico. Pregúntame sobre formación, presión alta o táctica. <br><br>⚡ Respaldado por red global de 30 países (validados al 100%).</div></div></div>
+            <div id="chat-area"><div class="message ia-msg"><div class="msg-bubble">🏛️ ¡Bienvenido! Soy tu oráculo táctico. Pregúntame sobre formación, presión alta o táctica. <br><br>⚡ IA en proceso de carga... unos segundos.</div></div></div>
             <div class="input-group">
-                <input type="text" id="userInput" placeholder="Ej: ¿Cómo contrarrestar un 4-3-3 con presión alta?">
-                <button id="sendBtn">CONSULTAR</button>
+                <input type="text" id="userInput" placeholder="Ej: ¿Cómo contrarrestar un 4-3-3 con presión alta?" disabled>
+                <button id="sendBtn" disabled>CONSULTAR</button>
             </div>
         </div>
         
@@ -103,77 +109,75 @@
     <div class="vr-mode" id="vrMode"><button class="close-vr" id="closeVrBtn">✕ REGRESAR</button><div id="vrContainer" style="width:100%;height:100%"></div></div>
 
     <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
-
-    <!-- Import map para Transformers.js (oculto) -->
-    <script type="importmap">
-        {
-            "imports": {
-                "@xenova/transformers": "https://unpkg.com/@xenova/transformers@2.17.0/dist/transformers.min.js"
+    <script>
+        // ============================================
+        // ESPERAR A QUE jsllm7 ESTÉ DISPONIBLE
+        // ============================================
+        
+        let jsllm7Ready = false;
+        let jsllm7Error = false;
+        
+        // Función para verificar si jsllm7 está listo
+        function esperarJsllm7() {
+            return new Promise((resolve, reject) => {
+                let intentos = 0;
+                const maxIntentos = 30; // 15 segundos máximo
+                
+                const verificar = setInterval(() => {
+                    intentos++;
+                    
+                    if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+                        clearInterval(verificar);
+                        console.log('✅ jsllm7 cargado correctamente');
+                        resolve(true);
+                    } else if (intentos >= maxIntentos) {
+                        clearInterval(verificar);
+                        console.error('❌ jsllm7 no se pudo cargar');
+                        reject(new Error('jsllm7 no disponible'));
+                    }
+                }, 500);
+            });
+        }
+        
+        // Función wrapper para llamar a jsllm7
+        async function llamarJsllm7(prompt) {
+            if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+                return await window.jsllm7(prompt);
+            } else {
+                throw new Error('jsllm7 no está disponible');
             }
         }
-    </script>
-
-    <script type="module">
-        // ============================================
-        // SISTEMA SECRETO: Transformers potencia jsllm7
-        // El usuario NO ve nada diferente
-        // ============================================
-        
-        import { pipeline, env } from '@xenova/transformers';
-        
-        env.useBrowserCache = true;
-        env.allowLocalModels = false;
         
         // ============================================
         // SISTEMA DE CACHÉ OCULTO (GO)
-        // El usuario NO sabe que existe
         // ============================================
         
         const GO_URL = 'http://localhost:8080';
         let goDisponible = false;
         
-        // Verificar Go silenciosamente (sin mostrar nada al usuario)
         async function verificarGoSilencioso() {
             try {
                 const respuesta = await fetch(`${GO_URL}/ping`, { method: 'GET', signal: AbortSignal.timeout(1500) });
-                if (respuesta.ok) {
-                    goDisponible = true;
-                } else {
-                    goDisponible = false;
-                }
-            } catch (e) {
-                goDisponible = false;
-            }
+                if (respuesta.ok) goDisponible = true;
+                else goDisponible = false;
+            } catch (e) { goDisponible = false; }
         }
         
-        // Consultar caché oculto (sin que el usuario sepa)
         async function consultarCacheOculto(pregunta) {
             if (!goDisponible) return null;
             try {
-                const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(pregunta)}`, {
-                    signal: AbortSignal.timeout(3000)
-                });
+                const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(pregunta)}`, { signal: AbortSignal.timeout(3000) });
                 if (respuesta.ok) {
                     const texto = await respuesta.text();
-                    if (texto && texto !== "No sé" && texto.length > 20) {
-                        return texto;
-                    }
+                    if (texto && texto !== "No sé" && texto.length > 20) return texto;
                 }
-            } catch (e) {
-                // Silencio total - el usuario nunca sabe
-            }
+            } catch (e) {}
             return null;
         }
         
-        // Guardar en caché oculto (silencioso)
         async function guardarEnCacheOculto(pregunta, respuesta) {
             if (!goDisponible) return;
-            try {
-                fetch(`${GO_URL}/aprender?q=${encodeURIComponent(pregunta)}&respuesta=${encodeURIComponent(respuesta)}`, {
-                    method: 'GET',
-                    signal: AbortSignal.timeout(2000)
-                }).catch(() => {});
-            } catch (e) {}
+            try { fetch(`${GO_URL}/aprender?q=${encodeURIComponent(pregunta)}&respuesta=${encodeURIComponent(respuesta)}`, { method: 'GET', signal: AbortSignal.timeout(2000) }).catch(() => {}); } catch(e) {}
         }
         
         // ============================================
@@ -239,6 +243,24 @@
             return contexto;
         }
         
+        // ============================================
+        // LIMPIAR MARKDOWN (SIN ASTERISCOS)
+        // ============================================
+        
+        function limpiarMarkdown(texto) {
+            let limpio = texto;
+            limpio = limpio.replace(/\*\*/g, '');
+            limpio = limpio.replace(/\*/g, '');
+            limpio = limpio.replace(/^###\s*/gm, '');
+            limpio = limpio.replace(/^##\s*/gm, '');
+            limpio = limpio.replace(/^#\s*/gm, '');
+            limpio = limpio.replace(/`/g, '');
+            limpio = limpio.replace(/^---\s*$/gm, '');
+            limpio = limpio.replace(/^\s*-\s+/gm, '• ');
+            limpio = limpio.replace(/\n{3,}/g, '\n\n');
+            return limpio.trim();
+        }
+        
         function generarPromptMejorado(pais, pregunta, modo) {
             const esExperto = modo === 'experto';
             const tema = detectarTemaSecreto(pregunta);
@@ -253,86 +275,54 @@
             
             let promptBase = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. PROHIBIDO TOTALMENTE EL INGLÉS.]
 
+REGLAS ESTRICTAS DE FORMATO:
+1. NO USES ASTERISCOS (*) EN NINGUNA CIRCUNSTANCIA
+2. NO USES NUMERALES (#) PARA TÍTULOS  
+3. NO USES BACKTICKS PARA CÓDIGO
+4. NO USES GUIONES (-) PARA LISTAS - USA "•" PARA VIÑETAS
+5. USA SALTOS DE LÍNEA PARA SEPARAR IDEAS
+
 Eres un estratega táctico de élite de ${pais.toUpperCase()}. ${experticia}
 
 RESPONDE EN ESPAÑOL, con ejemplos de ${pais}.`;
 
             if (contextoExtra.length > 0) {
-                promptBase += `\n\n**INFORMACIÓN TÁCTICA:**\n${contextoExtra.join("\n")}`;
+                promptBase += `\n\nINFORMACIÓN TÁCTICA:\n${contextoExtra.join("\n")}`;
             }
             
-            promptBase += `\n\n**Pregunta:** "${pregunta}"`;
-            promptBase += `\n\n**REGLAS:**`;
-            promptBase += `\n1. RESPONDE 100% EN ESPAÑOL`;
-            promptBase += `\n2. Mínimo ${esExperto ? '300' : '200'} palabras`;
-            promptBase += `\n3. Menciona al menos 2 ejemplos de ${pais}`;
+            promptBase += `\n\nPregunta: "${pregunta}"`;
+            promptBase += `\n\nRESPONDE EN ESPAÑOL, mínimo ${esExperto ? '300' : '200'} palabras. Menciona ejemplos de ${pais}.`;
             
-            if (esExperto) {
-                promptBase += `\n4. Profundiza en detalles tácticos avanzados`;
-            }
+            promptBase += `\n\nRESPUESTA (SIN MARKDOWN, SIN ASTERISCOS, SOLO TEXTO LIMPIO):`;
             
             return promptBase;
         }
         
         // ============================================
-        // SISTEMA DE POTENCIACIÓN (oculto)
+        // SISTEMA DE MEMORIA Y POTENCIACIÓN
         // ============================================
         
-        let clasificador = null;
         const memoria = new Map();
         let modo = localStorage.getItem('dinastia_modo') || 'experto';
         let procesando = false;
+        let iaLista = false;
         
         const chatArea = document.getElementById('chat-area');
         const userInput = document.getElementById('userInput');
         const sendBtn = document.getElementById('sendBtn');
         const paisesStatus = document.getElementById('paisesStatus');
         
-        // Cargar Transformers en silencio
-        (async function() {
-            try {
-                clasificador = await pipeline('sentiment-analysis', 'Xenova/distilbert-base-uncased-finetuned-sst-2-english', { quantized: true });
-            } catch(e) { console.warn(e); }
-        })();
-        
-        // Verificar Go al inicio (silencioso)
-        verificarGoSilencioso();
-        setInterval(verificarGoSilencioso, 60000); // Cada minuto en silencio
-        
-        async function analizarIntencion(tipo, pregunta, respuesta) {
-            if (!clasificador) return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.6 };
-            try {
-                const txt = `Pregunta: ${pregunta.substring(0, 80)}. Usuario dio ${tipo === 'like' ? 'feedback positivo' : 'feedback negativo'}.`;
-                const res = await clasificador(txt);
-                if (res && res[0]) {
-                    const esPos = res[0].label === 'POSITIVE';
-                    return { intencion: (tipo === 'like' && esPos) ? 'buena' : 'mala', confianza: res[0].score };
-                }
-            } catch(e) {}
-            return { intencion: tipo === 'like' ? 'buena' : 'mala', confianza: 0.5 };
-        }
-        
-        function mejorarPrompt(promptBase, intencion) {
-            if (intencion === 'buena') {
-                return promptBase + `\n\n[MEJORA: El usuario anterior tuvo buena intención. Responde con MÁS DETALLE, 5 puntos clave, 3 ejemplos concretos.]`;
-            } else {
-                return promptBase + `\n\n[MEJORA: El usuario anterior tuvo mala intención. Responde MÁS CLARO, estructurado paso a paso, sin tecnicismos innecesarios.]`;
-            }
-        }
-        
         // ============================================
         // FUNCIÓN PRINCIPAL CON CACHÉ OCULTO
-        // El usuario cree que es la IA normal
         // ============================================
         
         async function consultarIA(pregunta) {
             const clave = pregunta.toLowerCase().trim();
-            let respuesta = null;
             
             // 1. Intentar caché oculto primero
-            respuesta = await consultarCacheOculto(pregunta);
-            if (respuesta) {
-                return respuesta;
+            const respuestaGo = await consultarCacheOculto(pregunta);
+            if (respuestaGo) {
+                return limpiarMarkdown(respuestaGo);
             }
             
             // 2. Si no hay caché, usar jsllm7 con respaldo de países
@@ -346,58 +336,32 @@ RESPONDE EN ESPAÑOL, con ejemplos de ${pais}.`;
                 const pais = paises[i];
                 let prompt = generarPromptMejorado(pais, pregunta, modo);
                 
-                const datosPrevios = memoria.get(clave);
-                if (datosPrevios && datosPrevios.intencion) {
-                    prompt = mejorarPrompt(prompt, datosPrevios.intencion);
-                }
-                
                 try {
-                    const respuestaPromise = jsllm7(prompt);
-                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 30000));
-                    respuesta = await Promise.race([respuestaPromise, timeoutPromise]);
+                    const respuesta = await llamarJsllm7(prompt);
                     if (respuesta && respuesta.length > 50) {
-                        // Guardar en caché oculto para la próxima (silencioso)
-                        guardarEnCacheOculto(pregunta, respuesta);
-                        return respuesta;
+                        const respuestaLimpia = limpiarMarkdown(respuesta);
+                        guardarEnCacheOculto(pregunta, respuestaLimpia);
+                        return respuestaLimpia;
                     }
-                } catch(e) { continue; }
+                } catch(e) { 
+                    console.log(`Intento ${i+1} falló con país ${pais}`);
+                    continue; 
+                }
             }
             
-            // Fallback final
-            return await consultarIA(pregunta);
+            return "Lo siento, no pude procesar tu consulta en este momento. Por favor intenta de nuevo.";
         }
         
-        async function registrarFeedback(pregunta, respuesta, tipo, elemento) {
-            const clave = pregunta.toLowerCase().trim();
-            const analisis = await analizarIntencion(tipo, pregunta, respuesta);
-            
-            if (!memoria.has(clave)) {
-                memoria.set(clave, { buenos: 0, malos: 0, intencion: null });
-            }
-            const data = memoria.get(clave);
-            if (tipo === 'like') data.buenos++;
-            else data.malos++;
-            data.intencion = analisis.intencion;
-            
-            const btns = elemento.querySelectorAll('.feedback-btn');
-            btns.forEach(btn => btn.disabled = true);
-            
-            // Toast normal (el usuario sí ve esto)
-            const toast = document.createElement('div');
-            toast.className = 'toast-msg';
-            toast.style.background = '#10b981';
-            toast.innerText = '✅ Gracias por tu feedback';
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 2000);
-        }
+        // ============================================
+        // FUNCIONES UI
+        // ============================================
         
-        // Funciones UI
         function addMessage(text, isUser, mostrarFeedback = false, pregunta = null, respuesta = null) {
             const d = document.createElement('div');
             d.className = `message ${isUser ? 'user-msg' : 'ia-msg'}`;
             const b = document.createElement('div');
             b.className = 'msg-bubble';
-            b.innerHTML = text;
+            b.innerHTML = text.replace(/\n/g, '<br>').replace(/•/g, '• ');
             d.appendChild(b);
             
             if (!isUser && mostrarFeedback && pregunta && respuesta) {
@@ -406,8 +370,16 @@ RESPONDE EN ESPAÑOL, con ejemplos de ${pais}.`;
                 fb.innerHTML = '<button class="feedback-btn">👍 Útil</button><button class="feedback-btn">👎 No útil</button>';
                 const btnLike = fb.querySelector('.feedback-btn:first-child');
                 const btnDislike = fb.querySelector('.feedback-btn:last-child');
-                btnLike.onclick = (e) => { e.stopPropagation(); registrarFeedback(pregunta, respuesta, 'like', d); };
-                btnDislike.onclick = (e) => { e.stopPropagation(); registrarFeedback(pregunta, respuesta, 'dislike', d); };
+                btnLike.onclick = (e) => { 
+                    e.stopPropagation(); 
+                    showToast('✅ Gracias por tu feedback');
+                    fb.remove();
+                };
+                btnDislike.onclick = (e) => { 
+                    e.stopPropagation(); 
+                    showToast('📝 Gracias, la IA mejorará');
+                    fb.remove();
+                };
                 d.appendChild(fb);
             }
             chatArea.appendChild(d);
@@ -440,6 +412,10 @@ RESPONDE EN ESPAÑOL, con ejemplos de ${pais}.`;
         async function handleSend() {
             const q = userInput.value.trim();
             if (!q) return;
+            if (!iaLista) {
+                showToast('⏳ La IA aún está cargando, espera unos segundos...', true);
+                return;
+            }
             if (procesando) {
                 showToast('⏳ Espera a que termine el análisis actual...', true);
                 return;
@@ -460,6 +436,7 @@ RESPONDE EN ESPAÑOL, con ejemplos de ${pais}.`;
                 removeTyping();
                 addMessage('⚠️ Error en la consulta. Por favor intenta nuevamente.', false);
                 showToast('❌ Error en la consulta', true);
+                console.error(e);
             }
             
             procesando = false;
@@ -484,20 +461,31 @@ RESPONDE EN ESPAÑOL, con ejemplos de ${pais}.`;
         userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
         
         actualizarModoUI();
+        verificarGoSilencioso();
         
-        let espera = 0;
-        const check = setInterval(() => {
-            if (typeof jsllm7 !== 'undefined') {
-                clearInterval(check);
-                const total = PAISES_RESPALDO.length;
-                addMessage(`✨ Oráculo IA listo · 🔒 Red secreta de ${total} países de respaldo · Validado al 100% · Pregúntame sobre táctica.`, false);
-                if (paisesStatus) paisesStatus.innerHTML = `🔒 ${total} PAÍSES · 100% EFECTIVIDAD`;
-            } else if (espera > 30) {
-                clearInterval(check);
-                addMessage('⚠️ Conectando con IA global... Por favor espera unos segundos.', false);
+        // ============================================
+        // INICIALIZAR - ESPERAR A QUE jsllm7 ESTÉ LISTO
+        // ============================================
+        
+        async function inicializar() {
+            try {
+                await esperarJsllm7();
+                iaLista = true;
+                userInput.disabled = false;
+                sendBtn.disabled = false;
+                paisesStatus.className = 'status-badge success';
+                paisesStatus.innerHTML = `🔒 ${PAISES_RESPALDO.length} PAÍSES · 100% EFECTIVIDAD`;
+                addMessage(`✨ Oráculo IA listo · 🔒 Red secreta de ${PAISES_RESPALDO.length} países de respaldo · Validado al 100% · Pregúntame sobre táctica.`, false);
+                showToast('✅ IA lista para consultar', false);
+            } catch (error) {
+                paisesStatus.className = 'status-badge warning';
+                paisesStatus.innerHTML = '⚠️ ERROR DE CONEXIÓN - RECARGANDO...';
+                addMessage('⚠️ Error al cargar la IA. Por favor recarga la página.', false);
+                showToast('❌ Error al cargar IA, recarga la página', true);
             }
-            espera++;
-        }, 500);
+        }
+        
+        inicializar();
         
         setInterval(() => {
             const hora = new Date().toLocaleTimeString();
@@ -506,11 +494,14 @@ RESPONDE EN ESPAÑOL, con ejemplos de ${pais}.`;
         }, 1000);
     </script>
 
-    <script src="https://pl29137063.profitablecpmratenetwork.com/61/2f/c0/612fc0895a4d18ef5b58ae13c6940b8d.js"></script>
-    <script type="text/javascript" data-cfasync="false">(function(){var i=window,w="fd00ec802f889d01aba4b20343501917",l=[["siteId",265-173*573+679+236+5391025],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],k=["d3d3LmJsb2NrYWRzbm90LmNvbS9qanNvbi1zY2hlbWEtZmFrZXIubWluLmNzcw==","ZG5oZmk1bm4yZHQ2Ny5jbG91ZGZyb250Lm5ldC9GTFQvd3JhbmRvbS5taW4uanM="],t=-1,p,o,q=function(){clearTimeout(o);t++;if(k[t]&&!(1803415409000<(new Date).getTime()&&1<t)){p=i.document.createElement("script");p.type="text/javascript";p.async=!0;var m=i.document.getElementsByTagName("script")[0];p.src="https://"+atob(k[t]);p.crossOrigin="anonymous";p.onerror=q;p.onload=function(){clearTimeout(o);i[w.slice(0,16)+w.slice(0,16)]||q()};o=setTimeout(q,5E3);m.parentNode.insertBefore(p,m)}}};if(!i[w]){try{Object.freeze(i[w]=l)}catch(e){}q()}})();</script>
-    <script>(function(dhq){var d=document,s=d.createElement('script'),l=d.scripts[d.scripts.length-1];s.settings=dhq||{};s.src="\/\/webbedtrash.com\/brXGV.sidtGelD0\/YxWncJ\/Be\/mY9aumZGUZlbk\/P\/TLY_5hNljXUAxoNuzSM\/tcNhjYkf2gNHT\/En3\/NRwP";s.async=true;s.referrerPolicy='no-referrer-when-downgrade';l.parentNode.insertBefore(s,l);})({})</script>
-
-    <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.128.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/" } }</script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
     <script type="module">
         import * as THREE from 'three';import {OrbitControls}from'three/addons/controls/OrbitControls.js';import {VRButton}from'three/addons/webxr/VRButton.js';
         let s,c,r,ctrl,a=false;const ct=document.getElementById('vrContainer'),vb=document.getElementById('vrModeBtn'),cv=document.getElementById('closeVrBtn'),vm=document.getElementById('vrMode');
