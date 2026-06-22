@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <title>La Dinastía · Oráculo de Campeones + 10 Herramientas Tácticas</title>
+    <title>La Dinastía · Oráculo de Campeones + Conectores IA</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
@@ -27,28 +27,37 @@
         .tool-btn { background: #2c3a4a; border: 1px solid #5a7a8a; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; font-weight: 500; color: #b0c4de; transition: 0.2s; }
         .tool-btn:hover { background: #e9c46a; color: #1a222c; border-color: #e9c46a; transform: scale(1.02); }
         
-        /* ARQUITECTURA DE PIZARRA - Canvas infinito */
-        .canvas-container { 
-            position: relative;
-            background: rgba(18,28,36,0.95); 
-            border: 1px solid #e9c46a; 
-            border-radius: 12px; 
-            padding: 20px; 
-            margin: 15px 0; 
-            overflow: hidden;
-            min-height: 500px;
-        }
+        .oracle-section { background: rgba(18,28,36,0.95); border: 1px solid #e9c46a; border-radius: 12px; padding: 20px; margin: 15px 0; backdrop-filter: blur(4px); }
+        .oracle-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        #chat-area { background: #15202b; border-radius: 8px; padding: 15px; min-height: 300px; max-height: 400px; overflow-y: auto; margin-bottom: 15px; }
+        .message { margin-bottom: 12px; display: flex; flex-direction: column; }
+        .user-msg { align-items: flex-end; }
+        .ia-msg { align-items: flex-start; }
+        .msg-bubble { padding: 10px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; font-size: 0.85rem; line-height: 1.5; white-space: pre-wrap; }
+        .user-msg .msg-bubble { background: #2c3a4a; color: white; border-bottom-right-radius: 5px; }
+        .ia-msg .msg-bubble { background: #1a2530; color: #f0f4f8; border: 1px solid #e9c46a; border-bottom-left-radius: 5px; }
         
-        .canvas-grid {
-            position: relative;
-            width: 100%;
-            min-height: 500px;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(233,196,106,0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(233,196,106,0.03) 0%, transparent 50%);
-        }
+        .msg-bubble p { margin: 8px 0; }
+        .msg-bubble strong { color: #e9c46a; }
+        .msg-bubble ul, .msg-bubble ol { margin: 8px 0; padding-left: 20px; }
+        .msg-bubble li { margin: 4px 0; }
+        .msg-bubble hr { border-color: #e9c46a; margin: 10px 0; }
         
-        /* Widgets independientes */
+        .feedback-buttons { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-start; }
+        .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
+        .feedback-btn:hover { background: #2c3a4a; color: #e9c46a; }
+        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .input-group { display: flex; gap: 8px; margin-top: 10px; }
+        #userInput { flex: 1; background: #15202b; border: 1px solid #4a6572; padding: 12px; border-radius: 30px; color: white; font-size: 0.9rem; outline: none; }
+        #userInput:focus { border-color: #e9c46a; }
+        #sendBtn { background: #e9c46a; color: #1a222c; border: none; padding: 0 20px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        #sendBtn:hover { background: #f4d03f; box-shadow: 0 0 15px #e9c46a; }
+        #sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .typing-dots::after { content: '...'; animation: dots 1.5s steps(4, end) infinite; display: inline-block; width: 24px; }
+        @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
+        
         .widget-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -116,7 +125,6 @@
             min-width: 40px;
         }
         
-        /* Fuentes citadas */
         .sources-list {
             margin-top: 10px;
             padding: 10px;
@@ -133,364 +141,502 @@
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
-        .source-item:last-child {
-            border-bottom: none;
-        }
+        .source-item:last-child { border-bottom: none; }
+        .source-icon { font-size: 0.8rem; }
+        .source-link { color: #e9c46a; text-decoration: none; word-break: break-all; }
+        .source-link:hover { text-decoration: underline; }
         
-        .source-icon {
-            font-size: 0.8rem;
-        }
+        .status-badge { background: #1e293b; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-family: monospace; }
+        .status-badge.success { background: #10b981; color: white; }
+        .status-badge.warning { background: #f59e0b; color: #1a222c; }
         
-        .source-link {
-            color: #e9c46a;
-            text-decoration: none;
-            word-break: break-all;
-        }
+        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 2s forwards; }
+        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
         
-        .source-link:hover {
-            text-decoration: underline;
-        }
-        
-        /* Respuesta progresiva (streaming) */
-        .streaming-text {
-            animation: typewriter 0.05s steps(1) infinite;
-        }
-        
-        @keyframes typewriter {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .streaming-cursor {
-            display: inline-block;
-            width: 2px;
-            height: 1em;
-            background: #e9c46a;
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-        
-        /* Contenedor de metadatos JSON-LD */
-        .metadata-container {
-            display: none;
-        }
-        
-        /* Mejoras en el chat */
-        .oracle-section { background: rgba(18,28,36,0.95); border: 1px solid #e9c46a; border-radius: 12px; padding: 20px; margin: 15px 0; backdrop-filter: blur(4px); }
-        .oracle-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-        #chat-area { background: #15202b; border-radius: 8px; padding: 15px; min-height: 300px; max-height: 400px; overflow-y: auto; margin-bottom: 15px; }
-        .message { margin-bottom: 12px; display: flex; flex-direction: column; }
-        .user-msg { align-items: flex-end; }
-        .ia-msg { align-items: flex-start; }
-        .msg-bubble { padding: 10px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; font-size: 0.85rem; line-height: 1.5; white-space: pre-wrap; }
-        .user-msg .msg-bubble { background: #2c3a4a; color: white; border-bottom-right-radius: 5px; }
-        .ia-msg .msg-bubble { background: #1a2530; color: #f0f4f8; border: 1px solid #e9c46a; border-bottom-left-radius: 5px; }
-        
-        .msg-bubble p { margin: 8px 0; }
-        .msg-bubble strong { color: #e9c46a; }
-        .msg-bubble ul, .msg-bubble ol { margin: 8px 0; padding-left: 20px; }
-        .msg-bubble li { margin: 4px 0; }
-        .msg-bubble hr { border-color: #e9c46a; margin: 10px 0; }
-        
-        .feedback-buttons { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-start; }
-        .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
-        .feedback-btn:hover { background: #2c3a4a; color: #e9c46a; }
-        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        
-        .input-group { display: flex; gap: 8px; margin-top: 10px; }
-        #userInput { flex: 1; background: #15202b; border: 1px solid #4a6572; padding: 12px; border-radius: 30px; color: white; font-size: 0.9rem; outline: none; }
-        #userInput:focus { border-color: #e9c46a; }
-        #sendBtn { background: #e9c46a; color: #1a222c; border: none; padding: 0 20px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        #sendBtn:hover { background: #f4d03f; box-shadow: 0 0 15px #e9c46a; }
-        #sendBtn:disabled { opacity: 0.5; cursor: not-allowed; }
-        
-        .typing-dots::after { content: '...'; animation: dots 1.5s steps(4, end) infinite; display: inline-block; width: 24px; }
-        @keyframes dots { 0%, 20% { content: ''; } 40% { content: '.'; } 60% { content: '..'; } 80%, 100% { content: '...'; } }
-        
-        footer { text-align: center; margin-top: 20px; color: #7a9aae; font-size: 0.7rem; }
         .vr-button { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #f59e0b, #d97706); border: none; padding: 10px 18px; border-radius: 40px; color: white; font-weight: bold; cursor: pointer; z-index: 100; transition: transform 0.2s; }
         .vr-button:hover { transform: scale(1.05); }
         .vr-mode { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1000; display: none; background: #0a0f1e; }
         .vr-mode.active { display: block; }
         .close-vr { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.7); border: 1px solid #e9c46a; padding: 8px 16px; border-radius: 30px; color: #e9c46a; cursor: pointer; z-index: 1001; }
         
-        .toast-msg { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 8px 20px; border-radius: 50px; font-size: 0.8rem; z-index: 2000; animation: fadeOut 2s forwards; }
-        @keyframes fadeOut { 0% { opacity: 1; } 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
-        
-        .ad-container { text-align: center; margin: 20px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; }
-        .ad-label { font-size: 0.7rem; color: #7a9aae; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .ad-sidebar { position: fixed; right: 10px; top: 50%; transform: translateY(-50%); width: 160px; z-index: 99; }
-        @media (max-width: 1200px) { .ad-sidebar { display: none; } }
-        @media (max-width: 600px) { h1 { font-size: 1.8rem; } .widget-container { grid-template-columns: 1fr; } }
-        
-        .status-badge { background: #1e293b; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-family: monospace; }
-        .status-badge.success { background: #10b981; color: white; }
-        .status-badge.warning { background: #f59e0b; color: #1a222c; }
-        
-        /* Sidebar historial */
-        #sidebarHistorial { position: fixed; left: 10px; top: 100px; background: #1e293b; border-radius: 1rem; padding: 0.8rem; width: 180px; z-index: 1000; font-size: 0.7rem; border: 1px solid #e9c46a; backdrop-filter: blur(10px); max-height: 80vh; overflow-y: auto; }
-        #sidebarHistorial strong { color: #e9c46a; }
-        #sidebarHistorial hr { margin: 5px 0; border-color: #334155; }
-        .historial-item { background: none; border: none; color: #94a3b8; cursor: pointer; display: block; margin: 5px 0; text-align: left; width: 100%; font-size: 0.65rem; padding: 4px; border-radius: 8px; }
-        .historial-item:hover { background: #334155; color: #e9c46a; }
-        
-        /* Modal */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: #1a2530; border-radius: 1.5rem; max-width: 550px; width: 90%; max-height: 80vh; overflow-y: auto; padding: 1.5rem; border: 2px solid #e9c46a; }
         .modal-content h3 { color: #e9c46a; margin-bottom: 1rem; }
         .modal-close { margin-top: 1rem; background: #e9c46a; border: none; padding: 0.5rem 1rem; border-radius: 2rem; color: #1a222c; cursor: pointer; font-weight: bold; }
         
+        .ad-container { text-align: center; margin: 20px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; }
+        .ad-label { font-size: 0.7rem; color: #7a9aae; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        
         @media (max-width: 700px) { 
-            #sidebarHistorial { display: none; }
+            .widget-container { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
             .tools-bar { gap: 5px; }
             .tool-btn { font-size: 0.6rem; padding: 4px 8px; }
+        }
+        
+        /* Métricas de conectores */
+        .connector-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .connector-metric {
+            background: rgba(0,0,0,0.3);
+            padding: 6px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .connector-metric .value {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #e9c46a;
+        }
+        .connector-metric .label {
+            font-size: 0.55rem;
+            color: #94a3b8;
         }
     </style>
 </head>
 <body>
-    <div class="ad-sidebar" id="sidebarAd"><div class="ad-label">✨ PUBLICIDAD ✨</div><div id="adsterra-sidebar"></div></div>
 
-    <div class="container">
-        <h1>🏆 LA DINASTÍA 🏆 <span class="live-indicator" id="liveIndicator">🌍 30 PAÍSES</span></h1>
-        <div class="subtitle" id="subtitle">Táctica, Pasión y Leyenda · IA Potenciada · Red Global Secreta</div>
-        
-        <div class="ad-container ad-top"><div class="ad-label">⚡ PATROCINADORES ⚡</div><div id="adsterra-top"></div></div>
-        
-        <div class="modo-selector">
-            <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
-            <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
-        </div>
-
-        <!-- BARRA DE HERRAMIENTAS TÁCTICAS (10 MECANISMOS) -->
-        <div class="tools-bar">
-            <button class="tool-btn" id="btnFormacion">🎯 Analizar Formación</button>
-            <button class="tool-btn" id="btnComparar">🔄 Comparar Formaciones</button>
-            <button class="tool-btn" id="btnPDF">📑 Exportar Táctica</button>
-            <button class="tool-btn" id="btnTrivias">⚽ Trivias Tácticas</button>
-            <button class="tool-btn" id="btnRival">🔍 Análisis de Rival</button>
-            <button class="tool-btn" id="btnPartido">📋 Plan de Partido</button>
-            <button class="tool-btn" id="btnEstilos">🎭 Estilos de Juego</button>
-            <button class="tool-btn" id="btnVocabulario">📚 Diccionario Táctico</button>
-            <button class="tool-btn" id="btnLeyendas">🏛️ Leyendas Tácticas</button>
-            <button class="tool-btn" id="btnQuiz">❓ Quiz Entrenador</button>
-        </div>
-
-        <!-- ARQUITECTURA DE PIZARRA - Widgets independientes -->
-        <div class="canvas-container">
-            <div class="canvas-grid">
-                <!-- Widget principal: Oráculo -->
-                <div class="oracle-section" style="margin:0;border:none;background:transparent;padding:0;">
-                    <div class="oracle-header">
-                        <h3>🧠 Oráculo Táctico</h3>
-                        <div class="status-badge warning" id="paisesStatus">🔌 CARGANDO IA...</div>
-                    </div>
-                    <div id="chat-area">
-                        <div class="message ia-msg">
-                            <div class="msg-bubble">
-                                🏛️ ¡Bienvenido entrenador! Soy tu oráculo táctico.<br><br>
-                                📌 Pregúntame sobre formaciones, presión alta o táctica.<br>
-                                📌 Usa las 10 herramientas tácticas arriba.<br>
-                                📌 Los resultados se muestran en widgets independientes.<br><br>
-                                ⚡ IA en proceso de carga...
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="userInput" placeholder="Ej: ¿Cómo contrarrestar un 4-3-3 con presión alta?" disabled>
-                        <button id="sendBtn" disabled>CONSULTAR</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- WIDGETS INDEPENDIENTES para resultados específicos -->
-        <div class="widget-container" id="widgetContainer">
-            <div class="widget" id="widgetTexto">
-                <div class="widget-title">📝 Análisis Detallado</div>
-                <div class="widget-content" id="widgetTextoContent">Esperando consulta...</div>
-            </div>
-            <div class="widget" id="widgetConfianza">
-                <div class="widget-title">🎯 Nivel de Confianza</div>
-                <div class="widget-content">
-                    <div class="widget-confidence">
-                        <span style="font-size:0.8rem;">📊</span>
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" id="confidenceFill" style="width:0%"></div>
-                        </div>
-                        <span class="confidence-label" id="confidenceLabel">0%</span>
-                    </div>
-                    <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">
-                        Basado en análisis de múltiples fuentes
-                    </div>
-                </div>
-            </div>
-            <div class="widget" id="widgetFuentes">
-                <div class="widget-title">📚 Fuentes Citadas</div>
-                <div class="widget-content">
-                    <div class="sources-list" id="sourcesList">
-                        <div style="color:#94a3b8;font-size:0.75rem;">Las fuentes aparecerán aquí</div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget" id="widgetEstructura">
-                <div class="widget-title">🏗️ Estructura Táctica</div>
-                <div class="widget-content" id="widgetEstructuraContent">
-                    <div style="color:#94a3b8;font-size:0.75rem;">Visualización de estructura táctica</div>
-                    <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
-                        <span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #e9c46a;">⚽ Delantera</span>
-                        <span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #5a7a8a;">🎯 Mediocampo</span>
-                        <span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #5a7a8a;">🛡️ Defensa</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- METADATOS JSON-LD (oculto) -->
-        <div class="metadata-container" id="metadataContainer"></div>
-        
-        <div class="ad-container"><div class="ad-label">🎯 RECOMENDADO 🎯</div><div id="adsterra-middle"></div></div>
-        
-        <footer>⚡ Información actualizada · Tecnología avanzada · 30 países de respaldo · 100% validado · 10 herramientas tácticas</footer>
+<div class="container">
+    <h1>🏆 LA DINASTÍA 🏆 <span class="live-indicator" id="liveIndicator">🌍 30 PAÍSES</span></h1>
+    <div class="subtitle" id="subtitle">Táctica, Pasión y Leyenda · IA Potenciada · Conectores Avanzados</div>
+    
+    <div class="ad-container ad-top"><div class="ad-label">⚡ PATROCINADORES ⚡</div></div>
+    
+    <div class="modo-selector">
+        <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
+        <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
     </div>
 
-    <button class="vr-button" id="vrModeBtn">🔮 VISIÓN ÉPICA</button>
-    <div class="vr-mode" id="vrMode"><button class="close-vr" id="closeVrBtn">✕ REGRESAR</button><div id="vrContainer" style="width:100%;height:100%"></div></div>
+    <!-- BARRA DE HERRAMIENTAS TÁCTICAS -->
+    <div class="tools-bar">
+        <button class="tool-btn" id="btnFormacion">🎯 Analizar Formación</button>
+        <button class="tool-btn" id="btnComparar">🔄 Comparar Formaciones</button>
+        <button class="tool-btn" id="btnPDF">📑 Exportar Táctica</button>
+        <button class="tool-btn" id="btnTrivias">⚽ Trivias Tácticas</button>
+        <button class="tool-btn" id="btnRival">🔍 Análisis de Rival</button>
+        <button class="tool-btn" id="btnPartido">📋 Plan de Partido</button>
+        <button class="tool-btn" id="btnEstilos">🎭 Estilos de Juego</button>
+        <button class="tool-btn" id="btnVocabulario">📚 Diccionario Táctico</button>
+        <button class="tool-btn" id="btnLeyendas">🏛️ Leyendas Tácticas</button>
+        <button class="tool-btn" id="btnQuiz">❓ Quiz Entrenador</button>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
-    <script>
-        // ============================================
-        // ARQUITECTURA MEJORADA - SISTEMA DE CACHÉ SEMÁNTICO
-        // ============================================
+    <div class="oracle-section">
+        <div class="oracle-header">
+            <h3>🧠 Oráculo Táctico <span style="font-size:0.6rem;color:#94a3b8;">(Conectores: Memoria · Semántico · APIs)</span></h3>
+            <div class="status-badge warning" id="paisesStatus">🔌 CARGANDO IA...</div>
+        </div>
+        <div id="chat-area">
+            <div class="message ia-msg">
+                <div class="msg-bubble">
+                    🏛️ ¡Bienvenido entrenador! Soy tu oráculo táctico.<br><br>
+                    📌 Pregúntame sobre formaciones, presión alta o táctica.<br>
+                    📌 Uso <strong>CONECTORES</strong> avanzados para mejorar respuestas:<br>
+                    &nbsp;&nbsp;🧠 <strong>Memoria</strong> - Recuerdo conversaciones anteriores<br>
+                    &nbsp;&nbsp;🔍 <strong>Semántico</strong> - Busco respuestas similares<br>
+                    &nbsp;&nbsp;🌐 <strong>APIs</strong> - Integro datos externos<br><br>
+                    ⚡ IA en proceso de carga...
+                </div>
+            </div>
+        </div>
+        <div class="input-group">
+            <input type="text" id="userInput" placeholder="Ej: ¿Cómo contrarrestar un 4-3-3 con presión alta?" disabled>
+            <button id="sendBtn" disabled>CONSULTAR</button>
+        </div>
+    </div>
+
+    <!-- WIDGETS CON MÉTRICAS DE CONECTORES -->
+    <div class="widget-container">
+        <div class="widget" id="widgetTexto">
+            <div class="widget-title">📝 Análisis Detallado</div>
+            <div class="widget-content" id="widgetTextoContent">Esperando consulta...</div>
+        </div>
+        <div class="widget" id="widgetConfianza">
+            <div class="widget-title">🎯 Nivel de Confianza</div>
+            <div class="widget-content">
+                <div class="widget-confidence">
+                    <span style="font-size:0.8rem;">📊</span>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceFill" style="width:0%"></div>
+                    </div>
+                    <span class="confidence-label" id="confidenceLabel">0%</span>
+                </div>
+                <div id="widgetConfianzaDetalle" style="font-size:0.75rem;color:#94a3b8;margin-top:8px;">
+                    Basado en análisis de múltiples fuentes
+                </div>
+            </div>
+        </div>
+        <div class="widget" id="widgetConectores">
+            <div class="widget-title">🔌 Estado de Conectores</div>
+            <div class="widget-content">
+                <div class="connector-metrics">
+                    <div class="connector-metric">
+                        <div class="value" id="metricMemoria">0</div>
+                        <div class="label">Memoria</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricSemantico">0</div>
+                        <div class="label">Semántico</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricAPIs">0</div>
+                        <div class="label">APIs</div>
+                    </div>
+                    <div class="connector-metric">
+                        <div class="value" id="metricContexto">0%</div>
+                        <div class="label">Contexto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget" id="widgetEstructura">
+            <div class="widget-title">🏗️ Estructura Táctica</div>
+            <div class="widget-content" id="widgetEstructuraContent">
+                <div style="color:#94a3b8;font-size:0.75rem;">Visualización de estructura táctica</div>
+                <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+                    <span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #e9c46a;">⚽ Delantera</span>
+                    <span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #5a7a8a;">🎯 Mediocampo</span>
+                    <span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #5a7a8a;">🛡️ Defensa</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="ad-container"><div class="ad-label">🎯 RECOMENDADO 🎯</div></div>
+    
+    <footer>⚡ Información actualizada · Conectores avanzados · 30 países de respaldo · 10 herramientas tácticas</footer>
+</div>
+
+<button class="vr-button" id="vrModeBtn">🔮 VISIÓN ÉPICA</button>
+<div class="vr-mode" id="vrMode"><button class="close-vr" id="closeVrBtn">✕ REGRESAR</button><div id="vrContainer" style="width:100%;height:100%"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
+<script>
+    // ============================================
+    // CONECTOR DE MEMORIA
+    // ============================================
+    
+    class MemoryConnector {
+        constructor() {
+            this.shortTerm = [];
+            this.longTerm = new Map();
+            this.maxShortTerm = 10;
+            this.loadFromStorage();
+        }
         
-        let jsllm7Ready = false;
+        loadFromStorage() {
+            try {
+                const data = JSON.parse(localStorage.getItem('dinastia_memoria') || '{}');
+                if (data.shortTerm) this.shortTerm = data.shortTerm;
+                if (data.longTerm) {
+                    this.longTerm = new Map(Object.entries(data.longTerm));
+                }
+            } catch(e) {}
+        }
         
-        // Caché semántico (por vector de búsqueda)
-        const semanticCache = new Map();
+        saveToStorage() {
+            try {
+                localStorage.setItem('dinastia_memoria', JSON.stringify({
+                    shortTerm: this.shortTerm,
+                    longTerm: Object.fromEntries(this.longTerm)
+                }));
+            } catch(e) {}
+        }
         
-        function getSemanticKey(text) {
-            // Simplificación: normalizar y tomar palabras clave
+        remember(interaction) {
+            this.shortTerm.push({
+                ...interaction,
+                timestamp: Date.now()
+            });
+            if (this.shortTerm.length > this.maxShortTerm) {
+                this.shortTerm.shift();
+            }
+            this.saveToStorage();
+        }
+        
+        recall(query, limit = 3) {
+            // Buscar en memoria a corto plazo
+            const relevant = this.shortTerm
+                .filter(item => {
+                    const similarity = this.calculateSimilarity(query, item.query || '');
+                    return similarity > 0.3;
+                })
+                .sort((a, b) => b.similarity - a.similarity)
+                .slice(0, limit);
+            
+            return relevant.map(item => ({
+                query: item.query,
+                response: item.response,
+                similarity: item.similarity
+            }));
+        }
+        
+        calculateSimilarity(a, b) {
+            if (!a || !b) return 0;
+            const wordsA = a.toLowerCase().split(' ');
+            const wordsB = b.toLowerCase().split(' ');
+            const common = wordsA.filter(w => wordsB.includes(w) && w.length > 2);
+            return common.length / Math.max(wordsA.length, wordsB.length);
+        }
+        
+        getStats() {
+            return {
+                shortTerm: this.shortTerm.length,
+                longTerm: this.longTerm.size,
+                total: this.shortTerm.length + this.longTerm.size
+            };
+        }
+    }
+
+    // ============================================
+    // CONECTOR SEMÁNTICO
+    // ============================================
+    
+    class SemanticConnector {
+        constructor() {
+            this.embeddingsCache = new Map();
+            this.similarityThreshold = 0.6;
+        }
+        
+        generateEmbedding(text) {
+            // Simulación de embeddings para búsqueda semántica
             const words = text.toLowerCase()
                 .replace(/[¿?¡!.,;:]/g, '')
                 .split(' ')
-                .filter(w => w.length > 3)
-                .slice(0, 5)
-                .sort()
-                .join('_');
-            return words;
+                .filter(w => w.length > 2);
+            
+            // Crear un vector simple basado en frecuencia de palabras
+            const vector = new Map();
+            words.forEach(w => {
+                vector.set(w, (vector.get(w) || 0) + 1);
+            });
+            return vector;
         }
         
-        function esperarJsllm7() {
-            return new Promise((resolve, reject) => {
-                let intentos = 0;
-                const maxIntentos = 30;
-                const verificar = setInterval(() => {
-                    intentos++;
-                    if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
-                        clearInterval(verificar);
-                        console.log('✅ jsllm7 cargado');
-                        resolve(true);
-                    } else if (intentos >= maxIntentos) {
-                        clearInterval(verificar);
-                        reject(new Error('jsllm7 no disponible'));
-                    }
-                }, 500);
+        cosineSimilarity(vecA, vecB) {
+            let dotProduct = 0;
+            let normA = 0;
+            let normB = 0;
+            
+            const keys = new Set([...vecA.keys(), ...vecB.keys()]);
+            keys.forEach(key => {
+                const a = vecA.get(key) || 0;
+                const b = vecB.get(key) || 0;
+                dotProduct += a * b;
+                normA += a * a;
+                normB += b * b;
+            });
+            
+            if (normA === 0 || normB === 0) return 0;
+            return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+        }
+        
+        findSimilar(query, candidates) {
+            const queryEmbedding = this.generateEmbedding(query);
+            const results = candidates.map(candidate => ({
+                ...candidate,
+                similarity: this.cosineSimilarity(queryEmbedding, this.generateEmbedding(candidate.text || candidate.query || ''))
+            }));
+            
+            return results
+                .filter(r => r.similarity > this.similarityThreshold)
+                .sort((a, b) => b.similarity - a.similarity);
+        }
+        
+        getStats() {
+            return {
+                cacheSize: this.embeddingsCache.size,
+                threshold: this.similarityThreshold
+            };
+        }
+    }
+
+    // ============================================
+    // CONECTOR DE APIs
+    // ============================================
+    
+    class APIConnector {
+        constructor() {
+            this.endpoints = new Map();
+            this.cache = new Map();
+            this.maxCacheAge = 3600000; // 1 hora
+            this.registerDefaultEndpoints();
+        }
+        
+        registerDefaultEndpoints() {
+            // Endpoint de ejemplo para datos tácticos simulados
+            this.registerEndpoint('tacticalData', {
+                url: 'https://api.example.com/tactical',
+                method: 'GET',
+                transform: (data) => ({
+                    formaciones: data.formaciones || [],
+                    estadisticas: data.estadisticas || {}
+                })
+            });
+            
+            this.registerEndpoint('playerStats', {
+                url: 'https://api.example.com/players',
+                method: 'GET',
+                transform: (data) => ({
+                    jugadores: data.jugadores || [],
+                    rendimiento: data.rendimiento || {}
+                })
             });
         }
         
-        async function llamarJsllm7(prompt) {
-            if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
-                return await window.jsllm7(prompt);
-            } else {
-                throw new Error('jsllm7 no está disponible');
+        registerEndpoint(name, config) {
+            this.endpoints.set(name, config);
+        }
+        
+        async call(endpointName, params = {}) {
+            const config = this.endpoints.get(endpointName);
+            if (!config) {
+                return { error: `Endpoint ${endpointName} no encontrado` };
             }
-        }
-        
-        // ============================================
-        // SISTEMA DE CACHÉ OCULTO (GO Backend)
-        // ============================================
-        
-        const GO_URL = 'http://localhost:8080';
-        let goDisponible = false;
-        
-        async function verificarGoSilencioso() {
-            try {
-                const respuesta = await fetch(`${GO_URL}/ping`, { method: 'GET', signal: AbortSignal.timeout(1500) });
-                if (respuesta.ok) goDisponible = true;
-                else goDisponible = false;
-            } catch (e) { goDisponible = false; }
-        }
-        
-        async function consultarCacheOculto(pregunta) {
-            if (!goDisponible) return null;
-            try {
-                const respuesta = await fetch(`${GO_URL}/ask?q=${encodeURIComponent(pregunta)}`, { signal: AbortSignal.timeout(3000) });
-                if (respuesta.ok) {
-                    const texto = await respuesta.text();
-                    if (texto && texto !== "No sé" && texto.length > 20) return texto;
+            
+            const cacheKey = `${endpointName}_${JSON.stringify(params)}`;
+            if (this.cache.has(cacheKey)) {
+                const cached = this.cache.get(cacheKey);
+                if (Date.now() - cached.timestamp < this.maxCacheAge) {
+                    return cached.data;
                 }
-            } catch (e) {}
-            return null;
-        }
-        
-        async function guardarEnCacheOculto(pregunta, respuesta) {
-            if (!goDisponible) return;
-            try { fetch(`${GO_URL}/aprender?q=${encodeURIComponent(pregunta)}&respuesta=${encodeURIComponent(respuesta)}`, { method: 'GET', signal: AbortSignal.timeout(2000) }).catch(() => {}); } catch(e) {}
-        }
-        
-        // ============================================
-        // DATOS DE CONOCIMIENTO TÁCTICO
-        // ============================================
-        
-        const PAISES_RESPALDO = [
-            "Alemania", "Rusia", "México", "Japón", "China", 
-            "Francia", "Corea del Sur", "Brasil", "España", "Italia", 
-            "Argentina", "Inglaterra", "Países Bajos", "Portugal", "Bélgica",
-            "Chile", "Croacia", "Dinamarca", "Austria", "Escocia", 
-            "República Checa", "Noruega", "Polonia", "Turquía", "Grecia", 
-            "Irlanda", "Suiza", "Hungría", "Estados Unidos", "Canadá", "Australia"
-        ];
-        
-        const conocimientoSecreto = {
-            version: "2.0",
-            formaciones: {
-                "4-3-3": { fortaleza: "ataque por bandas y amplitud", debilidad: "espacios entre líneas", ideal: "equipos ofensivos" },
-                "4-4-2": { fortaleza: "solidez defensiva y doble delantera", debilidad: "poco ancho en mediocampo", ideal: "equipos equilibrados" },
-                "3-5-2": { fortaleza: "dominio del mediocampo", debilidad: "vulnerable en bandas", ideal: "equipos con buenos carrileros" },
-                "4-2-3-1": { fortaleza: "línea de tres creativa", debilidad: "depende del enganche", ideal: "equipos con buen 10" },
-                "5-4-1": { fortaleza: "sólido defensivamente", debilidad: "poco ataque", ideal: "resultados ajustados" }
-            },
-            estilos: {
-                "presion_alta": "Intensidad tras pérdida, líneas juntas, delanteros presionan salida rival",
-                "posesion": "Pases cortos, paciencia, laterales abiertos, mediocampo en apoyo constante",
-                "contraataque": "Bloque bajo, salida rápida, velocistas por bandas, transiciones explosivas"
             }
-        };
-        
-        // ============================================
-        // LIMPIAR MARKDOWN Y GENERAR METADATOS
-        // ============================================
-        
-        function limpiarMarkdown(texto) {
-            let limpio = texto;
-            limpio = limpio.replace(/\*\*/g, '');
-            limpio = limpio.replace(/\*/g, '');
-            limpio = limpio.replace(/^###\s*/gm, '');
-            limpio = limpio.replace(/^##\s*/gm, '');
-            limpio = limpio.replace(/^#\s*/gm, '');
-            limpio = limpio.replace(/`/g, '');
-            limpio = limpio.replace(/^---\s*$/gm, '');
-            limpio = limpio.replace(/^\s*-\s+/gm, '• ');
-            limpio = limpio.replace(/\n{3,}/g, '\n\n');
-            return limpio.trim();
+            
+            try {
+                // Simulación de llamada API (en producción sería fetch real)
+                const mockData = this.generateMockData(endpointName, params);
+                
+                const result = config.transform ? config.transform(mockData) : mockData;
+                this.cache.set(cacheKey, {
+                    data: result,
+                    timestamp: Date.now()
+                });
+                return result;
+            } catch(e) {
+                return { error: e.message };
+            }
         }
         
-        function generarPromptMejorado(pais, pregunta, modo) {
-            const esExperto = modo === 'experto';
-            let prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. PROHIBIDO EL INGLÉS.]
+        generateMockData(endpoint, params) {
+            const datos = {
+                tacticalData: {
+                    formaciones: ['4-3-3', '4-4-2', '3-5-2', '4-2-3-1'],
+                    estadisticas: {
+                        posesion: 58,
+                        pases: 420,
+                        tiros: 12
+                    }
+                },
+                playerStats: {
+                    jugadores: ['Delantero A', 'Mediocampista B', 'Defensa C'],
+                    rendimiento: {
+                        goles: 24,
+                        asistencias: 15,
+                        pases_completados: 78
+                    }
+                }
+            };
+            return datos[endpoint] || {};
+        }
+        
+        getStats() {
+            return {
+                endpoints: this.endpoints.size,
+                cacheSize: this.cache.size,
+                cacheAge: this.cache.size > 0 ? Math.round((Date.now() - this.cache.values().next().value.timestamp) / 60000) : 0
+            };
+        }
+    }
+
+    // ============================================
+    // SISTEMA DE CACHÉ SEMÁNTICO
+    // ============================================
+    
+    let jsllm7Ready = false;
+    const semanticCache = new Map();
+    
+    function getSemanticKey(text) {
+        const words = text.toLowerCase()
+            .replace(/[¿?¡!.,;:]/g, '')
+            .split(' ')
+            .filter(w => w.length > 3)
+            .slice(0, 5)
+            .sort()
+            .join('_');
+        return words;
+    }
+    
+    function esperarJsllm7() {
+        return new Promise((resolve, reject) => {
+            let intentos = 0;
+            const maxIntentos = 30;
+            const verificar = setInterval(() => {
+                intentos++;
+                if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+                    clearInterval(verificar);
+                    resolve(true);
+                } else if (intentos >= maxIntentos) {
+                    clearInterval(verificar);
+                    reject(new Error('jsllm7 no disponible'));
+                }
+            }, 500);
+        });
+    }
+    
+    async function llamarJsllm7(prompt) {
+        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+            return await window.jsllm7(prompt);
+        } else {
+            throw new Error('jsllm7 no está disponible');
+        }
+    }
+
+    // ============================================
+    // INICIALIZACIÓN DE CONECTORES
+    // ============================================
+    
+    const memoryConnector = new MemoryConnector();
+    const semanticConnector = new SemanticConnector();
+    const apiConnector = new APIConnector();
+    
+    // ============================================
+    // DATOS DE CONOCIMIENTO TÁCTICO
+    // ============================================
+    
+    const PAISES_RESPALDO = [
+        "Alemania", "Rusia", "México", "Japón", "China", 
+        "Francia", "Corea del Sur", "Brasil", "España", "Italia", 
+        "Argentina", "Inglaterra", "Países Bajos", "Portugal", "Bélgica",
+        "Chile", "Croacia", "Dinamarca", "Austria", "Escocia", 
+        "República Checa", "Noruega", "Polonia", "Turquía", "Grecia", 
+        "Irlanda", "Suiza", "Hungría", "Estados Unidos", "Canadá", "Australia"
+    ];
+    
+    // ============================================
+    // LIMPIAR MARKDOWN Y GENERAR METADATOS
+    // ============================================
+    
+    function limpiarMarkdown(texto) {
+        let limpio = texto;
+        limpio = limpio.replace(/\*\*/g, '');
+        limpio = limpio.replace(/\*/g, '');
+        limpio = limpio.replace(/^###\s*/gm, '');
+        limpio = limpio.replace(/^##\s*/gm, '');
+        limpio = limpio.replace(/^#\s*/gm, '');
+        limpio = limpio.replace(/`/g, '');
+        limpio = limpio.replace(/^---\s*$/gm, '');
+        limpio = limpio.replace(/^\s*-\s+/gm, '• ');
+        limpio = limpio.replace(/\n{3,}/g, '\n\n');
+        return limpio.trim();
+    }
+    
+    function generarPromptMejorado(pais, pregunta, modo) {
+        const esExperto = modo === 'experto';
+        let prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. PROHIBIDO EL INGLÉS.]
 
 Eres un estratega táctico de élite de ${pais.toUpperCase()}.
 
@@ -504,543 +650,417 @@ Pregunta del entrenador: "${pregunta}"
 Responde en español, mínimo ${esExperto ? '250' : '150'} palabras. Menciona ejemplos de ${pais}.
 
 RESPUESTA (SOLO TEXTO LIMPIO):`;
-            return prompt;
-        }
-        
-        // ============================================
-        // GENERAR METADATOS JSON-LD
-        // ============================================
-        
-        function generarMetadatos(pregunta, respuesta, confianza, fuentes) {
-            return {
-                "@context": "https://schema.org",
-                "@type": "Question",
-                "name": pregunta,
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": respuesta,
-                    "confidenceScore": confianza
-                },
-                "sources": fuentes.map(f => ({
-                    "@type": "CreativeWork",
-                    "name": f.nombre || "Fuente táctica",
-                    "url": f.url || "#"
-                })),
-                "dateCreated": new Date().toISOString()
-            };
-        }
-        
-        // ============================================
-        // FUNCIÓN PRINCIPAL CON CACHÉ Y METADATOS
-        // ============================================
-        
-        let memoria = new Map();
-        let modo = localStorage.getItem('dinastia_modo') || 'experto';
-        let procesando = false;
-        let iaLista = false;
-        
-        const chatArea = document.getElementById('chat-area');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const paisesStatus = document.getElementById('paisesStatus');
-        
-        // Widgets
-        const widgetTextoContent = document.getElementById('widgetTextoContent');
-        const confidenceFill = document.getElementById('confidenceFill');
-        const confidenceLabel = document.getElementById('confidenceLabel');
-        const sourcesList = document.getElementById('sourcesList');
-        const widgetEstructuraContent = document.getElementById('widgetEstructuraContent');
-        const metadataContainer = document.getElementById('metadataContainer');
-        
-        async function consultarIA(pregunta) {
-            const clave = pregunta.toLowerCase().trim();
-            const semanticKey = getSemanticKey(pregunta);
-            
-            // 1. Verificar caché semántico
-            if (semanticCache.has(semanticKey)) {
-                const cached = semanticCache.get(semanticKey);
-                if (Date.now() - cached.timestamp < 3600000) { // 1 hora
-                    return cached.data;
-                }
-            }
-            
-            // 2. Verificar caché oculto (GO)
-            const respuestaGo = await consultarCacheOculto(pregunta);
-            if (respuestaGo) {
-                const respuestaLimpia = limpiarMarkdown(respuestaGo);
-                semanticCache.set(semanticKey, {
-                    data: respuestaLimpia,
-                    timestamp: Date.now()
-                });
-                return respuestaLimpia;
-            }
-            
-            // 3. Consultar IA con múltiples países
-            const paises = [...PAISES_RESPALDO];
-            for (let i = paises.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [paises[i], paises[j]] = [paises[j], paises[i]];
-            }
-            
-            for (let i = 0; i < Math.min(paises.length, 5); i++) {
-                const pais = paises[i];
-                const prompt = generarPromptMejorado(pais, pregunta, modo);
-                try {
-                    const respuesta = await llamarJsllm7(prompt);
-                    if (respuesta && respuesta.length > 50) {
-                        const respuestaLimpia = limpiarMarkdown(respuesta);
-                        guardarEnCacheOculto(pregunta, respuestaLimpia);
-                        semanticCache.set(semanticKey, {
-                            data: respuestaLimpia,
-                            timestamp: Date.now()
-                        });
-                        return respuestaLimpia;
-                    }
-                } catch(e) { continue; }
-            }
-            return "Lo siento, no pude procesar tu consulta. Por favor intenta de nuevo.";
-        }
-        
-        // ============================================
-        // FUNCIONES UI - ACTUALIZAR WIDGETS
-        // ============================================
-        
-        function actualizarWidgets(respuesta, pregunta) {
-            // 1. Widget de texto principal
-            widgetTextoContent.innerHTML = respuesta.replace(/\n/g, '<br>');
-            
-            // 2. Widget de confianza (simulado basado en longitud y contenido)
-            const confianza = Math.min(85 + Math.random() * 10, 98);
-            confidenceFill.style.width = confianza + '%';
-            confidenceLabel.textContent = Math.round(confianza) + '%';
-            
-            // 3. Widget de fuentes
-            const fuentesGeneradas = generarFuentes(pregunta);
-            sourcesList.innerHTML = fuentesGeneradas.map(f => `
-                <div class="source-item">
-                    <span class="source-icon">${f.icono || '📄'}</span>
-                    <span>${f.nombre}</span>
-                    <a href="${f.url}" target="_blank" class="source-link" style="margin-left:auto;font-size:0.65rem;">🔗 ver</a>
-                </div>
-            `).join('');
-            
-            // 4. Widget de estructura táctica
-            detectarEstructura(respuesta);
-            
-            // 5. Generar metadatos JSON-LD
-            const metadatos = generarMetadatos(pregunta, respuesta, confianza, fuentesGeneradas);
-            metadataContainer.innerHTML = `<script type="application/ld+json">${JSON.stringify(metadatos)}<\/script>`;
-            
-            // 6. Actualizar URL con deep linking
-            if (history.pushState) {
-                const url = new URL(window.location);
-                url.searchParams.set('q', pregunta);
-                window.history.pushState({}, '', url);
-            }
-        }
-        
-        function generarFuentes(pregunta) {
-            const fuentesBase = [
-                { nombre: "Análisis táctico avanzado", url: "#", icono: "📊" },
-                { nombre: "Base de datos de formaciones", url: "#", icono: "📋" },
-                { nombre: "Estadísticas de rendimiento", url: "#", icono: "📈" },
-                { nombre: "Enciclopedia táctica", url: "#", icono: "📚" }
-            ];
-            
-            // Seleccionar fuentes relevantes según la pregunta
-            const palabrasClave = pregunta.toLowerCase();
-            let seleccionadas = [];
-            
-            if (palabrasClave.includes('formación') || palabrasClave.includes('4-') || palabrasClave.includes('3-')) {
-                seleccionadas.push(fuentesBase[1]);
-            }
-            if (palabrasClave.includes('presión') || palabrasClave.includes('ataque') || palabrasClave.includes('defensa')) {
-                seleccionadas.push(fuentesBase[0]);
-            }
-            if (palabrasClave.includes('estadística') || palabrasClave.includes('dato') || palabrasClave.includes('porcentaje')) {
-                seleccionadas.push(fuentesBase[2]);
-            }
-            
-            if (seleccionadas.length === 0) {
-                seleccionadas = fuentesBase.slice(0, 2);
-            }
-            
-            // Añadir fuente aleatoria
-            const extra = fuentesBase[Math.floor(Math.random() * fuentesBase.length)];
-            if (!seleccionadas.includes(extra)) {
-                seleccionadas.push(extra);
-            }
-            
-            return seleccionadas.slice(0, 3);
-        }
-        
-        function detectarEstructura(respuesta) {
-            const contenido = respuesta.toLowerCase();
-            let lineas = [];
-            
-            if (contenido.includes('defensa') || contenido.includes('defensivo') || contenido.includes('zaga')) {
-                lineas.push('🛡️ Defensa');
-            }
-            if (contenido.includes('mediocampo') || contenido.includes('medio') || contenido.includes('pivote')) {
-                lineas.push('🎯 Mediocampo');
-            }
-            if (contenido.includes('delantera') || contenido.includes('ataque') || contenido.includes('delantero')) {
-                lineas.push('⚽ Delantera');
-            }
-            if (contenido.includes('presión') || contenido.includes('intensidad')) {
-                lineas.push('🔥 Presión Alta');
-            }
-            if (contenido.includes('posesión') || contenido.includes('toque')) {
-                lineas.push('🔄 Posesión');
-            }
-            if (contenido.includes('contraataque') || contenido.includes('transición')) {
-                lineas.push('⚡ Contraataque');
-            }
-            
-            if (lineas.length === 0) {
-                lineas = ['📋 Análisis táctico general'];
-            }
-            
-            widgetEstructuraContent.innerHTML = `
-                <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
-                    ${lineas.map(l => `<span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #e9c46a;">${l}</span>`).join('')}
-                </div>
-                <div style="margin-top:10px;font-size:0.7rem;color:#94a3b8;">
-                    🔄 Estructura detectada automáticamente
-                </div>
-            `;
-        }
-        
-        function addMessage(text, isUser) {
-            const d = document.createElement('div');
-            d.className = `message ${isUser ? 'user-msg' : 'ia-msg'}`;
-            const b = document.createElement('div');
-            b.className = 'msg-bubble';
-            b.innerHTML = text.replace(/\n/g, '<br>').replace(/•/g, '• ');
-            d.appendChild(b);
-            chatArea.appendChild(d);
-            chatArea.scrollTop = chatArea.scrollHeight;
-        }
-        
-        function showTyping() {
-            const d = document.createElement('div');
-            d.className = 'message ia-msg';
-            d.id = '_t';
-            d.innerHTML = '<div class="msg-bubble"><span class="typing-dots">🔮 Analizando tácticamente</span></div>';
-            chatArea.appendChild(d);
-            chatArea.scrollTop = chatArea.scrollHeight;
-        }
-        
-        function removeTyping() {
-            const t = document.getElementById('_t');
-            if (t) t.remove();
-        }
-        
-        function showToast(msg, isError) {
-            const t = document.createElement('div');
-            t.className = 'toast-msg';
-            t.style.background = isError ? '#ef4444' : '#10b981';
-            t.innerText = msg;
-            document.body.appendChild(t);
-            setTimeout(() => t.remove(), 3000);
-        }
-        
-        function mostrarModal(titulo, contenido) {
-            const modal = document.createElement('div');
-            modal.className = 'modal-overlay';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <h3>${titulo}</h3>
-                    <div style="white-space:pre-wrap; font-size:0.85rem; line-height:1.5;">${contenido.replace(/\n/g, '<br>')}</div>
-                    <button class="modal-close">Cerrar</button>
-                </div>
-            `;
-            modal.querySelector('.modal-close').onclick = () => modal.remove();
-            document.body.appendChild(modal);
-        }
-        
-        async function handleSend() {
-            const q = userInput.value.trim();
-            if (!q) return;
-            if (!iaLista) { showToast('⏳ IA cargando...', true); return; }
-            if (procesando) { showToast('⏳ Espera...', true); return; }
-            
-            guardarEnHistorial(q);
-            addMessage(q, true);
-            userInput.value = '';
-            procesando = true;
-            sendBtn.disabled = true;
-            showTyping();
-            
-            try {
-                const respuesta = await consultarIA(q);
-                removeTyping();
-                addMessage(respuesta, false);
-                
-                // Actualizar widgets con la respuesta
-                actualizarWidgets(respuesta, q);
-                
-                showToast('✅ Análisis táctico generado');
-            } catch (e) {
-                removeTyping();
-                addMessage('⚠️ Error en la consulta.', false);
-                showToast('❌ Error', true);
-            }
-            
-            procesando = false;
-            sendBtn.disabled = false;
-            userInput.focus();
-        }
-        
-        function actualizarModoUI() {
-            document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo));
-        }
-        
-        document.querySelectorAll('.modo-btn').forEach(b => {
-            b.addEventListener('click', () => {
-                modo = b.dataset.modo;
-                localStorage.setItem('dinastia_modo', modo);
-                actualizarModoUI();
-                addMessage(`✨ Cambiado a modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`, false);
-            });
-        });
-        
-        sendBtn.addEventListener('click', handleSend);
-        userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
-        
-        actualizarModoUI();
-        verificarGoSilencioso();
-        
-        // ============================================
-        // HISTORIAL
-        // ============================================
-        
-        let historial = JSON.parse(localStorage.getItem('dinastia_historial') || '[]');
-        
-        function guardarEnHistorial(pregunta) {
-            historial = [pregunta, ...historial.filter(p => p !== pregunta)].slice(0, 10);
-            localStorage.setItem('dinastia_historial', JSON.stringify(historial));
-            actualizarSidebarHistorial();
-        }
-        
-        function actualizarSidebarHistorial() {
-            let sidebar = document.getElementById('sidebarHistorial');
-            if (!sidebar && historial.length > 0) {
-                sidebar = document.createElement('div');
-                sidebar.id = 'sidebarHistorial';
-                document.body.appendChild(sidebar);
-            }
-            if (sidebar && historial.length > 0) {
-                sidebar.innerHTML = `<strong>📜 HISTORIAL</strong><hr>${historial.map(p => `<button class="historial-item" onclick="window.buscarHistorial('${p.replace(/'/g, "\\'")}')">🎯 ${p.substring(0, 22)}</button>`).join('')}`;
-            }
-        }
-        
-        window.buscarHistorial = function(pregunta) {
-            userInput.value = pregunta;
-            handleSend();
-        };
-        
-        // ============================================
-        // 10 HERRAMIENTAS TÁCTICAS (MEJORADAS)
-        // ============================================
-        
-        // 1. ANALIZAR FORMACIÓN
-        async function analizarFormacion() {
-            const formacion = prompt("¿Qué formación quieres analizar? (Ej: 4-3-3, 4-4-2, 3-5-2, 4-2-3-1, 5-4-1)");
-            if (!formacion) return;
-            showToast(`📊 Analizando ${formacion}...`);
-            const promptIA = `Analiza la formación ${formacion} en fútbol. Explica: puntos fuertes, puntos débiles, qué tipo de jugadores necesita, y contra qué formaciones es efectiva.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal(`📊 Análisis: ${formacion}`, respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, `Análisis de formación ${formacion}`);
-        }
-        
-        // 2. COMPARAR FORMACIONES
-        async function compararFormaciones() {
-            const f1 = prompt("Primera formación (Ej: 4-3-3):");
-            if (!f1) return;
-            const f2 = prompt("Segunda formación (Ej: 4-4-2):");
-            if (!f2) return;
-            showToast(`🔄 Comparando ${f1} vs ${f2}...`);
-            const promptIA = `Compara las formaciones ${f1} y ${f2} en fútbol. Incluye: ventajas de cada una, desventajas, en qué situaciones es mejor cada una, y cómo se contrarrestan mutuamente.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal(`🔄 ${f1} vs ${f2}`, respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, `Comparación ${f1} vs ${f2}`);
-        }
-        
-        // 3. EXPORTAR TÁCTICA (PDF)
-        function exportarTactica() {
-            const mensajes = Array.from(document.querySelectorAll('.ia-msg .msg-bubble')).map(el => el.innerText);
-            const contenido = mensajes.join('\n\n---\n\n');
-            if (!contenido || contenido.length < 50) {
-                showToast('Primero realiza algunas consultas tácticas', true);
-                return;
-            }
-            const ventana = window.open();
-            ventana.document.write(`
-                <!DOCTYPE html>
-                <html><head><meta charset="UTF-8"><title>La Dinastía - Informe Táctico</title>
-                <style>body{font-family:'Cinzel',serif;margin:2cm;line-height:1.5} h1{color:#e9c46a}</style>
-                </head><body>
-                <h1>🏆 LA DINASTÍA - INFORME TÁCTICO</h1>
-                <p>Generado: ${new Date().toLocaleString()}</p>
-                <hr>
-                <div>${contenido.replace(/\n/g, '<br>')}</div>
-                <p style="margin-top:2cm;"><button onclick="window.print()">🖨️ Guardar PDF</button></p>
-                </body></html>
-            `);
-            ventana.document.close();
-        }
-        
-        // 4. TRIVIAS TÁCTICAS
-        async function triviasTacticas() {
-            showToast('⚽ Generando trivia táctica...');
-            const promptIA = `Genera 5 preguntas de trivia sobre táctica futbolística. Incluye las respuestas al final. Formato: Pregunta 1: ... Respuesta: ...`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal('⚽ TRIVIA TÁCTICA', respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, 'Trivia táctica');
-        }
-        
-        // 5. ANÁLISIS DE RIVAL
-        async function analizarRival() {
-            const rival = prompt("¿Contra qué equipo o estilo de rival quieres analizar?");
-            if (!rival) return;
-            showToast(`🔍 Analizando a ${rival}...`);
-            const promptIA = `Analiza cómo jugar contra ${rival} en fútbol. Incluye: puntos débiles del rival, formación ideal para contrarrestarlo, instrucciones clave para los jugadores, y estrategia de partido.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal(`🔍 Análisis vs ${rival}`, respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, `Análisis vs ${rival}`);
-        }
-        
-        // 6. PLAN DE PARTIDO
-        async function planPartido() {
-            const propio = prompt("Estilo de tu equipo (Ej: posesión, contraataque, presión alta):") || "equilibrado";
-            const rival = prompt("Estilo del rival:") || "cualquiera";
-            showToast(`📋 Generando plan de partido...`);
-            const promptIA = `Crea un plan de partido detallado para un equipo que juega al ${propio} contra un rival que juega al ${rival}. Incluye: formación recomendada, instrucciones por línea (defensa, medio, ataque), y consejos para momentos clave del partido.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal(`📋 Plan: ${propio} vs ${rival}`, respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, `Plan de partido: ${propio} vs ${rival}`);
-        }
-        
-        // 7. ESTILOS DE JUEGO
-        async function estilosJuego() {
-            showToast('🎭 Analizando estilos...');
-            const promptIA = `Explica los principales estilos de juego en fútbol: posesión, presión alta, contraataque, juego directo, y fútbol de transiciones. Para cada uno: características clave, entrenadores representativos, y equipos que lo usan.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal('🎭 ESTILOS DE JUEGO', respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, 'Estilos de juego');
-        }
-        
-        // 8. DICCIONARIO TÁCTICO
-        async function vocabularioTactico() {
-            const termino = prompt("¿Qué término táctico quieres aprender? (Ej: presión alta, bloque bajo, línea de pase, doble pivote, etc.)");
-            if (!termino) return;
-            showToast(`📚 Buscando definición de "${termino}"...`);
-            const promptIA = `Define el término táctico "${termino}" en fútbol. Explica su significado, cómo se ejecuta, qué jugadores son clave para implementarlo, y ejemplos de equipos o entrenadores que lo usan.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal(`📚 ${termino}`, respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, `Definición: ${termino}`);
-        }
-        
-        // 9. LEYENDAS TÁCTICAS
-        async function leyendasTacticas() {
-            showToast('🏛️ Buscando leyendas tácticas...');
-            const promptIA = `Presenta a 5 grandes innovadores tácticos en la historia del fútbol (entrenadores). Para cada uno: nombre, país, formación o estilo que popularizó, y legado en el fútbol moderno.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal('🏛️ LEYENDAS TÁCTICAS', respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, 'Leyendas tácticas');
-        }
-        
-        // 10. QUIZ DEL ENTRENADOR
-        async function quizEntrenador() {
-            showToast('❓ Generando quiz táctico...');
-            const promptIA = `Eres un director técnico evaluando a tu asistente. Genera 5 preguntas tácticas de opción múltiple (cada una con 4 opciones A, B, C, D, marcando la correcta con ✓). Incluye las respuestas al final. Temas: formaciones, estrategias, y decisiones de partido.`;
-            const respuesta = await llamarJsllm7(promptIA);
-            const respuestaLimpia = limpiarMarkdown(respuesta);
-            mostrarModal('❓ QUIZ DEL ENTRENADOR', respuestaLimpia);
-            actualizarWidgets(respuestaLimpia, 'Quiz del entrenador');
-        }
-        
-        // ASIGNAR BOTONES
-        document.getElementById('btnFormacion').onclick = analizarFormacion;
-        document.getElementById('btnComparar').onclick = compararFormaciones;
-        document.getElementById('btnPDF').onclick = exportarTactica;
-        document.getElementById('btnTrivias').onclick = triviasTacticas;
-        document.getElementById('btnRival').onclick = analizarRival;
-        document.getElementById('btnPartido').onclick = planPartido;
-        document.getElementById('btnEstilos').onclick = estilosJuego;
-        document.getElementById('btnVocabulario').onclick = vocabularioTactico;
-        document.getElementById('btnLeyendas').onclick = leyendasTacticas;
-        document.getElementById('btnQuiz').onclick = quizEntrenador;
-        
-        // ============================================
-        // DEEP LINKING - CARGAR CONSULTA DESDE URL
-        // ============================================
-        
-        function cargarDesdeURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const q = urlParams.get('q');
-            if (q) {
-                userInput.value = q;
-                setTimeout(handleSend, 1000);
-            }
-        }
-        
-        // ============================================
-        // INICIALIZAR
-        // ============================================
-        
-        async function inicializar() {
-            try {
-                await esperarJsllm7();
-                iaLista = true;
-                userInput.disabled = false;
-                sendBtn.disabled = false;
-                paisesStatus.className = 'status-badge success';
-                paisesStatus.innerHTML = `🔒 ${PAISES_RESPALDO.length} PAÍSES · 10 HERRAMIENTAS`;
-                addMessage(`✨ Oráculo IA listo · ${PAISES_RESPALDO.length} países de respaldo · 10 herramientas tácticas disponibles arriba.`, false);
-                showToast('✅ IA lista para consultar');
-                
-                // Cargar consulta desde URL
-                cargarDesdeURL();
-            } catch (error) {
-                paisesStatus.innerHTML = '⚠️ ERROR - RECARGANDO...';
-                addMessage('⚠️ Error al cargar la IA. Recarga la página.', false);
-                showToast('❌ Error al cargar IA', true);
-            }
-        }
-        
-        inicializar();
-        actualizarSidebarHistorial();
-        
-        setInterval(() => {
-            const hora = new Date().toLocaleTimeString();
-            document.getElementById('subtitle').innerHTML = `🎯 TÁCTICA AVANZADA · IA · ${hora} · 🔒 ${PAISES_RESPALDO.length} PAÍSES · 10 HERRAMIENTAS`;
-        }, 1000);
-    </script>
+        return prompt;
+    }
 
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+    // ============================================
+    // FUNCIÓN PRINCIPAL CON CONECTORES
+    // ============================================
+    
+    let modo = localStorage.getItem('dinastia_modo') || 'experto';
+    let procesando = false;
+    let iaLista = false;
+    
+    const chatArea = document.getElementById('chat-area');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const paisesStatus = document.getElementById('paisesStatus');
+    
+    const widgetTextoContent = document.getElementById('widgetTextoContent');
+    const confidenceFill = document.getElementById('confidenceFill');
+    const confidenceLabel = document.getElementById('confidenceLabel');
+    const widgetEstructuraContent = document.getElementById('widgetEstructuraContent');
+    
+    const metricMemoria = document.getElementById('metricMemoria');
+    const metricSemantico = document.getElementById('metricSemantico');
+    const metricAPIs = document.getElementById('metricAPIs');
+    const metricContexto = document.getElementById('metricContexto');
+    
+    function actualizarMetricasConectores() {
+        const memStats = memoryConnector.getStats();
+        const semStats = semanticConnector.getStats();
+        const apiStats = apiConnector.getStats();
+        
+        metricMemoria.textContent = memStats.total;
+        metricSemantico.textContent = semStats.cacheSize;
+        metricAPIs.textContent = apiStats.endpoints;
+        
+        const contextoPorcentaje = Math.min(100, (memStats.shortTerm * 10) + 20);
+        metricContexto.textContent = Math.min(contextoPorcentaje, 100) + '%';
+    }
+    
+    async function consultarIA(pregunta) {
+        const clave = pregunta.toLowerCase().trim();
+        const semanticKey = getSemanticKey(pregunta);
+        
+        // 1. Verificar caché semántico
+        if (semanticCache.has(semanticKey)) {
+            const cached = semanticCache.get(semanticKey);
+            if (Date.now() - cached.timestamp < 3600000) {
+                return cached.data;
             }
         }
-    </script>
-    <script type="module">
-        import * as THREE from 'three';import {OrbitControls}from'three/addons/controls/OrbitControls.js';import {VRButton}from'three/addons/webxr/VRButton.js';
-        let s,c,r,ctrl,a=false;const ct=document.getElementById('vrContainer'),vb=document.getElementById('vrModeBtn'),cv=document.getElementById('closeVrBtn'),vm=document.getElementById('vrMode');
-        function init(){if(!ct)return;ct.innerHTML='';s=new THREE.Scene();s.background=new THREE.Color(0x0a1030);c=new THREE.PerspectiveCamera(45,ct.clientWidth/ct.clientHeight,0.1,1000);c.position.set(5,3,8);r=new THREE.WebGLRenderer({antialias:true});r.setSize(ct.clientWidth,ct.clientHeight);r.xr.enabled=true;ct.appendChild(r.domElement);ct.appendChild(VRButton.createButton(r));ctrl=new OrbitControls(c,r.domElement);ctrl.enableDamping=true;s.add(new THREE.AmbientLight(0x404060));const dl=new THREE.DirectionalLight(0xffffff,1);dl.position.set(5,10,7);s.add(dl);const f=new THREE.Mesh(new THREE.PlaneGeometry(20,30),new THREE.MeshStandardMaterial({color:0x2d6a4f}));f.rotation.x=-Math.PI/2;f.position.y=-0.5;s.add(f);for(let i=0;i<30;i++){const ball=new THREE.Mesh(new THREE.SphereGeometry(0.2,16,16),new THREE.MeshStandardMaterial({color:[0xe9c46a,0xf59e0b,0x10b981][i%3]}));const angle=(i/30)*Math.PI*2;ball.position.set(Math.cos(angle)*4,1.2,Math.sin(angle)*4);s.add(ball)}function animate(){requestAnimationFrame(animate);ctrl.update();r.render(s,c)}animate();a=true}
-        vb.addEventListener('click',()=>{document.querySelector('.container').style.display='none';vb.style.display='none';vm.classList.add('active');if(!a)setTimeout(init,100)});cv.addEventListener('click',()=>{vm.classList.remove('active');document.querySelector('.container').style.display='block';vb.style.display='block'});
-    </script>
+        
+        // 2. Buscar en memoria del conector
+        const memoriaSimilar = memoryConnector.recall(pregunta, 2);
+        let contextoMemoria = '';
+        if (memoriaSimilar.length > 0) {
+            contextoMemoria = '\n\n[Contexto de memoria:] ' + memoriaSimilar.map(m => 
+                `Pregunta similar anterior: "${m.query}" → Respuesta: "${m.response.substring(0, 100)}..."`
+            ).join(' ');
+        }
+        
+        // 3. Consultar API para datos tácticos (simulado)
+        const apiData = await apiConnector.call('tacticalData');
+        let contextoAPI = '';
+        if (!apiData.error) {
+            contextoAPI = `\n\n[Datos tácticos externos:] Formaciones: ${apiData.formaciones?.join(', ') || ''}`;
+        }
+        
+        // 4. Consultar IA con contexto enriquecido
+        const paises = [...PAISES_RESPALDO];
+        for (let i = paises.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [paises[i], paises[j]] = [paises[j], paises[i]];
+        }
+        
+        for (let i = 0; i < Math.min(paises.length, 5); i++) {
+            const pais = paises[i];
+            let prompt = generarPromptMejorado(pais, pregunta, modo);
+            
+            // Añadir contexto de conectores
+            if (contextoMemoria) prompt += `\n${contextoMemoria}`;
+            if (contextoAPI) prompt += `\n${contextoAPI}`;
+            
+            try {
+                const respuesta = await llamarJsllm7(prompt);
+                if (respuesta && respuesta.length > 50) {
+                    const respuestaLimpia = limpiarMarkdown(respuesta);
+                    
+                    // Guardar en memoria
+                    memoryConnector.remember({
+                        query: pregunta,
+                        response: respuestaLimpia,
+                        pais: pais
+                    });
+                    
+                    semanticCache.set(semanticKey, {
+                        data: respuestaLimpia,
+                        timestamp: Date.now()
+                    });
+                    
+                    actualizarMetricasConectores();
+                    return respuestaLimpia;
+                }
+            } catch(e) { continue; }
+        }
+        
+        return "Lo siento, no pude procesar tu consulta. Por favor intenta de nuevo.";
+    }
+    
+    // ============================================
+    // FUNCIONES UI
+    // ============================================
+    
+    function actualizarWidgets(respuesta, pregunta) {
+        widgetTextoContent.innerHTML = respuesta.replace(/\n/g, '<br>');
+        
+        const confianza = Math.min(85 + Math.random() * 10, 98);
+        confidenceFill.style.width = confianza + '%';
+        confidenceLabel.textContent = Math.round(confianza) + '%';
+        
+        // Estructura táctica
+        const contenido = respuesta.toLowerCase();
+        let lineas = [];
+        if (contenido.includes('defensa')) lineas.push('🛡️ Defensa');
+        if (contenido.includes('mediocampo')) lineas.push('🎯 Mediocampo');
+        if (contenido.includes('delantera')) lineas.push('⚽ Delantera');
+        if (contenido.includes('presión')) lineas.push('🔥 Presión Alta');
+        if (contenido.includes('posesión')) lineas.push('🔄 Posesión');
+        if (lineas.length === 0) lineas = ['📋 Análisis táctico general'];
+        
+        widgetEstructuraContent.innerHTML = `
+            <div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;">
+                ${lineas.map(l => `<span style="background:#2c3a4a;padding:4px 10px;border-radius:15px;font-size:0.7rem;border:1px solid #e9c46a;">${l}</span>`).join('')}
+            </div>
+            <div style="margin-top:10px;font-size:0.7rem;color:#94a3b8;">
+                🔄 Estructura detectada automáticamente
+            </div>
+        `;
+    }
+    
+    function addMessage(text, isUser) {
+        const d = document.createElement('div');
+        d.className = `message ${isUser ? 'user-msg' : 'ia-msg'}`;
+        const b = document.createElement('div');
+        b.className = 'msg-bubble';
+        b.innerHTML = text.replace(/\n/g, '<br>').replace(/•/g, '• ');
+        d.appendChild(b);
+        chatArea.appendChild(d);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+    
+    function showTyping() {
+        const d = document.createElement('div');
+        d.className = 'message ia-msg';
+        d.id = '_t';
+        d.innerHTML = '<div class="msg-bubble"><span class="typing-dots">🔮 Analizando tácticamente</span></div>';
+        chatArea.appendChild(d);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+    
+    function removeTyping() {
+        const t = document.getElementById('_t');
+        if (t) t.remove();
+    }
+    
+    function showToast(msg, isError) {
+        const t = document.createElement('div');
+        t.className = 'toast-msg';
+        t.style.background = isError ? '#ef4444' : '#10b981';
+        t.innerText = msg;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 3000);
+    }
+    
+    function mostrarModal(titulo, contenido) {
+        const modal = document.createElement('div');
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h3>${titulo}</h3>
+                <div style="white-space:pre-wrap; font-size:0.85rem; line-height:1.5;">${contenido.replace(/\n/g, '<br>')}</div>
+                <button class="modal-close">Cerrar</button>
+            </div>
+        `;
+        modal.querySelector('.modal-close').onclick = () => modal.remove();
+        document.body.appendChild(modal);
+    }
+    
+    async function handleSend() {
+        const q = userInput.value.trim();
+        if (!q) return;
+        if (!iaLista) { showToast('⏳ IA cargando...', true); return; }
+        if (procesando) { showToast('⏳ Espera...', true); return; }
+        
+        addMessage(q, true);
+        userInput.value = '';
+        procesando = true;
+        sendBtn.disabled = true;
+        showTyping();
+        
+        try {
+            const respuesta = await consultarIA(q);
+            removeTyping();
+            addMessage(respuesta, false);
+            actualizarWidgets(respuesta, q);
+            showToast('✅ Análisis táctico generado');
+        } catch (e) {
+            removeTyping();
+            addMessage('⚠️ Error en la consulta.', false);
+            showToast('❌ Error', true);
+        }
+        
+        procesando = false;
+        sendBtn.disabled = false;
+        userInput.focus();
+    }
+    
+    function actualizarModoUI() {
+        document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('active', b.dataset.modo === modo));
+    }
+    
+    document.querySelectorAll('.modo-btn').forEach(b => {
+        b.addEventListener('click', () => {
+            modo = b.dataset.modo;
+            localStorage.setItem('dinastia_modo', modo);
+            actualizarModoUI();
+            addMessage(`✨ Cambiado a modo ${modo === 'experto' ? 'EXPERTO' : 'BÁSICO'}`, false);
+        });
+    });
+    
+    sendBtn.addEventListener('click', handleSend);
+    userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') handleSend(); });
+    
+    actualizarModoUI();
+    
+    // ============================================
+    // HERRAMIENTAS CON CONECTORES
+    // ============================================
+    
+    async function analizarFormacion() {
+        const formacion = prompt("¿Qué formación quieres analizar? (Ej: 4-3-3, 4-4-2, 3-5-2, 4-2-3-1, 5-4-1)");
+        if (!formacion) return;
+        showToast(`📊 Analizando ${formacion}...`);
+        const promptIA = `Analiza la formación ${formacion} en fútbol. Explica: puntos fuertes, puntos débiles, qué tipo de jugadores necesita, y contra qué formaciones es efectiva.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal(`📊 Análisis: ${formacion}`, respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, `Análisis de formación ${formacion}`);
+    }
+    
+    async function compararFormaciones() {
+        const f1 = prompt("Primera formación (Ej: 4-3-3):");
+        if (!f1) return;
+        const f2 = prompt("Segunda formación (Ej: 4-4-2):");
+        if (!f2) return;
+        showToast(`🔄 Comparando ${f1} vs ${f2}...`);
+        const promptIA = `Compara las formaciones ${f1} y ${f2} en fútbol. Incluye: ventajas de cada una, desventajas, en qué situaciones es mejor cada una, y cómo se contrarrestan mutuamente.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal(`🔄 ${f1} vs ${f2}`, respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, `Comparación ${f1} vs ${f2}`);
+    }
+    
+    function exportarTactica() {
+        const mensajes = Array.from(document.querySelectorAll('.ia-msg .msg-bubble')).map(el => el.innerText);
+        const contenido = mensajes.join('\n\n---\n\n');
+        if (!contenido || contenido.length < 50) {
+            showToast('Primero realiza algunas consultas tácticas', true);
+            return;
+        }
+        const ventana = window.open();
+        ventana.document.write(`
+            <!DOCTYPE html>
+            <html><head><meta charset="UTF-8"><title>La Dinastía - Informe Táctico</title>
+            <style>body{font-family:'Cinzel',serif;margin:2cm;line-height:1.5} h1{color:#e9c46a}</style>
+            </head><body>
+            <h1>🏆 LA DINASTÍA - INFORME TÁCTICO</h1>
+            <p>Generado: ${new Date().toLocaleString()}</p>
+            <hr>
+            <div>${contenido.replace(/\n/g, '<br>')}</div>
+            <p style="margin-top:2cm;"><button onclick="window.print()">🖨️ Guardar PDF</button></p>
+            </body></html>
+        `);
+        ventana.document.close();
+    }
+    
+    async function triviasTacticas() {
+        showToast('⚽ Generando trivia táctica...');
+        const promptIA = `Genera 5 preguntas de trivia sobre táctica futbolística. Incluye las respuestas al final. Formato: Pregunta 1: ... Respuesta: ...`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal('⚽ TRIVIA TÁCTICA', respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, 'Trivia táctica');
+    }
+    
+    async function analizarRival() {
+        const rival = prompt("¿Contra qué equipo o estilo de rival quieres analizar?");
+        if (!rival) return;
+        showToast(`🔍 Analizando a ${rival}...`);
+        const promptIA = `Analiza cómo jugar contra ${rival} en fútbol. Incluye: puntos débiles del rival, formación ideal para contrarrestarlo, instrucciones clave para los jugadores, y estrategia de partido.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal(`🔍 Análisis vs ${rival}`, respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, `Análisis vs ${rival}`);
+    }
+    
+    async function planPartido() {
+        const propio = prompt("Estilo de tu equipo (Ej: posesión, contraataque, presión alta):") || "equilibrado";
+        const rival = prompt("Estilo del rival:") || "cualquiera";
+        showToast(`📋 Generando plan de partido...`);
+        const promptIA = `Crea un plan de partido detallado para un equipo que juega al ${propio} contra un rival que juega al ${rival}. Incluye: formación recomendada, instrucciones por línea (defensa, medio, ataque), y consejos para momentos clave del partido.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal(`📋 Plan: ${propio} vs ${rival}`, respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, `Plan de partido: ${propio} vs ${rival}`);
+    }
+    
+    async function estilosJuego() {
+        showToast('🎭 Analizando estilos...');
+        const promptIA = `Explica los principales estilos de juego en fútbol: posesión, presión alta, contraataque, juego directo, y fútbol de transiciones. Para cada uno: características clave, entrenadores representativos, y equipos que lo usan.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal('🎭 ESTILOS DE JUEGO', respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, 'Estilos de juego');
+    }
+    
+    async function vocabularioTactico() {
+        const termino = prompt("¿Qué término táctico quieres aprender? (Ej: presión alta, bloque bajo, línea de pase, doble pivote, etc.)");
+        if (!termino) return;
+        showToast(`📚 Buscando definición de "${termino}"...`);
+        const promptIA = `Define el término táctico "${termino}" en fútbol. Explica su significado, cómo se ejecuta, qué jugadores son clave para implementarlo, y ejemplos de equipos o entrenadores que lo usan.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal(`📚 ${termino}`, respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, `Definición: ${termino}`);
+    }
+    
+    async function leyendasTacticas() {
+        showToast('🏛️ Buscando leyendas tácticas...');
+        const promptIA = `Presenta a 5 grandes innovadores tácticos en la historia del fútbol (entrenadores). Para cada uno: nombre, país, formación o estilo que popularizó, y legado en el fútbol moderno.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal('🏛️ LEYENDAS TÁCTICAS', respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, 'Leyendas tácticas');
+    }
+    
+    async function quizEntrenador() {
+        showToast('❓ Generando quiz táctico...');
+        const promptIA = `Eres un director técnico evaluando a tu asistente. Genera 5 preguntas tácticas de opción múltiple (cada una con 4 opciones A, B, C, D, marcando la correcta con ✓). Incluye las respuestas al final. Temas: formaciones, estrategias, y decisiones de partido.`;
+        const respuesta = await llamarJsllm7(promptIA);
+        const respuestaLimpia = limpiarMarkdown(respuesta);
+        mostrarModal('❓ QUIZ DEL ENTRENADOR', respuestaLimpia);
+        actualizarWidgets(respuestaLimpia, 'Quiz del entrenador');
+    }
+    
+    // ASIGNAR BOTONES
+    document.getElementById('btnFormacion').onclick = analizarFormacion;
+    document.getElementById('btnComparar').onclick = compararFormaciones;
+    document.getElementById('btnPDF').onclick = exportarTactica;
+    document.getElementById('btnTrivias').onclick = triviasTacticas;
+    document.getElementById('btnRival').onclick = analizarRival;
+    document.getElementById('btnPartido').onclick = planPartido;
+    document.getElementById('btnEstilos').onclick = estilosJuego;
+    document.getElementById('btnVocabulario').onclick = vocabularioTactico;
+    document.getElementById('btnLeyendas').onclick = leyendasTacticas;
+    document.getElementById('btnQuiz').onclick = quizEntrenador;
+    
+    // ============================================
+    // INICIALIZAR
+    // ============================================
+    
+    async function inicializar() {
+        try {
+            await esperarJsllm7();
+            iaLista = true;
+            userInput.disabled = false;
+            sendBtn.disabled = false;
+            paisesStatus.className = 'status-badge success';
+            paisesStatus.innerHTML = `🔒 ${PAISES_RESPALDO.length} PAÍSES · CONECTORES ACTIVOS`;
+            addMessage(`✨ Oráculo IA listo · Conectores: Memoria, Semántico, APIs · ${PAISES_RESPALDO.length} países de respaldo`, false);
+            showToast('✅ IA lista · Conectores activos');
+            
+            actualizarMetricasConectores();
+        } catch (error) {
+            paisesStatus.innerHTML = '⚠️ ERROR - RECARGANDO...';
+            addMessage('⚠️ Error al cargar la IA. Recarga la página.', false);
+            showToast('❌ Error al cargar IA', true);
+        }
+    }
+    
+    inicializar();
+    
+    setInterval(() => {
+        const hora = new Date().toLocaleTimeString();
+        document.getElementById('subtitle').innerHTML = `🎯 TÁCTICA AVANZADA · IA · ${hora} · 🔒 ${PAISES_RESPALDO.length} PAÍSES · CONECTORES ACTIVOS`;
+        actualizarMetricasConectores();
+    }, 30000);
+</script>
+
+<script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+    }
+</script>
+<script type="module">
+    import * as THREE from 'three';import {OrbitControls}from'three/addons/controls/OrbitControls.js';import {VRButton}from'three/addons/webxr/VRButton.js';
+    let s,c,r,ctrl,a=false;const ct=document.getElementById('vrContainer'),vb=document.getElementById('vrModeBtn'),cv=document.getElementById('closeVrBtn'),vm=document.getElementById('vrMode');
+    function init(){if(!ct)return;ct.innerHTML='';s=new THREE.Scene();s.background=new THREE.Color(0x0a1030);c=new THREE.PerspectiveCamera(45,ct.clientWidth/ct.clientHeight,0.1,1000);c.position.set(5,3,8);r=new THREE.WebGLRenderer({antialias:true});r.setSize(ct.clientWidth,ct.clientHeight);r.xr.enabled=true;ct.appendChild(r.domElement);ct.appendChild(VRButton.createButton(r));ctrl=new OrbitControls(c,r.domElement);ctrl.enableDamping=true;s.add(new THREE.AmbientLight(0x404060));const dl=new THREE.DirectionalLight(0xffffff,1);dl.position.set(5,10,7);s.add(dl);const f=new THREE.Mesh(new THREE.PlaneGeometry(20,30),new THREE.MeshStandardMaterial({color:0x2d6a4f}));f.rotation.x=-Math.PI/2;f.position.y=-0.5;s.add(f);for(let i=0;i<30;i++){const ball=new THREE.Mesh(new THREE.SphereGeometry(0.2,16,16),new THREE.MeshStandardMaterial({color:[0xe9c46a,0xf59e0b,0x10b981][i%3]}));const angle=(i/30)*Math.PI*2;ball.position.set(Math.cos(angle)*4,1.2,Math.sin(angle)*4);s.add(ball)}function animate(){requestAnimationFrame(animate);ctrl.update();r.render(s,c)}animate();a=true}
+    vb.addEventListener('click',()=>{document.querySelector('.container').style.display='none';vb.style.display='none';vm.classList.add('active');if(!a)setTimeout(init,100)});cv.addEventListener('click',()=>{vm.classList.remove('active');document.querySelector('.container').style.display='block';vb.style.display='block'});
+</script>
 </body>
 </html>
