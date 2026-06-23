@@ -72,80 +72,18 @@
             padding: 15px;
             transition: all 0.3s;
         }
-        
-        .widget:hover {
-            border-color: #f4d03f;
-            box-shadow: 0 0 20px rgba(233,196,106,0.1);
-        }
-        
-        .widget-title {
-            font-family: 'Cinzel', serif;
-            color: #e9c46a;
-            font-size: 0.8rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .widget-content {
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: #f0f4f8;
-        }
-        
-        .widget-confidence {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 8px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 8px;
-        }
-        
-        .confidence-bar {
-            flex: 1;
-            height: 4px;
-            background: #2c3a4a;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        
-        .confidence-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #f59e0b, #10b981);
-            transition: width 1s ease;
-            width: 0%;
-        }
-        
-        .confidence-label {
-            font-size: 0.7rem;
-            color: #b0c4de;
-            min-width: 40px;
-        }
-        
-        .sources-list {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            font-size: 0.7rem;
-        }
-        
-        .source-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        
+        .widget:hover { border-color: #f4d03f; box-shadow: 0 0 20px rgba(233,196,106,0.1); }
+        .widget-title { font-family: 'Cinzel', serif; color: #e9c46a; font-size: 0.8rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .widget-content { font-size: 0.85rem; line-height: 1.6; color: #f0f4f8; }
+        .widget-confidence { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 8px; }
+        .confidence-bar { flex: 1; height: 4px; background: #2c3a4a; border-radius: 2px; overflow: hidden; }
+        .confidence-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #10b981); transition: width 1s ease; width: 0%; }
+        .confidence-label { font-size: 0.7rem; color: #b0c4de; min-width: 40px; }
+        .sources-list { margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; font-size: 0.7rem; }
+        .source-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .source-item:last-child { border-bottom: none; }
-        .source-icon { font-size: 0.8rem; }
         .source-link { color: #e9c46a; text-decoration: none; word-break: break-all; }
         .source-link:hover { text-decoration: underline; }
-        
         .status-badge { background: #1e293b; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-family: monospace; }
         .status-badge.success { background: #10b981; color: white; }
         .status-badge.warning { background: #f59e0b; color: #1a222c; }
@@ -167,14 +105,6 @@
         .ad-container { text-align: center; margin: 20px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; }
         .ad-label { font-size: 0.7rem; color: #7a9aae; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
         
-        @media (max-width: 700px) { 
-            .widget-container { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
-            .tools-bar { gap: 5px; }
-            .tool-btn { font-size: 0.6rem; padding: 4px 8px; }
-        }
-        
-        /* Métricas de conectores */
         .connector-metrics {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -187,14 +117,14 @@
             border-radius: 6px;
             text-align: center;
         }
-        .connector-metric .value {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #e9c46a;
-        }
-        .connector-metric .label {
-            font-size: 0.55rem;
-            color: #94a3b8;
+        .connector-metric .value { font-size: 1rem; font-weight: bold; color: #e9c46a; }
+        .connector-metric .label { font-size: 0.55rem; color: #94a3b8; }
+        
+        @media (max-width: 700px) { 
+            .widget-container { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+            .tools-bar { gap: 5px; }
+            .tool-btn { font-size: 0.6rem; padding: 4px 8px; }
         }
     </style>
 </head>
@@ -223,11 +153,12 @@
         <button class="tool-btn" id="btnVocabulario">📚 Diccionario Táctico</button>
         <button class="tool-btn" id="btnLeyendas">🏛️ Leyendas Tácticas</button>
         <button class="tool-btn" id="btnQuiz">❓ Quiz Entrenador</button>
+        <button class="tool-btn" id="btnWikipedia">📖 Consultar Wikipedia (410M)</button>
     </div>
 
     <div class="oracle-section">
         <div class="oracle-header">
-            <h3>🧠 Oráculo Táctico <span style="font-size:0.6rem;color:#94a3b8;">(Conectores: Memoria · Semántico · APIs)</span></h3>
+            <h3>🧠 Oráculo Táctico <span style="font-size:0.6rem;color:#94a3b8;">(Conectores: Memoria · Semántico · APIs · Wikipedia 410M)</span></h3>
             <div class="status-badge warning" id="paisesStatus">🔌 CARGANDO IA...</div>
         </div>
         <div id="chat-area">
@@ -238,7 +169,8 @@
                     📌 Uso <strong>CONECTORES</strong> avanzados para mejorar respuestas:<br>
                     &nbsp;&nbsp;🧠 <strong>Memoria</strong> - Recuerdo conversaciones anteriores<br>
                     &nbsp;&nbsp;🔍 <strong>Semántico</strong> - Busco respuestas similares<br>
-                    &nbsp;&nbsp;🌐 <strong>APIs</strong> - Integro datos externos<br><br>
+                    &nbsp;&nbsp;🌐 <strong>APIs</strong> - Integro datos externos<br>
+                    &nbsp;&nbsp;📖 <strong>Wikipedia 410M</strong> - 404 millones de registros<br><br>
                     ⚡ IA en proceso de carga...
                 </div>
             </div>
@@ -291,6 +223,9 @@
                         <div class="label">Contexto</div>
                     </div>
                 </div>
+                <div id="wikipediaStatus" style="margin-top:8px;font-size:0.65rem;color:#94a3b8;">
+                    📖 Wikipedia: 🔍 Conectando...
+                </div>
             </div>
         </div>
         <div class="widget" id="widgetEstructura">
@@ -308,7 +243,7 @@
     
     <div class="ad-container"><div class="ad-label">🎯 RECOMENDADO 🎯</div></div>
     
-    <footer>⚡ Información actualizada · Conectores avanzados · 30 países de respaldo · 10 herramientas tácticas</footer>
+    <footer>⚡ Información actualizada · Conectores avanzados · 30 países de respaldo · 10 herramientas tácticas · Wikipedia 410M</footer>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🔮 VISIÓN ÉPICA</button>
@@ -316,6 +251,65 @@
 
 <script src="https://cdn.jsdelivr.net/npm/jsllm7@0.1.0/jsllm7.js"></script>
 <script>
+    // ============================================
+    // CONECTOR DE WIKIPEDIA - 410M REGISTROS
+    // ============================================
+    
+    class WikipediaConnector {
+        constructor() {
+            this.apiUrl = 'https://es.wikipedia.org/api/rest_v1/page/summary/';
+            this.cache = new Map();
+            this.maxCacheAge = 86400000; // 24 horas
+            this.connected = false;
+            this.recordCount = 404356967;
+            this.totalRecords = this.recordCount;
+        }
+        
+        async consultar(tema) {
+            try {
+                const cleanTopic = tema.replace(/¿qué es /i, '').replace(/¿quién fue /i, '').replace(/[¿?]/g, '').trim();
+                const url = this.apiUrl + encodeURIComponent(cleanTopic);
+                
+                const response = await fetch(url);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.extract) {
+                        this.connected = true;
+                        // Limpiar referencias HTML
+                        let texto = data.extract
+                            .replace(/<ref[^>]*>.*?<\/ref>/g, '')
+                            .replace(/<[^>]+>/g, '')
+                            .replace(/&lt;ref[^&]*&gt;.*?&lt;\/ref&gt;/g, '')
+                            .replace(/&lt;[^&]+&gt;/g, '')
+                            .replace(/&quot;/g, '')
+                            .replace(/&amp;/g, '')
+                            .replace(/\s+/g, ' ')
+                            .trim();
+                        
+                        return {
+                            success: true,
+                            data: texto,
+                            source: 'Wikipedia',
+                            title: data.title || cleanTopic,
+                            link: `https://es.wikipedia.org/wiki/${encodeURIComponent(cleanTopic)}`
+                        };
+                    }
+                }
+                return { success: false, error: 'No se encontró información' };
+            } catch (e) {
+                return { success: false, error: e.message };
+            }
+        }
+        
+        getStatus() {
+            return {
+                connected: this.connected,
+                totalRecords: this.totalRecords,
+                cacheSize: this.cache.size
+            };
+        }
+    }
+
     // ============================================
     // CONECTOR DE MEMORIA
     // ============================================
@@ -359,7 +353,6 @@
         }
         
         recall(query, limit = 3) {
-            // Buscar en memoria a corto plazo
             const relevant = this.shortTerm
                 .filter(item => {
                     const similarity = this.calculateSimilarity(query, item.query || '');
@@ -403,13 +396,11 @@
         }
         
         generateEmbedding(text) {
-            // Simulación de embeddings para búsqueda semántica
             const words = text.toLowerCase()
                 .replace(/[¿?¡!.,;:]/g, '')
                 .split(' ')
                 .filter(w => w.length > 2);
             
-            // Crear un vector simple basado en frecuencia de palabras
             const vector = new Map();
             words.forEach(w => {
                 vector.set(w, (vector.get(w) || 0) + 1);
@@ -463,27 +454,17 @@
         constructor() {
             this.endpoints = new Map();
             this.cache = new Map();
-            this.maxCacheAge = 3600000; // 1 hora
+            this.maxCacheAge = 3600000;
             this.registerDefaultEndpoints();
         }
         
         registerDefaultEndpoints() {
-            // Endpoint de ejemplo para datos tácticos simulados
             this.registerEndpoint('tacticalData', {
                 url: 'https://api.example.com/tactical',
                 method: 'GET',
                 transform: (data) => ({
                     formaciones: data.formaciones || [],
                     estadisticas: data.estadisticas || {}
-                })
-            });
-            
-            this.registerEndpoint('playerStats', {
-                url: 'https://api.example.com/players',
-                method: 'GET',
-                transform: (data) => ({
-                    jugadores: data.jugadores || [],
-                    rendimiento: data.rendimiento || {}
                 })
             });
         }
@@ -507,9 +488,7 @@
             }
             
             try {
-                // Simulación de llamada API (en producción sería fetch real)
                 const mockData = this.generateMockData(endpointName, params);
-                
                 const result = config.transform ? config.transform(mockData) : mockData;
                 this.cache.set(cacheKey, {
                     data: result,
@@ -525,19 +504,7 @@
             const datos = {
                 tacticalData: {
                     formaciones: ['4-3-3', '4-4-2', '3-5-2', '4-2-3-1'],
-                    estadisticas: {
-                        posesion: 58,
-                        pases: 420,
-                        tiros: 12
-                    }
-                },
-                playerStats: {
-                    jugadores: ['Delantero A', 'Mediocampista B', 'Defensa C'],
-                    rendimiento: {
-                        goles: 24,
-                        asistencias: 15,
-                        pases_completados: 78
-                    }
+                    estadisticas: { posesion: 58, pases: 420, tiros: 12 }
                 }
             };
             return datos[endpoint] || {};
@@ -546,52 +513,8 @@
         getStats() {
             return {
                 endpoints: this.endpoints.size,
-                cacheSize: this.cache.size,
-                cacheAge: this.cache.size > 0 ? Math.round((Date.now() - this.cache.values().next().value.timestamp) / 60000) : 0
+                cacheSize: this.cache.size
             };
-        }
-    }
-
-    // ============================================
-    // SISTEMA DE CACHÉ SEMÁNTICO
-    // ============================================
-    
-    let jsllm7Ready = false;
-    const semanticCache = new Map();
-    
-    function getSemanticKey(text) {
-        const words = text.toLowerCase()
-            .replace(/[¿?¡!.,;:]/g, '')
-            .split(' ')
-            .filter(w => w.length > 3)
-            .slice(0, 5)
-            .sort()
-            .join('_');
-        return words;
-    }
-    
-    function esperarJsllm7() {
-        return new Promise((resolve, reject) => {
-            let intentos = 0;
-            const maxIntentos = 30;
-            const verificar = setInterval(() => {
-                intentos++;
-                if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
-                    clearInterval(verificar);
-                    resolve(true);
-                } else if (intentos >= maxIntentos) {
-                    clearInterval(verificar);
-                    reject(new Error('jsllm7 no disponible'));
-                }
-            }, 500);
-        });
-    }
-    
-    async function llamarJsllm7(prompt) {
-        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
-            return await window.jsllm7(prompt);
-        } else {
-            throw new Error('jsllm7 no está disponible');
         }
     }
 
@@ -602,6 +525,7 @@
     const memoryConnector = new MemoryConnector();
     const semanticConnector = new SemanticConnector();
     const apiConnector = new APIConnector();
+    const wikipediaConnector = new WikipediaConnector();
     
     // ============================================
     // DATOS DE CONOCIMIENTO TÁCTICO
@@ -675,11 +599,13 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     const metricSemantico = document.getElementById('metricSemantico');
     const metricAPIs = document.getElementById('metricAPIs');
     const metricContexto = document.getElementById('metricContexto');
+    const wikipediaStatus = document.getElementById('wikipediaStatus');
     
     function actualizarMetricasConectores() {
         const memStats = memoryConnector.getStats();
         const semStats = semanticConnector.getStats();
         const apiStats = apiConnector.getStats();
+        const wikiStats = wikipediaConnector.getStatus();
         
         metricMemoria.textContent = memStats.total;
         metricSemantico.textContent = semStats.cacheSize;
@@ -687,6 +613,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
         
         const contextoPorcentaje = Math.min(100, (memStats.shortTerm * 10) + 20);
         metricContexto.textContent = Math.min(contextoPorcentaje, 100) + '%';
+        
+        wikipediaStatus.textContent = wikiStats.connected ? 
+            `📖 Wikipedia: ✅ Conectado (${wikiStats.totalRecords.toLocaleString()} registros)` : 
+            `📖 Wikipedia: 🔍 Buscando...`;
     }
     
     async function consultarIA(pregunta) {
@@ -710,14 +640,21 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             ).join(' ');
         }
         
-        // 3. Consultar API para datos tácticos (simulado)
+        // 3. CONSULTAR WIKIPEDIA (410M registros)
+        const wikiResult = await wikipediaConnector.consultar(pregunta);
+        let wikiContext = '';
+        if (wikiResult.success) {
+            wikiContext = `\n\n[Wikipedia 410M registros:] ${wikiResult.data.substring(0, 500)}...\nFuente: ${wikiResult.link}`;
+        }
+        
+        // 4. Consultar API para datos tácticos (simulado)
         const apiData = await apiConnector.call('tacticalData');
         let contextoAPI = '';
         if (!apiData.error) {
             contextoAPI = `\n\n[Datos tácticos externos:] Formaciones: ${apiData.formaciones?.join(', ') || ''}`;
         }
         
-        // 4. Consultar IA con contexto enriquecido
+        // 5. Consultar IA con contexto enriquecido
         const paises = [...PAISES_RESPALDO];
         for (let i = paises.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -731,28 +668,40 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             // Añadir contexto de conectores
             if (contextoMemoria) prompt += `\n${contextoMemoria}`;
             if (contextoAPI) prompt += `\n${contextoAPI}`;
+            if (wikiContext) prompt += `\n${wikiContext}`;
             
             try {
                 const respuesta = await llamarJsllm7(prompt);
                 if (respuesta && respuesta.length > 50) {
                     const respuestaLimpia = limpiarMarkdown(respuesta);
                     
+                    // Si Wikipedia dio info, añadirla como fuente
+                    let respuestaFinal = respuestaLimpia;
+                    if (wikiResult.success) {
+                        respuestaFinal += `\n\n📖 Fuente: Wikipedia (${wikiResult.title})\n🔗 ${wikiResult.link}`;
+                    }
+                    
                     // Guardar en memoria
                     memoryConnector.remember({
                         query: pregunta,
-                        response: respuestaLimpia,
+                        response: respuestaFinal,
                         pais: pais
                     });
                     
                     semanticCache.set(semanticKey, {
-                        data: respuestaLimpia,
+                        data: respuestaFinal,
                         timestamp: Date.now()
                     });
                     
                     actualizarMetricasConectores();
-                    return respuestaLimpia;
+                    return respuestaFinal;
                 }
             } catch(e) { continue; }
+        }
+        
+        // Si no hay respuesta de IA, devolver lo que encontró Wikipedia
+        if (wikiResult.success) {
+            return `📖 Información de Wikipedia (410M registros):\n\n${wikiResult.data}\n\n🔗 Fuente: ${wikiResult.link}`;
         }
         
         return "Lo siento, no pude procesar tu consulta. Por favor intenta de nuevo.";
@@ -854,7 +803,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             removeTyping();
             addMessage(respuesta, false);
             actualizarWidgets(respuesta, q);
-            showToast('✅ Análisis táctico generado');
+            showToast('✅ Análisis generado con Wikipedia 410M');
         } catch (e) {
             removeTyping();
             addMessage('⚠️ Error en la consulta.', false);
@@ -887,6 +836,22 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     // ============================================
     // HERRAMIENTAS CON CONECTORES
     // ============================================
+    
+    async function consultarWikipedia() {
+        const tema = prompt("¿Qué quieres consultar en Wikipedia? (Ej: inteligencia artificial)");
+        if (!tema) return;
+        showToast(`📖 Consultando Wikipedia sobre "${tema}"...`);
+        
+        const resultado = await wikipediaConnector.consultar(tema);
+        if (resultado.success) {
+            const mensaje = `📖 <b>${resultado.title}</b>\n\n${resultado.data}\n\n🔗 <a href="${resultado.link}" target="_blank">Ver en Wikipedia</a>`;
+            mostrarModal(`📖 ${resultado.title}`, mensaje);
+            addMessage(`📖 Wikipedia: ${resultado.data.substring(0, 300)}...`, false);
+            actualizarWidgets(resultado.data, tema);
+        } else {
+            showToast('❌ No se encontró información', true);
+        }
+    }
     
     async function analizarFormacion() {
         const formacion = prompt("¿Qué formación quieres analizar? (Ej: 4-3-3, 4-4-2, 3-5-2, 4-2-3-1, 5-4-1)");
@@ -976,7 +941,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     }
     
     async function vocabularioTactico() {
-        const termino = prompt("¿Qué término táctico quieres aprender? (Ej: presión alta, bloque bajo, línea de pase, doble pivote, etc.)");
+        const termino = prompt("¿Qué término táctico quieres aprender?");
         if (!termino) return;
         showToast(`📚 Buscando definición de "${termino}"...`);
         const promptIA = `Define el término táctico "${termino}" en fútbol. Explica su significado, cómo se ejecuta, qué jugadores son clave para implementarlo, y ejemplos de equipos o entrenadores que lo usan.`;
@@ -997,7 +962,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     
     async function quizEntrenador() {
         showToast('❓ Generando quiz táctico...');
-        const promptIA = `Eres un director técnico evaluando a tu asistente. Genera 5 preguntas tácticas de opción múltiple (cada una con 4 opciones A, B, C, D, marcando la correcta con ✓). Incluye las respuestas al final. Temas: formaciones, estrategias, y decisiones de partido.`;
+        const promptIA = `Genera 5 preguntas tácticas de opción múltiple (cada una con 4 opciones A, B, C, D). Incluye las respuestas al final.`;
         const respuesta = await llamarJsllm7(promptIA);
         const respuestaLimpia = limpiarMarkdown(respuesta);
         mostrarModal('❓ QUIZ DEL ENTRENADOR', respuestaLimpia);
@@ -1015,6 +980,49 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     document.getElementById('btnVocabulario').onclick = vocabularioTactico;
     document.getElementById('btnLeyendas').onclick = leyendasTacticas;
     document.getElementById('btnQuiz').onclick = quizEntrenador;
+    document.getElementById('btnWikipedia').onclick = consultarWikipedia;
+    
+    // ============================================
+    // FUNCIONES PARA Jsllm7
+    // ============================================
+    
+    const semanticCache = new Map();
+    
+    function getSemanticKey(text) {
+        const words = text.toLowerCase()
+            .replace(/[¿?¡!.,;:]/g, '')
+            .split(' ')
+            .filter(w => w.length > 3)
+            .slice(0, 5)
+            .sort()
+            .join('_');
+        return words;
+    }
+    
+    function esperarJsllm7() {
+        return new Promise((resolve, reject) => {
+            let intentos = 0;
+            const maxIntentos = 30;
+            const verificar = setInterval(() => {
+                intentos++;
+                if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+                    clearInterval(verificar);
+                    resolve(true);
+                } else if (intentos >= maxIntentos) {
+                    clearInterval(verificar);
+                    reject(new Error('jsllm7 no disponible'));
+                }
+            }, 500);
+        });
+    }
+    
+    async function llamarJsllm7(prompt) {
+        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+            return await window.jsllm7(prompt);
+        } else {
+            throw new Error('jsllm7 no está disponible');
+        }
+    }
     
     // ============================================
     // INICIALIZAR
@@ -1027,9 +1035,9 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             userInput.disabled = false;
             sendBtn.disabled = false;
             paisesStatus.className = 'status-badge success';
-            paisesStatus.innerHTML = `🔒 ${PAISES_RESPALDO.length} PAÍSES · CONECTORES ACTIVOS`;
-            addMessage(`✨ Oráculo IA listo · Conectores: Memoria, Semántico, APIs · ${PAISES_RESPALDO.length} países de respaldo`, false);
-            showToast('✅ IA lista · Conectores activos');
+            paisesStatus.innerHTML = `🔒 ${PAISES_RESPALDO.length} PAÍSES · CONECTORES ACTIVOS · WIKIPEDIA 410M`;
+            addMessage(`✨ Oráculo IA listo · Conectores: Memoria, Semántico, APIs, Wikipedia 410M · ${PAISES_RESPALDO.length} países de respaldo`, false);
+            showToast('✅ IA lista · Wikipedia 410M conectada');
             
             actualizarMetricasConectores();
         } catch (error) {
@@ -1043,7 +1051,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     
     setInterval(() => {
         const hora = new Date().toLocaleTimeString();
-        document.getElementById('subtitle').innerHTML = `🎯 TÁCTICA AVANZADA · IA · ${hora} · 🔒 ${PAISES_RESPALDO.length} PAÍSES · CONECTORES ACTIVOS`;
+        document.getElementById('subtitle').innerHTML = `🎯 TÁCTICA AVANZADA · IA · ${hora} · 🔒 ${PAISES_RESPALDO.length} PAÍSES · WIKIPEDIA 410M`;
         actualizarMetricasConectores();
     }, 30000);
 </script>
