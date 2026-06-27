@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=yes">
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <title>La Dinastía · Oráculo de Campeones + jsllm7 404M</title>
+    <title>La Dinastía · 403M DECIDE · Oráculo de Campeones</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
     
@@ -16,6 +16,8 @@
         h1 { font-size: 2.5rem; text-align: center; margin-bottom: 5px; text-shadow: 0 0 20px rgba(233,196,106,0.3); }
         .subtitle { text-align: center; color: #b0c4de; margin-bottom: 20px; font-style: italic; font-size: 0.8rem; }
         .live-indicator { background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; display: inline-block; margin-left: 10px; animation: pulse 2s infinite; }
+        .badge-decision { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
+        @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
         
         .modo-selector { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
@@ -25,6 +27,8 @@
         .tools-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; justify-content: center; }
         .tool-btn { background: #2c3a4a; border: 1px solid #5a7a8a; padding: 6px 12px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; font-weight: 500; color: #b0c4de; transition: 0.2s; }
         .tool-btn:hover { background: #e9c46a; color: #1a222c; border-color: #e9c46a; transform: scale(1.02); }
+        .tool-btn.decision { border-color: #8b5cf6; color: #a78bfa; }
+        .tool-btn.decision:hover { background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white; border-color: #8b5cf6; }
         
         .oracle-section { background: rgba(18,28,36,0.95); border: 1px solid #e9c46a; border-radius: 12px; padding: 20px; margin: 15px 0; backdrop-filter: blur(4px); }
         .oracle-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
@@ -35,17 +39,7 @@
         .msg-bubble { padding: 10px 15px; border-radius: 18px; max-width: 85%; word-wrap: break-word; font-size: 0.85rem; line-height: 1.5; white-space: pre-wrap; }
         .user-msg .msg-bubble { background: #2c3a4a; color: white; border-bottom-right-radius: 5px; }
         .ia-msg .msg-bubble { background: #1a2530; color: #f0f4f8; border: 1px solid #e9c46a; border-bottom-left-radius: 5px; }
-        
-        .msg-bubble p { margin: 8px 0; }
-        .msg-bubble strong { color: #e9c46a; }
-        .msg-bubble ul, .msg-bubble ol { margin: 8px 0; padding-left: 20px; }
-        .msg-bubble li { margin: 4px 0; }
-        .msg-bubble hr { border-color: #e9c46a; margin: 10px 0; }
-        
-        .feedback-buttons { display: flex; gap: 10px; margin-top: 5px; justify-content: flex-start; }
-        .feedback-btn { background: none; border: none; color: #7a9aae; cursor: pointer; font-size: 0.7rem; padding: 2px 8px; border-radius: 15px; transition: 0.2s; }
-        .feedback-btn:hover { background: #2c3a4a; color: #e9c46a; }
-        .feedback-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .msg-bubble.decision { border-color: #ec4899; }
         
         .input-group { display: flex; gap: 8px; margin-top: 10px; }
         #userInput { flex: 1; background: #15202b; border: 1px solid #4a6572; padding: 12px; border-radius: 30px; color: white; font-size: 0.9rem; outline: none; }
@@ -64,13 +58,7 @@
             margin: 15px 0;
         }
         
-        .widget {
-            background: rgba(26,37,48,0.95);
-            border: 1px solid #e9c46a;
-            border-radius: 12px;
-            padding: 15px;
-            transition: all 0.3s;
-        }
+        .widget { background: rgba(26,37,48,0.95); border: 1px solid #e9c46a; border-radius: 12px; padding: 15px; transition: all 0.3s; }
         .widget:hover { border-color: #f4d03f; box-shadow: 0 0 20px rgba(233,196,106,0.1); }
         .widget-title { font-family: 'Cinzel', serif; color: #e9c46a; font-size: 0.8rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
         .widget-content { font-size: 0.85rem; line-height: 1.6; color: #f0f4f8; }
@@ -78,11 +66,20 @@
         .confidence-bar { flex: 1; height: 4px; background: #2c3a4a; border-radius: 2px; overflow: hidden; }
         .confidence-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #10b981); transition: width 1s ease; width: 0%; }
         .confidence-label { font-size: 0.7rem; color: #b0c4de; min-width: 40px; }
-        .sources-list { margin-top: 10px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; font-size: 0.7rem; }
-        .source-item { display: flex; align-items: center; gap: 8px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .source-item:last-child { border-bottom: none; }
-        .source-link { color: #e9c46a; text-decoration: none; word-break: break-all; }
-        .source-link:hover { text-decoration: underline; }
+        
+        .connector-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .connector-metric { background: rgba(0,0,0,0.3); padding: 6px; border-radius: 6px; text-align: center; }
+        .connector-metric .value { font-size: 1rem; font-weight: bold; color: #e9c46a; }
+        .connector-metric .label { font-size: 0.55rem; color: #94a3b8; }
+        
+        #decisionStatus { font-size: 0.65rem; color: #ec4899; margin-top: 4px; text-align: center; }
+        #jsllm7Status { font-size: 0.65rem; color: #94a3b8; margin-top: 4px; }
+        
         .status-badge { background: #1e293b; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-family: monospace; }
         .status-badge.success { background: #10b981; color: white; }
         .status-badge.warning { background: #f59e0b; color: #1a222c; }
@@ -104,34 +101,14 @@
         .ad-container { text-align: center; margin: 20px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px; }
         .ad-label { font-size: 0.7rem; color: #7a9aae; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .connector-metrics {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 10px;
-        }
-        .connector-metric {
-            background: rgba(0,0,0,0.3);
-            padding: 6px;
-            border-radius: 6px;
-            text-align: center;
-        }
-        .connector-metric .value { font-size: 1rem; font-weight: bold; color: #e9c46a; }
-        .connector-metric .label { font-size: 0.55rem; color: #94a3b8; }
-        
-        @media (max-width: 700px) { 
-            .widget-container { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
-            .tools-bar { gap: 5px; }
-            .tool-btn { font-size: 0.6rem; padding: 4px 8px; }
-        }
+        @media (max-width: 700px) { .widget-container { grid-template-columns: 1fr; } h1 { font-size: 1.8rem; } .tools-bar { gap: 5px; } .tool-btn { font-size: 0.6rem; padding: 4px 8px; } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🏆 LA DINASTÍA 🏆 <span class="live-indicator" id="liveIndicator">🌍 30 PAÍSES</span></h1>
-    <div class="subtitle" id="subtitle">Táctica, Pasión y Leyenda · jsllm7 404M · Conectores Avanzados</div>
+    <h1>🏆 LA DINASTÍA 🏆 <span class="live-indicator" id="liveIndicator">🌍 30 PAÍSES</span><span class="badge-decision">🧠 403M DECIDE</span></h1>
+    <div class="subtitle" id="subtitle">403M DECIDE · Táctica, Pasión y Leyenda · jsllm7 404M · Conectores Avanzados</div>
     
     <div class="ad-container ad-top"><div class="ad-label">⚡ PATROCINADORES ⚡</div></div>
     
@@ -152,23 +129,26 @@
         <button class="tool-btn" id="btnLeyendas">🏛️ Leyendas Tácticas</button>
         <button class="tool-btn" id="btnQuiz">❓ Quiz Entrenador</button>
         <button class="tool-btn" id="btnWikipedia">📖 Consultar Wikipedia</button>
+        <button class="tool-btn decision" id="btnDecisionStatus">🧠 403M Decide</button>
     </div>
 
     <div class="oracle-section">
         <div class="oracle-header">
-            <h3>🧠 Oráculo Táctico <span style="font-size:0.6rem;color:#94a3b8;">(jsllm7 · 404M registros · Conectores)</span></h3>
-            <div class="status-badge warning" id="paisesStatus">🔌 CARGANDO jsllm7...</div>
+            <h3>🧠 Oráculo Táctico <span style="font-size:0.6rem;color:#94a3b8;">(403M DECIDE · jsllm7 · 404M registros)</span></h3>
+            <div class="status-badge warning" id="paisesStatus">🔌 CARGANDO 403M...</div>
         </div>
+        <div id="decisionStatus">🧠 403M DECIDE: Listo para analizar consultas tácticas</div>
         <div id="chat-area">
             <div class="message ia-msg">
-                <div class="msg-bubble">
-                    🏛️ ¡Bienvenido entrenador! Soy tu oráculo táctico con <strong>jsllm7</strong>.<br><br>
+                <div class="msg-bubble decision">
+                    🏛️ ¡Bienvenido entrenador! Soy tu oráculo táctico con <strong>403M DECIDE</strong>.<br><br>
                     📌 Pregúntame sobre formaciones, presión alta o táctica.<br>
                     📌 Uso <strong>jsllm7</strong> con 404M registros de conocimiento<br>
+                    📌 <strong>403M DECIDE</strong> qué BIG TECH activar automáticamente<br>
                     &nbsp;&nbsp;🧠 <strong>Memoria</strong> - Recuerdo conversaciones anteriores<br>
                     &nbsp;&nbsp;🔍 <strong>Semántico</strong> - Busco respuestas similares<br>
                     &nbsp;&nbsp;📖 <strong>Wikipedia</strong> - 404M registros de respaldo<br><br>
-                    ⚡ jsllm7 en proceso de carga...
+                    ⚡ 403M DECIDE activado...
                 </div>
             </div>
         </div>
@@ -216,7 +196,7 @@
                     </div>
                     <div class="connector-metric">
                         <div class="value" id="metricContexto">0%</div>
-                        <div class="label">Contexto</div>
+                        <div class="label">Contexto 403M</div>
                     </div>
                 </div>
                 <div id="jsllm7Status" style="margin-top:8px;font-size:0.65rem;color:#94a3b8;">
@@ -239,7 +219,7 @@
     
     <div class="ad-container"><div class="ad-label">🎯 RECOMENDADO 🎯</div></div>
     
-    <footer>⚡ Información actualizada · jsllm7 · 404M registros · Conectores avanzados · 30 países</footer>
+    <footer>⚡ Información actualizada · 403M DECIDE · jsllm7 · 404M registros · Conectores avanzados · 30 países</footer>
 </div>
 
 <button class="vr-button" id="vrModeBtn">🔮 VISIÓN ÉPICA</button>
@@ -251,8 +231,154 @@
     // CONFIGURACIÓN - API DE TERMUX (PUERTO 8081)
     // ============================================
     
-    const JSLLM7_API_URL = 'http://localhost:8081'; // ← Puerto 8081 de Termux
+    const JSLLM7_API_URL = 'http://localhost:8081';
+    let jsllm7TermuxConectado = false;
     
+    // ============================================
+    // NÚCLEO 403M DECIDE
+    // ============================================
+    
+    class Nucleo403MDecisor {
+        constructor() {
+            this.nucleo = {
+                activo: true,
+                parametros: 403000000,
+                decisiones: 0
+            };
+            
+            this.bigTech = {
+                nvidia: { activo: false, usos: 0, nombre: 'NVIDIA (Visualización)' },
+                google: { activo: false, usos: 0, nombre: 'Google (Búsqueda)' },
+                meta: { activo: false, usos: 0, nombre: 'Meta (Comunidad)' },
+                amazon: { activo: false, usos: 0, nombre: 'Amazon (Recursos)' },
+                microsoft: { activo: false, usos: 0, nombre: 'Microsoft (Análisis)' },
+                apple: { activo: false, usos: 0, nombre: 'Apple (Experiencia)' }
+            };
+            
+            this.historialDecisiones = [];
+            
+            console.log('🧠 NÚCLEO 403M DECIDE inicializado para La Dinastía');
+        }
+        
+        async analizarYDecidir(pregunta, modo) {
+            this.nucleo.decisiones++;
+            
+            console.log(`🧠 403M analizando consulta táctica: "${pregunta.substring(0, 50)}..."`);
+            document.getElementById('decisionStatus').textContent = '🧠 403M DECIDE: Analizando consulta táctica...';
+            
+            const promptDecision = `[DECISIÓN AUTÓNOMA 403M - TÁCTICA FUTBOLÍSTICA]
+Analiza la siguiente consulta táctica y decide qué BIG TECH activar:
+
+CONSULTA: "${pregunta}"
+MODO: ${modo}
+
+BIG TECH DISPONIBLES:
+1. NVIDIA - Para visualización de datos tácticos, gráficos, diagramas
+2. Google - Para búsqueda de información táctica, datos históricos
+3. Meta - Para conectar con comunidades de entrenadores
+4. Amazon - Para acceso a libros de táctica, recursos
+5. Microsoft - Para análisis de datos, herramientas de scouting
+6. Apple - Para diseño de presentaciones tácticas, experiencia visual
+
+DECIDE basándote en el contenido:
+- Si es sobre diagramas o visualización táctica → NVIDIA
+- Si es sobre búsqueda de información histórica → Google
+- Si es sobre comunidad de entrenadores → Meta
+- Si es sobre recursos tácticos → Amazon
+- Si es sobre análisis de datos → Microsoft
+- Si es sobre presentaciones tácticas → Apple
+
+Responde SOLO con los nombres de los BIG TECH a activar, separados por comas.
+Ejemplo: "Google, Microsoft" o "NVIDIA"
+
+DECISIÓN:`;
+
+            const decision = await llamarJsllm7(promptDecision);
+            console.log(`🧠 Decisión 403M: ${decision}`);
+            
+            const techsActivar = this.procesarDecision(decision);
+            
+            if (techsActivar.length > 0) {
+                document.getElementById('decisionStatus').textContent = `🧠 403M DECIDE: Activando ${techsActivar.join(', ')}`;
+            }
+            
+            for (const tech of techsActivar) {
+                if (this.bigTech[tech] && !this.bigTech[tech].activo) {
+                    this.bigTech[tech].activo = true;
+                    this.bigTech[tech].usos++;
+                    console.log(`🚀 403M activó: ${tech.toUpperCase()}`);
+                }
+            }
+            
+            this.historialDecisiones.push({
+                pregunta: pregunta.substring(0, 60),
+                decision: techsActivar,
+                timestamp: new Date().toISOString()
+            });
+            
+            return techsActivar;
+        }
+        
+        procesarDecision(decision) {
+            if (!decision) return ['google'];
+            
+            const techs = [];
+            const d = decision.toLowerCase();
+            
+            const mapeo = {
+                'nvidia': 'nvidia',
+                'google': 'google',
+                'meta': 'meta',
+                'amazon': 'amazon',
+                'microsoft': 'microsoft',
+                'apple': 'apple'
+            };
+            
+            for (const [key, value] of Object.entries(mapeo)) {
+                if (d.includes(key) || d.includes(value)) {
+                    techs.push(value);
+                }
+            }
+            
+            return techs.length > 0 ? techs : ['google'];
+        }
+        
+        getEstado() {
+            const activos = Object.entries(this.bigTech)
+                .filter(([k, v]) => v.activo)
+                .map(([k]) => k);
+            
+            return {
+                decisiones: this.nucleo.decisiones,
+                bigTechActivos: activos,
+                usos: Object.fromEntries(
+                    Object.entries(this.bigTech).map(([k, v]) => [k, v.usos])
+                ),
+                historial: this.historialDecisiones.slice(-5)
+            };
+        }
+        
+        mostrarEstado() {
+            const e = this.getEstado();
+            let mensaje = `
+=== 🧠 403M DECIDE (TÁCTICA) ===
+
+📊 Decisiones tomadas: ${e.decisiones}
+
+🏢 BIG TECH ACTIVADOS POR 403M:
+${Object.entries(e.usos).map(([k, v]) => `   • ${k}: ${v} usos`).join('\n')}
+
+📜 ÚLTIMAS DECISIONES:
+${e.historial.map(h => `   • "${h.pregunta}..." → ${h.decision.join(', ')}`).join('\n')}
+
+${e.bigTechActivos.length > 0 ? '✅ 403M está activando BIG TECH automáticamente' : '⚠️ 403M aún no ha activado BIG TECH'}
+`;
+            return mensaje;
+        }
+    }
+
+    const nucleoDecisor = new Nucleo403MDecisor();
+
     // ============================================
     // CONECTOR DE MEMORIA
     // ============================================
@@ -481,11 +607,12 @@
         return limpio.trim();
     }
     
-    function generarPromptMejorado(pais, pregunta, modo) {
+    function generarPromptMejorado(pais, pregunta, modo, bigTechActivados) {
         const esExperto = modo === 'experto';
         let prompt = `[RESPONDE EXCLUSIVAMENTE EN ESPAÑOL. PROHIBIDO EL INGLÉS.]
 
 Eres un estratega táctico de élite de ${pais.toUpperCase()}.
+403M DECIDIÓ ACTIVAR: ${bigTechActivados.join(', ') || 'Ninguno'}
 
 REGLAS DE FORMATO:
 1. NO USES ASTERISCOS (*) EN NINGÚN CASO
@@ -501,7 +628,79 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     }
 
     // ============================================
-    // FUNCIÓN PRINCIPAL CON jsllm7 + CONECTORES
+    // FUNCIÓN: LLAMAR A jsllm7 VÍA API DE TERMUX
+    // ============================================
+    
+    async function llamarJsllm7Termux(prompt) {
+        try {
+            const preguntaCodificada = encodeURIComponent(prompt);
+            const url = `${JSLLM7_API_URL}/ask?q=${preguntaCodificada}`;
+            
+            console.log('📤 Enviando a Termux (8081):', prompt.substring(0, 50) + '...');
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                console.error('❌ Error HTTP:', response.status);
+                throw new Error(`HTTP ${response.status}`);
+            }
+            
+            const text = await response.text();
+            console.log('📥 Respuesta recibida (primeros 100 chars):', text.substring(0, 100));
+            
+            if (text && text.length > 20) {
+                window._jsllm7Connected = true;
+                jsllm7TermuxConectado = true;
+                return text;
+            } else {
+                throw new Error('Respuesta vacía o inválida');
+            }
+        } catch (error) {
+            console.error('❌ Error conectando a Termux:', error);
+            window._jsllm7Connected = false;
+            jsllm7TermuxConectado = false;
+            return null;
+        }
+    }
+    
+    // ============================================
+    // FUNCIÓN HÍBRIDA: Termux primero, luego CDN
+    // ============================================
+    
+    async function llamarJsllm7(prompt) {
+        console.log('🔍 Intentando llamar a jsllm7...');
+        
+        const termuxResponse = await llamarJsllm7Termux(prompt);
+        if (termuxResponse) {
+            console.log('✅ Respuesta de Termux obtenida');
+            return termuxResponse;
+        }
+        
+        console.log('⚠️ Termux no disponible, intentando CDN...');
+        
+        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
+            try {
+                const response = await window.jsllm7(prompt);
+                if (response && response.length > 50) {
+                    console.log('✅ Respuesta de CDN obtenida');
+                    return response;
+                }
+            } catch (e) {
+                console.warn('Error con jsllm7 CDN:', e);
+            }
+        }
+        
+        console.log('⚠️ Usando Wikipedia como fallback...');
+        const wikiResult = await wikipediaConnector.consultar(prompt);
+        if (wikiResult.success) {
+            return `📖 Información de Wikipedia (404M registros):\n\n${wikiResult.data}`;
+        }
+        
+        throw new Error('No se pudo obtener respuesta');
+    }
+
+    // ============================================
+    // CONSULTA PRINCIPAL CON 403M DECIDE
     // ============================================
     
     let modo = localStorage.getItem('dinastia_modo') || 'experto';
@@ -530,7 +729,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
         
         metricMemoria.textContent = memStats.total;
         metricSemantico.textContent = semStats.cacheSize;
-        metricAPIs.textContent = '1'; // Termux API
+        metricAPIs.textContent = '1';
         
         const contextoPorcentaje = Math.min(100, (memStats.shortTerm * 10) + 20);
         metricContexto.textContent = Math.min(contextoPorcentaje, 100) + '%';
@@ -542,85 +741,6 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
                 `📖 jsllm7: 🔍 Conectando a Termux...`;
         }
     }
-    
-    // ============================================
-    // FUNCIÓN: LLAMAR A jsllm7 VÍA API DE TERMUX
-    // ============================================
-    
-    async function llamarJsllm7Termux(prompt) {
-        try {
-            // Codificar la pregunta correctamente
-            const preguntaCodificada = encodeURIComponent(prompt);
-            const url = `${JSLLM7_API_URL}/ask?q=${preguntaCodificada}`;
-            
-            console.log('📤 Enviando a Termux (8081):', prompt.substring(0, 50) + '...');
-            
-            const response = await fetch(url);
-            
-            if (!response.ok) {
-                console.error('❌ Error HTTP:', response.status);
-                throw new Error(`HTTP ${response.status}`);
-            }
-            
-            const text = await response.text();
-            console.log('📥 Respuesta recibida (primeros 100 chars):', text.substring(0, 100));
-            
-            if (text && text.length > 20) {
-                window._jsllm7Connected = true;
-                return text;
-            } else {
-                console.warn('⚠️ Respuesta muy corta o vacía');
-                throw new Error('Respuesta vacía o inválida');
-            }
-        } catch (error) {
-            console.error('❌ Error conectando a Termux:', error);
-            window._jsllm7Connected = false;
-            return null;
-        }
-    }
-    
-    // ============================================
-    // FUNCIÓN HÍBRIDA: Termux primero, luego CDN
-    // ============================================
-    
-    async function llamarJsllm7(prompt) {
-        console.log('🔍 Intentando llamar a jsllm7...');
-        
-        // 1. INTENTAR CON TERMUX (API local)
-        const termuxResponse = await llamarJsllm7Termux(prompt);
-        if (termuxResponse) {
-            console.log('✅ Respuesta de Termux obtenida');
-            return termuxResponse;
-        }
-        
-        console.log('⚠️ Termux no disponible, intentando CDN...');
-        
-        // 2. FALLBACK: Usar jsllm7 del CDN
-        if (typeof window.jsllm7 !== 'undefined' && window.jsllm7) {
-            try {
-                const response = await window.jsllm7(prompt);
-                if (response && response.length > 50) {
-                    console.log('✅ Respuesta de CDN obtenida');
-                    return response;
-                }
-            } catch (e) {
-                console.warn('Error con jsllm7 CDN:', e);
-            }
-        }
-        
-        // 3. FALLBACK FINAL: Wikipedia
-        console.log('⚠️ Usando Wikipedia como fallback...');
-        const wikiResult = await wikipediaConnector.consultar(prompt);
-        if (wikiResult.success) {
-            return `📖 Información de Wikipedia (404M registros):\n\n${wikiResult.data}`;
-        }
-        
-        throw new Error('No se pudo obtener respuesta');
-    }
-    
-    // ============================================
-    // CONSULTA PRINCIPAL
-    // ============================================
     
     const semanticCache = new Map();
     
@@ -639,13 +759,15 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
         const clave = pregunta.toLowerCase().trim();
         const semanticKey = getSemanticKey(pregunta);
         
-        // Verificar caché semántico
         if (semanticCache.has(semanticKey)) {
             const cached = semanticCache.get(semanticKey);
             if (Date.now() - cached.timestamp < 3600000) {
                 return cached.data;
             }
         }
+        
+        // 403M DECIDE qué BIG TECH activar
+        const bigTechDecididos = await nucleoDecisor.analizarYDecidir(pregunta, modo);
         
         // Buscar en memoria
         const memoriaSimilar = memoryConnector.recall(pregunta, 2);
@@ -663,7 +785,6 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             wikiContext = `\n\n[Wikipedia:] ${wikiResult.data.substring(0, 500)}...`;
         }
         
-        // Generar prompt con contexto
         const paises = [...PAISES_RESPALDO];
         for (let i = paises.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -672,7 +793,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
         
         for (let i = 0; i < Math.min(paises.length, 3); i++) {
             const pais = paises[i];
-            let prompt = generarPromptMejorado(pais, pregunta, modo);
+            let prompt = generarPromptMejorado(pais, pregunta, modo, bigTechDecididos);
             if (contextoMemoria) prompt += `\n${contextoMemoria}`;
             if (wikiContext) prompt += `\n${wikiContext}`;
             
@@ -686,10 +807,16 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
                         respuestaFinal += `\n\n📖 Fuente: ${wikiResult.title}\n🔗 ${wikiResult.link}`;
                     }
                     
+                    // Mostrar qué BIG TECH activó 403M
+                    if (bigTechDecididos.length > 0) {
+                        respuestaFinal = `🧠 403M activó: ${bigTechDecididos.join(', ')}\n\n${respuestaFinal}`;
+                    }
+                    
                     memoryConnector.remember({
                         query: pregunta,
                         response: respuestaFinal,
-                        pais: pais
+                        pais: pais,
+                        bigTech: bigTechDecididos
                     });
                     
                     semanticCache.set(semanticKey, {
@@ -703,7 +830,6 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             } catch(e) { continue; }
         }
         
-        // Fallback final
         if (wikiResult.success) {
             return `📖 Información de Wikipedia (404M registros):\n\n${wikiResult.data}`;
         }
@@ -746,6 +872,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
         d.className = `message ${isUser ? 'user-msg' : 'ia-msg'}`;
         const b = document.createElement('div');
         b.className = 'msg-bubble';
+        if (!isUser) b.classList.add('decision');
         b.innerHTML = text.replace(/\n/g, '<br>').replace(/•/g, '• ');
         d.appendChild(b);
         chatArea.appendChild(d);
@@ -756,7 +883,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
         const d = document.createElement('div');
         d.className = 'message ia-msg';
         d.id = '_t';
-        d.innerHTML = '<div class="msg-bubble"><span class="typing-dots">🔮 Analizando con jsllm7</span></div>';
+        d.innerHTML = '<div class="msg-bubble"><span class="typing-dots">🔮 403M DECIDE analizando</span></div>';
         chatArea.appendChild(d);
         chatArea.scrollTop = chatArea.scrollHeight;
     }
@@ -806,7 +933,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             removeTyping();
             addMessage(respuesta, false);
             actualizarWidgets(respuesta, q);
-            showToast('✅ Análisis generado con jsllm7');
+            showToast('✅ 403M DECIDE generó análisis táctico');
         } catch (e) {
             removeTyping();
             addMessage('⚠️ Error en la consulta.', false);
@@ -837,13 +964,24 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     actualizarModoUI();
     
     // ============================================
-    // HERRAMIENTAS
+    // BOTÓN 403M DECIDE
+    // ============================================
+    
+    document.getElementById('btnDecisionStatus').onclick = () => {
+        const estado = nucleoDecisor.mostrarEstado();
+        mostrarModal('🧠 403M DECIDE (TÁCTICA)', estado);
+    };
+    
+    // ============================================
+    // HERRAMIENTAS CON 403M DECIDE
     // ============================================
     
     async function consultarWikipedia() {
         const tema = prompt("¿Qué quieres consultar en Wikipedia?");
         if (!tema) return;
-        showToast(`📖 Consultando Wikipedia sobre "${tema}"...`);
+        showToast(`📖 403M DECIDE consultando Wikipedia sobre "${tema}"...`);
+        
+        await nucleoDecisor.analizarYDecidir(`Consultar Wikipedia sobre ${tema}`, modo);
         
         const resultado = await wikipediaConnector.consultar(tema);
         if (resultado.success) {
@@ -859,7 +997,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     async function analizarFormacion() {
         const formacion = prompt("¿Qué formación quieres analizar? (Ej: 4-3-3, 4-4-2, 3-5-2)");
         if (!formacion) return;
-        showToast(`📊 Analizando ${formacion}...`);
+        showToast(`📊 403M DECIDE analizando ${formacion}...`);
+        
+        await nucleoDecisor.analizarYDecidir(`Analizar formación ${formacion}`, modo);
+        
         const promptIA = `Analiza la formación ${formacion} en fútbol. Explica: puntos fuertes, puntos débiles, qué tipo de jugadores necesita, y contra qué formaciones es efectiva.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -877,7 +1018,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
         if (!f1) return;
         const f2 = prompt("Segunda formación (Ej: 4-4-2):");
         if (!f2) return;
-        showToast(`🔄 Comparando ${f1} vs ${f2}...`);
+        showToast(`🔄 403M DECIDE comparando ${f1} vs ${f2}...`);
+        
+        await nucleoDecisor.analizarYDecidir(`Comparar formaciones ${f1} vs ${f2}`, modo);
+        
         const promptIA = `Compara las formaciones ${f1} y ${f2} en fútbol. Incluye: ventajas de cada una, desventajas, en qué situaciones es mejor cada una, y cómo se contrarrestan.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -904,7 +1048,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             <style>body{font-family:'Cinzel',serif;margin:2cm;line-height:1.5} h1{color:#e9c46a}</style>
             </head><body>
             <h1>🏆 LA DINASTÍA - INFORME TÁCTICO</h1>
-            <p>Generado: ${new Date().toLocaleString()}</p>
+            <p>Generado con 403M DECIDE: ${new Date().toLocaleString()}</p>
             <hr>
             <div>${contenido.replace(/\n/g, '<br>')}</div>
             <p style="margin-top:2cm;"><button onclick="window.print()">🖨️ Guardar PDF</button></p>
@@ -914,7 +1058,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     }
     
     async function triviasTacticas() {
-        showToast('⚽ Generando trivia táctica...');
+        showToast('⚽ 403M DECIDE generando trivia táctica...');
+        
+        await nucleoDecisor.analizarYDecidir('Generar trivias tácticas', modo);
+        
         const promptIA = `Genera 5 preguntas de trivia sobre táctica futbolística. Incluye las respuestas al final.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -930,7 +1077,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     async function analizarRival() {
         const rival = prompt("¿Contra qué equipo o estilo de rival quieres analizar?");
         if (!rival) return;
-        showToast(`🔍 Analizando a ${rival}...`);
+        showToast(`🔍 403M DECIDE analizando a ${rival}...`);
+        
+        await nucleoDecisor.analizarYDecidir(`Analizar rival ${rival}`, modo);
+        
         const promptIA = `Analiza cómo jugar contra ${rival} en fútbol. Incluye: puntos débiles del rival, formación ideal para contrarrestarlo, instrucciones clave para los jugadores, y estrategia de partido.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -946,7 +1096,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     async function planPartido() {
         const propio = prompt("Estilo de tu equipo (Ej: posesión, contraataque, presión alta):") || "equilibrado";
         const rival = prompt("Estilo del rival:") || "cualquiera";
-        showToast(`📋 Generando plan de partido...`);
+        showToast(`📋 403M DECIDE generando plan de partido...`);
+        
+        await nucleoDecisor.analizarYDecidir(`Plan de partido: ${propio} vs ${rival}`, modo);
+        
         const promptIA = `Crea un plan de partido detallado para un equipo que juega al ${propio} contra un rival que juega al ${rival}. Incluye: formación recomendada, instrucciones por línea, y consejos para momentos clave.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -960,7 +1113,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     }
     
     async function estilosJuego() {
-        showToast('🎭 Analizando estilos...');
+        showToast('🎭 403M DECIDE analizando estilos...');
+        
+        await nucleoDecisor.analizarYDecidir('Analizar estilos de juego', modo);
+        
         const promptIA = `Explica los principales estilos de juego en fútbol: posesión, presión alta, contraataque, juego directo, y fútbol de transiciones.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -976,7 +1132,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     async function vocabularioTactico() {
         const termino = prompt("¿Qué término táctico quieres aprender?");
         if (!termino) return;
-        showToast(`📚 Buscando definición de "${termino}"...`);
+        showToast(`📚 403M DECIDE buscando definición de "${termino}"...`);
+        
+        await nucleoDecisor.analizarYDecidir(`Definir término táctico ${termino}`, modo);
+        
         const promptIA = `Define el término táctico "${termino}" en fútbol. Explica su significado, cómo se ejecuta, qué jugadores son clave, y ejemplos.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -990,7 +1149,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     }
     
     async function leyendasTacticas() {
-        showToast('🏛️ Buscando leyendas tácticas...');
+        showToast('🏛️ 403M DECIDE buscando leyendas tácticas...');
+        
+        await nucleoDecisor.analizarYDecidir('Buscar leyendas tácticas', modo);
+        
         const promptIA = `Presenta a 5 grandes innovadores tácticos en la historia del fútbol. Para cada uno: nombre, país, formación o estilo que popularizó, y legado.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -1004,7 +1166,10 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     }
     
     async function quizEntrenador() {
-        showToast('❓ Generando quiz táctico...');
+        showToast('❓ 403M DECIDE generando quiz táctico...');
+        
+        await nucleoDecisor.analizarYDecidir('Generar quiz táctico', modo);
+        
         const promptIA = `Genera 5 preguntas tácticas de opción múltiple (cada una con 4 opciones A, B, C, D). Incluye las respuestas al final.`;
         
         let respuesta = await llamarJsllm7(promptIA);
@@ -1035,23 +1200,24 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     // ============================================
     
     async function inicializar() {
-        console.log('🚀 Inicializando jsllm7...');
+        console.log('🚀 Inicializando 403M DECIDE...');
         console.log('🔌 Conectando a Termux en puerto 8081...');
         
-        // Verificar si Termux está disponible
         try {
             const testResponse = await fetch(`${JSLLM7_API_URL}/stats`);
             if (testResponse.ok) {
                 const stats = await testResponse.json();
                 window._jsllm7Connected = true;
+                jsllm7TermuxConectado = true;
                 iaLista = true;
                 userInput.disabled = false;
                 sendBtn.disabled = false;
                 paisesStatus.className = 'status-badge success';
-                paisesStatus.innerHTML = `🔒 jsllm7 ACTIVO · ${stats.total?.toLocaleString() || '404M'} REGISTROS · TERMUX:8081 ✅`;
-                addMessage(`✨ jsllm7 conectado a Termux (puerto 8081) con ${stats.total?.toLocaleString() || '404M'} registros`, false);
-                showToast('✅ jsllm7 · Termux conectado · 404M registros');
+                paisesStatus.innerHTML = `🔒 403M DECIDE · TERMUX:8081 ✅`;
+                addMessage(`✨ 403M DECIDE conectado a Termux (puerto 8081) con ${stats.total?.toLocaleString() || '404M'} registros`, false);
+                showToast('✅ 403M DECIDE · Termux conectado · 404M registros');
                 actualizarMetricasConectores();
+                document.getElementById('decisionStatus').textContent = '🧠 403M DECIDE: Activo · Listo para analizar';
                 console.log('✅ Conexión exitosa a Termux:', stats);
                 return;
             }
@@ -1059,7 +1225,6 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             console.warn('⚠️ Termux no disponible (puerto 8081), usando CDN...');
         }
         
-        // Fallback: Usar jsllm7 del CDN
         try {
             await esperarJsllm7();
             iaLista = true;
@@ -1070,11 +1235,12 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
             addMessage(`⚠️ Termux (puerto 8081) no disponible · Usando jsllm7 CDN como respaldo`, false);
             showToast('⚠️ Usando jsllm7 CDN');
             actualizarMetricasConectores();
+            document.getElementById('decisionStatus').textContent = '🧠 403M DECIDE: Activo (CDN) · Listo para analizar';
             console.log('⚠️ Usando CDN como fallback');
         } catch(error) {
             paisesStatus.innerHTML = '⚠️ ERROR - RECARGANDO...';
-            addMessage('⚠️ Error al cargar jsllm7. Recarga la página.', false);
-            showToast('❌ Error al cargar jsllm7', true);
+            addMessage('⚠️ Error al cargar 403M DECIDE. Recarga la página.', false);
+            showToast('❌ Error al cargar 403M DECIDE', true);
             console.error('❌ Error fatal:', error);
         }
     }
@@ -1101,7 +1267,7 @@ RESPUESTA (SOLO TEXTO LIMPIO):`;
     setInterval(() => {
         const hora = new Date().toLocaleTimeString();
         const connected = window._jsllm7Connected;
-        document.getElementById('subtitle').innerHTML = `🎯 TÁCTICA AVANZADA · jsllm7 · ${hora} · 🔒 ${PAISES_RESPALDO.length} PAÍSES · ${connected ? 'TERMUX:8081 ✅' : 'CDN'}`;
+        document.getElementById('subtitle').innerHTML = `🎯 403M DECIDE · TÁCTICA AVANZADA · ${hora} · 🔒 ${PAISES_RESPALDO.length} PAÍSES · ${connected ? 'TERMUX:8081 ✅' : 'CDN'}`;
         actualizarMetricasConectores();
     }, 30000);
 </script>
