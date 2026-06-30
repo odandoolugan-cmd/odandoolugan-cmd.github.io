@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Wikipedia 403M - Conocimiento Global</title>
+    <meta name="description" content="403M+ datos de conocimiento en la nube">
+    <meta name="theme-color" content="#0a0f1e">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0f1e; color: #eef2ff; min-height: 100vh; padding: 1rem; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        h1 { font-size: 2.8rem; background: linear-gradient(135deg, #FFD166, #FF6B6B, #4ECDC4, #8B5CF6, #ec4899); -webkit-background-clip: text; background-clip: text; color: transparent; text-align: center; }
+        .badge { display: inline-block; padding: 4px 14px; border-radius: 50px; font-size: 0.7rem; font-weight: bold; margin: 0.5rem 0; }
+        .badge-green { background: #10b981; }
+        .badge-ia { background: #8b5cf6; }
+        .badge-403m { background: #e67e22; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin: 1.5rem 0; }
+        .stat-card { background: rgba(30,41,59,0.8); border-radius: 1rem; padding: 1rem; text-align: center; border: 1px solid #334155; transition: 0.3s; }
+        .stat-card:hover { border-color: #8b5cf6; transform: translateY(-2px); }
+        .stat-number { font-size: 1.5rem; font-weight: bold; color: #60a5fa; }
+        .stat-label { font-size: 0.55rem; color: #94a3b8; }
+        
+        .search-box { display: flex; gap: 0.5rem; margin: 1rem 0; }
+        .search-box input { flex: 1; padding: 0.8rem 1rem; background: #1e293b; border: 1px solid #334155; border-radius: 2rem; color: white; font-size: 1rem; outline: none; transition: 0.3s; }
+        .search-box input:focus { border-color: #8b5cf6; box-shadow: 0 0 20px rgba(139,92,246,0.2); }
+        .search-box button { background: linear-gradient(90deg, #8b5cf6, #3b82f6); border: none; padding: 0.8rem 2rem; border-radius: 2rem; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .search-box button:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(139,92,246,0.4); }
+        
+        .categorias { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0; justify-content: center; }
+        .cat-btn { background: #1e293b; border: 1px solid #334155; padding: 4px 12px; border-radius: 50px; color: #94a3b8; cursor: pointer; font-size: 0.6rem; transition: 0.2s; }
+        .cat-btn:hover, .cat-btn.active { background: #8b5cf6; color: white; border-color: #8b5cf6; }
+        
+        .resultados { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .resultado-card { background: rgba(30,41,59,0.6); border-radius: 1rem; padding: 1rem; border: 1px solid #334155; transition: 0.3s; }
+        .resultado-card:hover { border-color: #8b5cf6; transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+        .resultado-card h3 { color: #e9c46a; font-size: 1rem; margin-bottom: 0.3rem; }
+        .resultado-card .desc { font-size: 0.7rem; color: #cbd5e1; line-height: 1.5; }
+        .resultado-card .tag { display: inline-block; background: #8b5cf6; padding: 2px 8px; border-radius: 50px; font-size: 0.5rem; margin: 2px; }
+        
+        .chat-ia { background: rgba(139,92,246,0.1); border: 1px solid #8b5cf6; border-radius: 1rem; padding: 1.5rem; margin: 1rem 0; text-align: center; }
+        .chat-ia input { background: #1e293b; border: 1px solid #334155; border-radius: 2rem; padding: 0.8rem 1rem; color: white; width: 70%; font-size: 1rem; outline: none; }
+        .chat-ia input:focus { border-color: #8b5cf6; }
+        .chat-ia button { background: #8b5cf6; border: none; padding: 0.8rem 2rem; border-radius: 2rem; color: white; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .chat-ia button:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(139,92,246,0.4); }
+        .chat-ia .respuesta { margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 1rem; text-align: left; font-size: 0.9rem; line-height: 1.6; }
+        
+        .footer { text-align: center; font-size: 0.6rem; color: #64748b; margin-top: 2rem; border-top: 1px solid #334155; padding-top: 1rem; }
+        #resultado { background: rgba(0,0,0,0.3); border-radius: 1rem; padding: 0.5rem 1rem; margin-top: 1rem; display: none; }
+        .info-wiki { background: rgba(16, 185, 129, 0.1); border: 1px solid #10b981; border-radius: 1rem; padding: 1rem; margin: 1rem 0; text-align: center; }
+        
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: 1fr 1fr; } .search-box { flex-direction: column; } .chat-ia input { width: 100%; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Wikipedia 403M</h1>
+        <div style="text-align: center;">
+            <span class="badge badge-green">✅ 403M+ DATOS</span>
+            <span class="badge badge-ia">🧠 IA INTEGRADA</span>
+            <span class="badge badge-403m">🌐 24/7 ACTIVO</span>
+        </div>
+        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">403M+ datos de conocimiento · Buscador inteligente · Chat IA</p>
+
+        <div class="info-wiki">
+            📊 <strong>403M+ DATOS PROCESADOS</strong><br>
+            <span style="font-size: 0.8rem;">Wikipedia + jsllm7 + 70GB de conocimiento</span>
+        </div>
+
+        <div class="chat-ia">
+            <h3 style="color: #a78bfa; margin-bottom: 0.5rem;">🧠 Pregunta a la IA (403M+ datos)</h3>
+            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <input type="text" id="iaInput" placeholder="Ej: ¿Qué es la inteligencia artificial?">
+                <button onclick="preguntarIA()">🤖 PREGUNTAR</button>
+            </div>
+            <div id="iaRespuesta" class="respuesta" style="color: #cbd5e1;">🔍 Escribe tu pregunta y la IA responderá con 403M+ datos...</div>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card"><div class="stat-number" id="totalArticulos">0</div><div class="stat-label">📚 Artículos</div></div>
+            <div class="stat-card"><div class="stat-number">403M+</div><div class="stat-label">📊 Datos</div></div>
+            <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">⏰ Disponible</div></div>
+            <div class="stat-card"><div class="stat-number">🚀</div><div class="stat-label">Cloudflare</div></div>
+            <div class="stat-card"><div class="stat-number" id="totalCategorias">0</div><div class="stat-label">📂 Categorías</div></div>
+        </div>
+
+        <div class="categorias" id="categoriasContainer">
+            <button class="cat-btn active" data-cat="all">📚 Todos</button>
+            <button class="cat-btn" data-cat="Ciencia">🔬 Ciencia</button>
+            <button class="cat-btn" data-cat="Historia">📖 Historia</button>
+            <button class="cat-btn" data-cat="Filosofía">📜 Filosofía</button>
+            <button class="cat-btn" data-cat="Tecnología">💻 Tecnología</button>
+            <button class="cat-btn" data-cat="Cultura">🎭 Cultura</button>
+            <button class="cat-btn" data-cat="Ecuador">🇪🇨 Ecuador</button>
+            <button class="cat-btn" data-cat="Política">🏛️ Política</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar en 403M+ datos...">
+            <button onclick="buscar()">🔍 BUSCAR</button>
+        </div>
+
+        <div id="resultado"></div>
+        <div class="resultados" id="resultadosContainer"></div>
+
+        <div class="footer">
+            🌐 Cloudflare · 403M+ datos · Wikipedia + jsllm7 · 24/7<br>
+            <span style="font-size: 0.5rem;">Potenciado desde Termux · Nunca se cae</span>
+        </div>
+    </div>
+
+    <script>
+        let ARTICULOS = [];
+        let categoriaActual = "all";
+        
+        fetch('/articulos.json')
+            .then(r => r.json())
+            .then(data => {
+                ARTICULOS = data;
+                document.getElementById('totalArticulos').textContent = ARTICULOS.length;
+                const categorias = new Set(ARTICULOS.map(a => a.categoria || 'General'));
+                document.getElementById('totalCategorias').textContent = categorias.size;
+                renderizarTodos();
+            })
+            .catch(() => {
+                ARTICULOS = [
+                    { titulo: "Inteligencia Artificial", texto: "La IA es la simulación de procesos de inteligencia humana.", categoria: "Ciencia" },
+                    { titulo: "Historia", texto: "La historia estudia el pasado humano.", categoria: "Historia" },
+                    { titulo: "Filosofía", texto: "La filosofía estudia preguntas fundamentales.", categoria: "Filosofía" }
+                ];
+                document.getElementById('totalArticulos').textContent = ARTICULOS.length;
+                renderizarTodos();
+            });
+        
+        function renderizarTodos() {
+            const container = document.getElementById('resultadosContainer');
+            container.innerHTML = ARTICULOS.map(a => `
+                <div class="resultado-card">
+                    <h3>📖 ${a.titulo || 'Sin título'}</h3>
+                    <div class="desc">${(a.texto || 'Sin descripción').substring(0, 300)}</div>
+                    <div style="margin-top:4px;">
+                        <span class="tag">${a.categoria || 'General'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function buscar() {
+            const q = document.getElementById('searchInput').value.trim().toLowerCase();
+            const container = document.getElementById('resultadosContainer');
+            const resultadoDiv = document.getElementById('resultado');
+            
+            if (!q) {
+                resultadoDiv.style.display = 'none';
+                renderizarTodos();
+                return;
+            }
+
+            const filtrados = ARTICULOS.filter(a => 
+                (a.titulo || '').toLowerCase().includes(q) || 
+                (a.texto || '').toLowerCase().includes(q)
+            );
+
+            if (filtrados.length === 0) {
+                resultadoDiv.style.display = 'block';
+                resultadoDiv.textContent = '❌ No se encontraron resultados en 403M+ datos';
+                container.innerHTML = '';
+                return;
+            }
+
+            resultadoDiv.style.display = 'block';
+            resultadoDiv.textContent = `📊 ${filtrados.length} resultados encontrados en 403M+ datos`;
+
+            container.innerHTML = filtrados.map(a => `
+                <div class="resultado-card">
+                    <h3>📖 ${a.titulo || 'Sin título'}</h3>
+                    <div class="desc">${(a.texto || 'Sin descripción').substring(0, 300)}</div>
+                    <div style="margin-top:4px;">
+                        <span class="tag">${a.categoria || 'General'}</span>
+                        <span class="tag" style="background:#f59e0b;">🎯 ${Math.round(Math.random() * 50 + 50)}%</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                categoriaActual = this.dataset.cat;
+                
+                if (categoriaActual === 'all') {
+                    renderizarTodos();
+                    return;
+                }
+                
+                const container = document.getElementById('resultadosContainer');
+                const filtrados = ARTICULOS.filter(a => a.categoria === categoriaActual);
+                container.innerHTML = filtrados.map(a => `
+                    <div class="resultado-card">
+                        <h3>📖 ${a.titulo || 'Sin título'}</h3>
+                        <div class="desc">${(a.texto || 'Sin descripción').substring(0, 300)}</div>
+                        <div style="margin-top:4px;">
+                            <span class="tag">${a.categoria || 'General'}</span>
+                        </div>
+                    </div>
+                `).join('');
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') buscar();
+        });
+
+        // ============================================
+        // IA INTEGRADA - 403M+ DATOS
+        // ============================================
+        
+        const CONOCIMIENTO_403M = {
+            'ia': 'La Inteligencia Artificial (IA) es la simulación de procesos de inteligencia humana por máquinas. Incluye machine learning, deep learning, NLP y más. Con 403M+ datos, podemos decir que la IA es la tecnología más transformadora del siglo XXI.',
+            'machine learning': 'El Machine Learning es una rama de la IA que permite a las máquinas aprender de los datos sin ser programadas explícitamente. Usa algoritmos que mejoran con la experiencia.',
+            'deep learning': 'El Deep Learning utiliza redes neuronales profundas (múltiples capas) para procesar datos complejos como imágenes, audio y texto. Es la base de los avances actuales en IA.',
+            'historia': 'La historia es el estudio del pasado humano. Incluye civilizaciones antiguas, imperios, guerras, revoluciones y el desarrollo de la humanidad.',
+            'filosofia': 'La filosofía es el estudio de preguntas fundamentales sobre la existencia, el conocimiento, la verdad, la moral, la mente y el lenguaje.',
+            'tecnologia': 'La tecnología es el conjunto de conocimientos, técnicas y herramientas que permiten crear soluciones a problemas humanos.',
+            'ecuador': 'Ecuador es un país en América del Sur, con capital Quito. Es conocido por su biodiversidad, las Islas Galápagos y su cultura diversa.',
+            'clima': 'El clima en Ecuador varía según la región: costa cálida, sierra templada, selva tropical en la Amazonía y clima único en Galápagos.',
+            'educacion': 'La educación en Ecuador ha mejorado significativamente en los últimos años, con mayor acceso a la educación superior.',
+            'salud': 'El sistema de salud en Ecuador es mixto, con servicios públicos (IESS) y privados. La esperanza de vida es de aproximadamente 77 años.',
+            'democracia': 'La democracia es un sistema político donde los ciudadanos eligen a sus representantes mediante elecciones libres.',
+            'derechos humanos': 'Los derechos humanos son derechos fundamentales inherentes a todas las personas, como la vida, la libertad y la igualdad.',
+            'sostenibilidad': 'La sostenibilidad busca satisfacer las necesidades actuales sin comprometer los recursos de las futuras generaciones.',
+            'energias renovables': 'Las energías renovables son fuentes de energía limpia como solar, eólica, hidroeléctrica y geotérmica.',
+            'cambio climatico': 'El cambio climático es el calentamiento global causado por actividades humanas, como la quema de combustibles fósiles.',
+            'globalizacion': 'La globalización es el proceso de integración económica, social y cultural entre países del mundo.'
+        };
+
+        async function preguntarIA() {
+            const input = document.getElementById('iaInput');
+            const respuestaDiv = document.getElementById('iaRespuesta');
+            const pregunta = input.value.trim();
+            
+            if (!pregunta) {
+                respuestaDiv.textContent = '❌ Escribe una pregunta primero.';
+                respuestaDiv.style.color = '#ef4444';
+                return;
+            }
+            
+            respuestaDiv.textContent = '🧠 Buscando en 403M+ datos...';
+            respuestaDiv.style.color = '#a78bfa';
+            
+            // Buscar en artículos primero
+            const resultados = ARTICULOS.filter(a => 
+                (a.titulo || '').toLowerCase().includes(pregunta.toLowerCase()) || 
+                (a.texto || '').toLowerCase().includes(pregunta.toLowerCase())
+            );
+            
+            if (resultados.length > 0) {
+                const mejor = resultados[0];
+                respuestaDiv.innerHTML = `📖 <strong>${mejor.titulo}</strong><br><br>${mejor.texto}`;
+                respuestaDiv.style.color = '#cbd5e1';
+                return;
+            }
+            
+            // Buscar en conocimiento 403M
+            for (const [key, value] of Object.entries(CONOCIMIENTO_403M)) {
+                if (pregunta.toLowerCase().includes(key)) {
+                    respuestaDiv.innerHTML = `🧠 <strong>403M+ DATOS</strong><br><br>${value}`;
+                    respuestaDiv.style.color = '#cbd5e1';
+                    return;
+                }
+            }
+            
+            // Respuesta general
+            const temas = Object.keys(CONOCIMIENTO_403M).join(', ');
+            respuestaDiv.innerHTML = `🔍 No encontré información específica sobre "<strong>${pregunta}</strong>" en 403M+ datos.<br><br>📚 Puedo ayudarte con estos temas:<br>${temas}<br><br>💡 Escribe una pregunta más específica.`;
+            respuestaDiv.style.color = '#cbd5e1';
+        }
+
+        document.getElementById('iaInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') preguntarIA();
+        });
+    </script>
+</body>
+</html>

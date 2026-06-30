@@ -1,0 +1,257 @@
+[
+  {
+    "titulo": "Machine Learning",
+    "texto": "El machine learning es una rama de la IA que permite a las máquinas aprender de los datos.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Deep Learning",
+    "texto": "El deep learning usa redes neuronales profundas para procesar datos complejos.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Redes Neuronales",
+    "texto": "Las redes neuronales son sistemas inspirados en el cerebro humano que procesan información.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Computación Cuántica",
+    "texto": "La computación cuántica usa qubits para procesar información a velocidades increíbles.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Blockchain",
+    "texto": "Blockchain es una tecnología de registro distribuido y seguro para transacciones.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Ciberseguridad",
+    "texto": "La ciberseguridad protege sistemas y datos de ataques digitales.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Realidad Virtual",
+    "texto": "La realidad virtual crea entornos simulados inmersivos para el usuario.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Realidad Aumentada",
+    "texto": "La realidad aumentada superpone información digital sobre el mundo real.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Ecuador",
+    "texto": "Ecuador es un país megadiverso con 4 regiones: Costa, Sierra, Amazonía y Galápagos.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Quito",
+    "texto": "Quito es la capital de Ecuador, declarada Patrimonio de la Humanidad.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Guayaquil",
+    "texto": "Guayaquil es la ciudad más poblada de Ecuador, principal puerto del país.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Cuenca",
+    "texto": "Cuenca es una ciudad colonial ecuatoriana, declarada Patrimonio Cultural de la Humanidad.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Galápagos",
+    "texto": "Las Islas Galápagos son un archipiélago ecuatoriano con biodiversidad única.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Democracia",
+    "texto": "La democracia es un sistema político donde los ciudadanos eligen a sus representantes.",
+    "categoria": "Política"
+  },
+  {
+    "titulo": "Derechos Humanos",
+    "texto": "Los derechos humanos son derechos fundamentales inherentes a todas las personas.",
+    "categoria": "Política"
+  },
+  {
+    "titulo": "Sostenibilidad",
+    "texto": "La sostenibilidad busca satisfacer necesidades actuales sin comprometer el futuro.",
+    "categoria": "General"
+  },
+  {
+    "titulo": "Energías Renovables",
+    "texto": "Las energías renovables son fuentes de energía limpia como solar, eólica e hidroeléctrica.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Cambio Climático",
+    "texto": "El cambio climático es el calentamiento global causado por actividades humanas.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Redes Neuronales Artificiales",
+    "texto": "Las redes neuronales son sistemas computacionales inspirados en el cerebro humano, capaces de aprender patrones complejos.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Aprendizaje Profundo",
+    "texto": "El aprendizaje profundo utiliza redes neuronales con múltiples capas para procesar información de manera jerárquica.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Procesamiento de Lenguaje Natural",
+    "texto": "El PLN permite a las máquinas entender, interpretar y generar lenguaje humano.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Visión por Computadora",
+    "texto": "La visión por computadora permite a las máquinas interpretar y entender el mundo visual.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Robótica",
+    "texto": "La robótica combina ingeniería, electrónica e IA para crear máquinas autónomas.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Globalización",
+    "texto": "La globalización es el proceso de integración económica, social y cultural entre países.",
+    "categoria": "General"
+  },
+  {
+    "titulo": "Cultura Ecuatoriana",
+    "texto": "La cultura ecuatoriana es una mezcla de influencias indígenas, españolas y africanas.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Gastronomía Ecuatoriana",
+    "texto": "La gastronomía ecuatoriana es diversa, con platos típicos como el encebollado, la fritada y el llapingacho.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Sistema Solar",
+    "texto": "El sistema solar está compuesto por el Sol y ocho planetas que orbitan a su alrededor.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Evolución Humana",
+    "texto": "La evolución humana es el proceso de cambio y adaptación de la especie Homo sapiens.",
+    "categoria": "Historia"
+  },
+  {
+    "titulo": "Inteligencia Artificial General",
+    "texto": "La AGI es un tipo de IA que igualaría o superaría la inteligencia humana en todas las áreas.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Teoría de la Relatividad",
+    "texto": "La teoría de la relatividad de Einstein revolucionó la física al demostrar que el espacio y el tiempo están interconectados.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Mecánica Cuántica",
+    "texto": "La mecánica cuántica describe el comportamiento de la materia y la energía a escalas atómicas y subatómicas.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Evolución de las Especies",
+    "texto": "La teoría de la evolución de Darwin explica cómo las especies cambian y se adaptan a lo largo del tiempo.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "ADN y Genética",
+    "texto": "El ADN es la molécula que almacena la información genética de todos los organismos vivos.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Inteligencia Artificial",
+    "texto": "La IA es la simulación de procesos de inteligencia humana por máquinas, especialmente sistemas informáticos.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Big Data",
+    "texto": "El Big Data se refiere a conjuntos de datos tan grandes que requieren herramientas especializadas para su procesamiento.",
+    "categoria": "Ciencia"
+  },
+  {
+    "titulo": "Internet de las Cosas",
+    "texto": "El IoT conecta dispositivos cotidianos a internet, permitiendo su control y monitoreo remoto.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Imprenta 3D",
+    "texto": "La impresión 3D crea objetos tridimensionales a partir de modelos digitales.",
+    "categoria": "Tecnología"
+  },
+  {
+    "titulo": "Revolución Francesa",
+    "texto": "La Revolución Francesa fue un período de cambio político y social en Francia que transformó Europa.",
+    "categoria": "Historia"
+  },
+  {
+    "titulo": "Primera Guerra Mundial",
+    "texto": "La Primera Guerra Mundial fue un conflicto global que cambió el mapa político de Europa.",
+    "categoria": "Historia"
+  },
+  {
+    "titulo": "Segunda Guerra Mundial",
+    "texto": "La Segunda Guerra Mundial fue el conflicto más devastador de la historia humana.",
+    "categoria": "Historia"
+  },
+  {
+    "titulo": "Caída del Muro de Berlín",
+    "texto": "La caída del Muro de Berlín en 1989 simbolizó el fin de la Guerra Fría.",
+    "categoria": "Historia"
+  },
+  {
+    "titulo": "Independencia de América",
+    "texto": "Los movimientos de independencia en América transformaron el mapa político del continente.",
+    "categoria": "Historia"
+  },
+  {
+    "titulo": "Costa Ecuatoriana",
+    "texto": "La costa ecuatoriana es una región con playas, manglares y una rica gastronomía.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Sierra Ecuatoriana",
+    "texto": "La sierra ecuatoriana es la región andina con volcanes, páramos y ciudades coloniales.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Amazonía Ecuatoriana",
+    "texto": "La Amazonía ecuatoriana es una de las regiones con mayor biodiversidad del planeta.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Islas Galápagos",
+    "texto": "Las Islas Galápagos son un archipiélago ecuatoriano con especies únicas en el mundo.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Cultura Indígena",
+    "texto": "La cultura indígena ecuatoriana incluye tradiciones como el Inti Raymi y la vestimenta tradicional.",
+    "categoria": "Ecuador"
+  },
+  {
+    "titulo": "Estoicismo",
+    "texto": "El estoicismo es una filosofía que enseña a aceptar lo que no podemos controlar.",
+    "categoria": "Filosofía"
+  },
+  {
+    "titulo": "Existencialismo",
+    "texto": "El existencialismo enfatiza la libertad individual y la responsabilidad personal.",
+    "categoria": "Filosofía"
+  },
+  {
+    "titulo": "Nietzsche",
+    "texto": "Friedrich Nietzsche fue un filósofo alemán que criticó la moral tradicional.",
+    "categoria": "Filosofía"
+  },
+  {
+    "titulo": "Kant",
+    "texto": "Immanuel Kant fue un filósofo alemán, autor de la 'Crítica de la razón pura'.",
+    "categoria": "Filosofía"
+  }
+]
