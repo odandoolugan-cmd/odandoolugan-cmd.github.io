@@ -128,11 +128,3 @@ Si no, usa tu conocimiento general.`;
 EOF
 
 
-# Agregar el archivo
-git add worker.js
-
-# Commit
-git commit -m "Agregar Worker con modelo Llama 3.1"
-
-# Push
-git push origin main
