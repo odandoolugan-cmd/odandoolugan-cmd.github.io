@@ -115,6 +115,7 @@
         let ARTICULOS = [];
         let categoriaActual = "all";
         
+        // Cargar datos desde el archivo JSON
         fetch('/articulos.json')
             .then(r => r.json())
             .then(data => {
@@ -125,6 +126,7 @@
                 renderizarTodos();
             })
             .catch(() => {
+                // Datos de respaldo si no carga el JSON
                 ARTICULOS = [
                     { titulo: "Inteligencia Artificial", texto: "La IA es la simulación de procesos de inteligencia humana.", categoria: "Ciencia" },
                     { titulo: "Historia", texto: "La historia estudia el pasado humano.", categoria: "Historia" },
