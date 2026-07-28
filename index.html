@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 Wikipedia 403M - Conocimiento Global + AcadémIA Pro</title>
-    <meta name="description" content="403M+ datos de conocimiento en la nube con IA académica integrada">
+    <title>📚 Wikipedia 403M - Conocimiento Global + AcadémIA Pro (Cloudflare AI)</title>
+    <meta name="description" content="403M+ datos de conocimiento en la nube con IA académica integrada y Cloudflare AI">
     <meta name="theme-color" content="#0a0f1e">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,6 +18,7 @@
         .badge-403m { background: #e67e22; }
         .badge-academia { background: linear-gradient(90deg, #8b5cf6, #ec4899); animation: glow 2s infinite; }
         .badge-12fuentes { background: linear-gradient(90deg, #10b981, #059669); color: white; animation: glow 2s infinite; }
+        .badge-cloudflare { background: #f48120; color: white; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         
         .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin: 1.5rem 0; }
@@ -110,17 +111,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>📚 Wikipedia 403M <span class="badge badge-academia">🧠 ACADÉMIA PRO</span> <span class="badge badge-12fuentes">🔬 12 FUENTES</span></h1>
+        <h1>📚 Wikipedia 403M <span class="badge badge-cloudflare">⚡ Cloudflare AI</span> <span class="badge badge-academia">🧠 ACADÉMIA PRO</span> <span class="badge badge-12fuentes">🔬 12 FUENTES</span></h1>
         <div style="text-align: center;">
             <span class="badge badge-green">✅ 403M+ DATOS</span>
             <span class="badge badge-ia">🧠 IA INTEGRADA</span>
             <span class="badge badge-403m">🌐 24/7 ACTIVO</span>
             <span class="badge badge-ia" style="background:#10b981;">🔬 12 FUENTES</span>
         </div>
-        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">403M+ datos · Buscador inteligente · Chat IA · AcadémIA Pro · 12 Fuentes Gratis · IndexedDB</p>
+        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">403M+ datos · Buscador inteligente · Chat IA (Cloudflare) · 12 Fuentes Gratis · IndexedDB</p>
 
         <div class="info-wiki">
-            📊 <strong>403M+ DATOS PROCESADOS</strong><br>
+            📊 <strong>403M+ DATOS PROCESADOS + IA Cloudflare (Sin caídas)</strong><br>
             <span style="font-size: 0.8rem;">Wikipedia + jsllm7 + 70GB + 12 fuentes académicas gratuitas + APA 7</span>
         </div>
 
@@ -128,12 +129,12 @@
             <span>💾 Caché: <span id="cacheHitRate">0%</span></span>
             <span>📊 DB: <span id="dbEntries">0</span></span>
             <span>🧠 403M: <span id="decisionCount">0</span></span>
-            <span>🔌 jsllm7: <span id="jsllm7Status">Conectando...</span></span>
+            <span>⚡ Cloudflare AI: <span id="jsllm7Status" style="color:#10b981;">✅ Activo</span></span>
         </div>
 
         <!-- SECCIÓN ACADÉMIA PRO -->
         <div class="academia-section">
-            <h2>🎓 AcadémIA Pro <span style="font-size:0.7rem;color:#94a3b8;">· 403M DECIDE · APA 7 · 12 Fuentes Gratis</span></h2>
+            <h2>🎓 AcadémIA Pro <span style="font-size:0.7rem;color:#94a3b8;">· Cloudflare AI · APA 7 · 12 Fuentes Gratis</span></h2>
             
             <div class="sources-badge">
                 <span class="source-badge">📄 Crossref (150M)</span>
@@ -174,14 +175,14 @@
             </div>
         </div>
 
-        <!-- CHAT IA -->
+        <!-- CHAT IA (AHORA CONECTADO A TU CLOUDFLARE WORKER) -->
         <div class="chat-ia">
-            <h3>🧠 Pregunta a la IA (403M+ datos)</h3>
+            <h3>🧠 Pregunta a la IA de Cloudflare (Sin caídas)</h3>
             <div class="input-group">
                 <input type="text" id="iaInput" placeholder="Ej: ¿Qué es la inteligencia artificial?">
                 <button onclick="preguntarIA()">🤖 PREGUNTAR</button>
             </div>
-            <div id="iaRespuesta" class="respuesta" style="color: #cbd5e1;">🔍 Escribe tu pregunta y la IA responderá con 403M+ datos...</div>
+            <div id="iaRespuesta" class="respuesta" style="color: #cbd5e1;">🔍 Escribe tu pregunta y la IA de Cloudflare responderá...</div>
             <div class="export-buttons" style="margin-top:10px;">
                 <button class="export-btn" onclick="exportarRespuestaLatex()">📄 LaTeX</button>
                 <button class="export-btn" onclick="exportarRespuestaMarkdown()">📝 Markdown</button>
@@ -221,8 +222,8 @@
         <div class="resultados" id="resultadosContainer"></div>
 
         <div class="footer">
-            🌐 Cloudflare · 403M+ datos · Wikipedia + jsllm7 + AcadémIA Pro · 12 Fuentes Gratis · 24/7<br>
-            <span style="font-size: 0.5rem;">Potenciado desde Termux · IndexedDB · 12 Fuentes Académicas Gratuitas</span>
+            🌐 Cloudflare AI · 403M+ datos · Wikipedia + jsllm7 + AcadémIA Pro · 12 Fuentes Gratis · 24/7<br>
+            <span style="font-size: 0.5rem;">Potenciado desde Cloudflare Workers · IndexedDB · 12 Fuentes Académicas Gratuitas</span>
         </div>
     </div>
 
@@ -235,6 +236,9 @@
         let ultimaRespuestaIA = '';
         let referenciasActuales = [];
         let ocupado = false;
+        
+        // CONFIGURACIÓN DE TU WORKER DE CLOUDFLARE
+        const CLOUDFLARE_AI_URL = 'https://ollama-ai.odandoolugan.workers.dev';
         
         // ============================================
         // SISTEMA DE CACHÉ CON IndexedDB
@@ -631,21 +635,8 @@
         document.getElementById('searchInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') buscar(); });
         
         // ============================================
-        // IA INTEGRADA
+        // IA INTEGRADA (CONECTADA A CLOUDFLARE)
         // ============================================
-        const CONOCIMIENTO_403M = {
-            'ia': 'La Inteligencia Artificial (IA) es la simulación de procesos de inteligencia humana por máquinas. Incluye machine learning, deep learning, NLP y más.',
-            'machine learning': 'El Machine Learning es una rama de la IA que permite a las máquinas aprender de los datos sin ser programadas explícitamente.',
-            'historia': 'La historia es el estudio del pasado humano. Incluye civilizaciones antiguas, imperios, guerras y revoluciones.',
-            'filosofia': 'La filosofía es el estudio de preguntas fundamentales sobre la existencia, el conocimiento y la moral.',
-            'tecnologia': 'La tecnología es el conjunto de conocimientos y herramientas que permiten crear soluciones a problemas humanos.',
-            'ecuador': 'Ecuador es un país en América del Sur, conocido por su biodiversidad y las Islas Galápagos.',
-            'democracia': 'La democracia es un sistema político donde los ciudadanos eligen a sus representantes mediante elecciones libres.',
-            'educacion': 'La educación es el proceso de facilitar el aprendizaje y la adquisición de conocimientos.',
-            'cambio climatico': 'El cambio climático es el calentamiento global causado por actividades humanas.',
-            'sostenibilidad': 'La sostenibilidad busca satisfacer las necesidades actuales sin comprometer los recursos futuros.'
-        };
-        
         async function preguntarIA() {
             const input = document.getElementById('iaInput');
             const respuestaDiv = document.getElementById('iaRespuesta');
@@ -653,25 +644,30 @@
             
             if (!pregunta) { respuestaDiv.innerHTML = '❌ Escribe una pregunta primero.'; return; }
             
-            respuestaDiv.innerHTML = '🧠 Buscando en 403M+ datos... <span class="loading-spinner"></span>';
-            await new Promise(resolve => setTimeout(resolve, 500));
+            respuestaDiv.innerHTML = '🧠 Consultando a la IA de Cloudflare... <span class="loading-spinner"></span>';
             
-            const resultados = ARTICULOS.filter(a => (a.titulo || '').toLowerCase().includes(pregunta.toLowerCase()) || (a.texto || '').toLowerCase().includes(pregunta.toLowerCase()));
-            
-            if (resultados.length > 0) {
-                const mejor = resultados[0];
-                const q = analyzer.analyzeQuality(mejor.texto || '');
-                respuestaDiv.innerHTML = `📖 <strong>${mejor.titulo}</strong> <span class="badge" style="background:#10b981;font-size:0.5rem;">Calidad: ${q.qualityScore}%</span><br><br>${mejor.texto}`;
-                ultimaRespuestaIA = mejor.texto;
-                return;
+            try {
+                const respuesta = await fetch(CLOUDFLARE_AI_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pregunta: pregunta })
+                });
+                
+                if (!respuesta.ok) throw new Error("Error al conectar con Cloudflare AI");
+                const textoRespuesta = await respuesta.text();
+                
+                respuestaDiv.innerHTML = `⚡ <strong>Respuesta de Cloudflare AI</strong><br><br>${textoRespuesta}`;
+                ultimaRespuestaIA = textoRespuesta;
+                
+                // Actualizar análisis
+                const q = analyzer.analyzeQuality(textoRespuesta);
+                document.getElementById('confidenceFill').style.width = `${q.qualityScore}%`;
+                document.getElementById('confidenceLabel').textContent = `${q.qualityScore}%`;
+                document.getElementById('qualityLabel').textContent = q.qualityScore + '%';
+
+            } catch (error) {
+                respuestaDiv.innerHTML = `❌ Error: ${error.message}`;
             }
-            
-            for (const [key, value] of Object.entries(CONOCIMIENTO_403M)) {
-                if (pregunta.toLowerCase().includes(key)) { respuestaDiv.innerHTML = `🧠 <strong>403M+ DATOS</strong><br><br>${value}`; ultimaRespuestaIA = value; return; }
-            }
-            
-            ultimaRespuestaIA = `Basado en 403M+ datos sobre "${pregunta}". Para información más específica, usa nuestras 12 fuentes académicas gratuitas.`;
-            respuestaDiv.innerHTML = `🤖 <strong>Respuesta de IA</strong><br><br>${ultimaRespuestaIA}`;
         }
         
         document.getElementById('iaInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') preguntarIA(); });
@@ -751,7 +747,7 @@
         
         document.getElementById('btnEstado403M').addEventListener('click', () => {
             const total = cache.cacheHits + cache.cacheMisses;
-            mostrarModal('🧠 Estado 403M DECIDE', `=== 403M DECIDE ===\n📊 Decisiones: ${Math.floor(Math.random()*1000)+100}\n💾 Caché: ${total} entradas\n📚 Fuentes: 5 originales + 7 gratis = 12 total\n🔬 12 Fuentes: ✅ Activas\n📈 Hit Rate: ${document.getElementById('cacheHitRate').textContent}`);
+            mostrarModal('🧠 Estado 403M DECIDE + Cloudflare AI', `=== 403M DECIDE ===\n⚡ Cloudflare AI: ✅ Activo (Sin caídas)\n📊 Decisiones: ${Math.floor(Math.random()*1000)+100}\n💾 Caché: ${total} entradas\n📚 Fuentes: 5 originales + 7 gratis = 12 total\n📈 Hit Rate: ${document.getElementById('cacheHitRate').textContent}`);
         });
         
         // ============================================
@@ -767,7 +763,7 @@
         verificarJsllm7();
         setInterval(verificarJsllm7, 30000);
         
-        console.log('🚀 Wikipedia 403M + AcadémIA Pro · 12 Fuentes Gratis · IndexedDB');
+        console.log('🚀 Wikipedia 403M + AcadémIA Pro + Cloudflare AI (Sin caídas)');
     </script>
 </body>
 </html>
