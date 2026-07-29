@@ -282,11 +282,37 @@
         const cache = new PersistentCache();
         
         // ============================================
-        // ANALIZADOR DE CONTENIDO
+        // ANALIZADOR DE CONTENIDO (MEJORADO PARA ESTRUCTURA)
         // ============================================
         class ContentAnalyzer {
-            constructor() { this.stopWords = new Set(['el','la','los','las','un','una','de','del','en','con','por','para','que','es','se','su','al','lo','como','más','y','o','pero','si','no']); this.academicWords = { 'investigación':3,'estudio':2.5,'análisis':2.5,'resultados':3,'metodología':3,'conclusión':2,'evidencia':3,'datos':2,'hipótesis':3,'teoría':2.5,'experimento':3,'revisión':2 }; }
-            analyzeQuality(text) { const w = text.toLowerCase().split(/\s+/); const f = w.filter(w => !this.stopWords.has(w)); let s = 0; f.forEach(w => { if (this.academicWords[w]) s += this.academicWords[w]; }); const q = Math.min((s / Math.max(f.length, 1)) * 100 + 30, 100); return { qualityScore: Math.round(q), qualityLevel: q > 70 ? 'alta' : q > 40 ? 'media' : 'baja' }; }
+            constructor() {
+                this.stopWords = new Set(['el','la','los','las','un','una','de','del','en','con','por','para','que','es','se','su','al','lo','como','más','y','o','pero','si','no']);
+                this.academicWords = {
+                    'investigación':3,'estudio':2.5,'análisis':2.5,'resultados':3,
+                    'metodología':3,'conclusión':2,'evidencia':3,'datos':2,
+                    'sistema':2,'proceso':2,'desarrollo':2.5,'inteligencia':2.5,
+                    'tecnología':2,'aprendizaje':2.5,'toma de decisiones':3
+                };
+            }
+            analyzeQuality(text) {
+                const words = text.toLowerCase().split(/\s+/);
+                const filtered = words.filter(w => !this.stopWords.has(w));
+                let score = 0;
+                filtered.forEach(w => { if (this.academicWords[w]) score += this.academicWords[w]; });
+                
+                // Bonificación por estructura
+                let estructuraBonus = 0;
+                const lowerText = text.toLowerCase();
+                if (lowerText.includes('introducción')) estructuraBonus += 10;
+                if (lowerText.includes('desarrollo')) estructuraBonus += 15;
+                if (lowerText.includes('conclusión')) estructuraBonus += 10;
+                if (lowerText.includes('1.')) estructuraBonus += 5;
+                if (lowerText.includes('2.')) estructuraBonus += 5;
+                
+                const finalScore = (score / Math.max(filtered.length, 1)) * 100 + 30 + estructuraBonus;
+                const q = Math.min(Math.round(finalScore), 100);
+                return { qualityScore: q, qualityLevel: q > 75 ? 'alta' : q > 50 ? 'media' : 'baja' };
+            }
         }
         const analyzer = new ContentAnalyzer();
         
