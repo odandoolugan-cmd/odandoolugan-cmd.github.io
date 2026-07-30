@@ -101,7 +101,6 @@
         .confidence-bar { flex: 1; height: 4px; background: #2c3a4a; border-radius: 2px; overflow: hidden; margin: 5px 0; }
         .confidence-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #10b981); transition: width 1s ease; width: 0%; }
         
-        /* Botón para análisis avanzado */
         .analisis-avanzado-btn {
             background: #8b5cf6;
             border: none;
@@ -233,7 +232,6 @@
                 <button class="export-btn" onclick="exportarRespuestaMarkdown()">📝 Markdown</button>
                 <button class="export-btn" onclick="copiarRespuesta()">📋 Copiar</button>
             </div>
-            <!-- Botón de análisis avanzado bajo demanda -->
             <div style="margin-top:10px;">
                 <button class="analisis-avanzado-btn" onclick="cargarAnalisisAvanzado(this)">📚 Cargar Análisis Avanzado</button>
                 <div class="analisis-container" id="contenedorAnalisisAvanzado">
@@ -771,6 +769,21 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
         // ============================================
         // FUNCIONES PRINCIPALES
         // ============================================
+        function showToast(msg, isErr) {
+            const t = document.createElement('div');
+            t.style.cssText = `position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:${isErr?'#ef4444':'#10b981'};color:white;padding:8px 20px;border-radius:50px;font-size:0.8rem;z-index:2000;`;
+            t.innerText = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+        
+        function mostrarModal(titulo, contenido) {
+            const modal = document.createElement('div'); modal.className = 'modal-overlay';
+            modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div>${contenido}</div><button class="modal-close">Cerrar</button></div>`;
+            modal.querySelector('.modal-close').onclick = () => modal.remove();
+            document.body.appendChild(modal);
+        }
+        
         fetch('/articulos.json')
             .then(r => r.json())
             .then(data => { ARTICULOS = data; actualizarEstadisticas(); renderizarTodos(); })
@@ -841,21 +854,6 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
         // ============================================
         // IA INTEGRADA (CONECTADA A CLOUDFLARE)
         // ============================================
-        function showToast(msg, isErr) {
-            const t = document.createElement('div');
-            t.style.cssText = `position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:${isErr?'#ef4444':'#10b981'};color:white;padding:8px 20px;border-radius:50px;font-size:0.8rem;z-index:2000;`;
-            t.innerText = msg;
-            document.body.appendChild(t);
-            setTimeout(() => t.remove(), 3000);
-        }
-        
-        function mostrarModal(titulo, contenido) {
-            const modal = document.createElement('div'); modal.className = 'modal-overlay';
-            modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div>${contenido}</div><button class="modal-close">Cerrar</button></div>`;
-            modal.querySelector('.modal-close').onclick = () => modal.remove();
-            document.body.appendChild(modal);
-        }
-        
         async function preguntarIA() {
             const input = document.getElementById('iaInput');
             const respuestaDiv = document.getElementById('iaRespuesta');
@@ -873,7 +871,6 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
                     respuestaDiv.innerHTML = `⚡ <strong>Respuesta de Cloudflare AI</strong><br><br>${respuesta}`;
                     ultimaRespuestaIA = respuesta;
                     
-                    // Actualizar análisis
                     const q = analyzer.analyzeQuality(respuesta);
                     document.getElementById('confidenceFill').style.width = `${q.qualityScore}%`;
                     document.getElementById('confidenceLabel').textContent = `${q.qualityScore}%`;
@@ -925,7 +922,6 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
             actualizarEstadisticas(); ocupado = false;
         });
         
-        // BOTÓN 12 FUENTES
         document.getElementById('btn12Fuentes').addEventListener('click', async () => {
             const tema = document.getElementById('searchInput').value.trim() || document.getElementById('iaInput').value.trim() || 'inteligencia artificial';
             showToast('🔬 Buscando en 12 fuentes gratuitas...');
