@@ -19,6 +19,7 @@
         .badge-academia { background: linear-gradient(90deg, #8b5cf6, #ec4899); animation: glow 2s infinite; }
         .badge-12fuentes { background: linear-gradient(90deg, #10b981, #059669); color: white; animation: glow 2s infinite; }
         .badge-cloudflare { background: #f48120; color: white; }
+        .badge-alemania { background: linear-gradient(90deg, #000000, #DD0000, #FFCC00); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; border: 1px solid #FFCC00; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         
         .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin: 1.5rem 0; }
@@ -56,7 +57,7 @@
         .chat-ia input:focus { border-color: #8b5cf6; }
         .chat-ia button { background: #8b5cf6; border: none; padding: 0.8rem 2rem; border-radius: 2rem; color: white; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .chat-ia button:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(139,92,246,0.4); }
-        .chat-ia .respuesta { margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 1rem; text-align: left; font-size: 0.9rem; line-height: 1.6; max-height: 500px; overflow-y: auto; }
+        .chat-ia .respuesta { margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 1rem; text-align: left; font-size: 0.9rem; line-height: 1.6; max-height: 600px; overflow-y: auto; }
         
         .academia-section { background: rgba(15,23,42,0.8); border: 2px solid #8b5cf6; border-radius: 1.5rem; padding: 1.5rem; margin: 1rem 0; }
         .academia-section h2 { color: #a78bfa; margin-bottom: 1rem; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
@@ -155,18 +156,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>📚 Wikipedia 403M <span class="badge badge-cloudflare">⚡ Cloudflare AI</span> <span class="badge badge-academia">🧠 ACADÉMIA PRO</span> <span class="badge badge-12fuentes">🔬 12 FUENTES</span></h1>
+        <h1>📚 Wikipedia 403M <span class="badge badge-cloudflare">⚡ Cloudflare AI</span> <span class="badge badge-academia">🧠 ACADÉMIA PRO</span> <span class="badge badge-12fuentes">🔬 12 FUENTES</span> <span class="badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span></h1>
         <div style="text-align: center;">
             <span class="badge badge-green">✅ 403M+ DATOS</span>
             <span class="badge badge-ia">🧠 IA INTEGRADA</span>
             <span class="badge badge-403m">🌐 24/7 ACTIVO</span>
             <span class="badge badge-ia" style="background:#10b981;">🔬 12 FUENTES</span>
         </div>
-        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">403M+ datos · Buscador inteligente · Chat IA (Cloudflare) · 12 Fuentes Gratis · IndexedDB</p>
+        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">403M+ datos · Buscador inteligente · Chat IA (Cloudflare) · 12 Fuentes Gratis · IndexedDB · 🇩🇪</p>
 
         <div class="info-wiki">
             📊 <strong>403M+ DATOS PROCESADOS + IA Cloudflare (Sin caídas)</strong><br>
-            <span style="font-size: 0.8rem;">Wikipedia + jsllm7 + 70GB + 12 fuentes académicas gratuitas + APA 7</span>
+            <span style="font-size: 0.8rem;">Wikipedia + jsllm7 + 70GB + 12 fuentes académicas gratuitas + APA 7 · 🇩🇪</span>
         </div>
 
         <div class="status-bar" id="statusBar">
@@ -178,7 +179,7 @@
 
         <!-- SECCIÓN ACADÉMIA PRO -->
         <div class="academia-section">
-            <h2>🎓 AcadémIA Pro <span style="font-size:0.7rem;color:#94a3b8;">· Cloudflare AI · APA 7 · 12 Fuentes Gratis</span></h2>
+            <h2>🎓 AcadémIA Pro <span style="font-size:0.7rem;color:#94a3b8;">· Cloudflare AI · APA 7 · 12 Fuentes Gratis · 🇩🇪</span></h2>
             
             <div class="sources-badge">
                 <span class="source-badge">📄 Crossref (150M)</span>
@@ -221,12 +222,12 @@
 
         <!-- CHAT IA (CONECTADO A CLOUDFLARE) -->
         <div class="chat-ia">
-            <h3>🧠 Pregunta a la IA de Cloudflare (Sin caídas)</h3>
+            <h3>🧠 Pregunta a la IA de Cloudflare (Sin caídas) · 🇩🇪</h3>
             <div class="input-group">
                 <input type="text" id="iaInput" placeholder="Ej: ¿Qué es la inteligencia artificial?">
                 <button onclick="preguntarIA()">🤖 PREGUNTAR</button>
             </div>
-            <div id="iaRespuesta" class="respuesta" style="color: #cbd5e1;">🔍 Escribe tu pregunta y la IA de Cloudflare responderá...</div>
+            <div id="iaRespuesta" class="respuesta" style="color: #cbd5e1;">🔍 Escribe tu pregunta y la IA de Cloudflare responderá con enfoque en Alemania...</div>
             <div class="export-buttons" style="margin-top:10px;">
                 <button class="export-btn" onclick="exportarRespuestaLatex()">📄 LaTeX</button>
                 <button class="export-btn" onclick="exportarRespuestaMarkdown()">📝 Markdown</button>
@@ -273,7 +274,7 @@
         <div class="resultados" id="resultadosContainer"></div>
 
         <div class="footer">
-            🌐 Cloudflare AI · 403M+ datos · Wikipedia + jsllm7 + AcadémIA Pro · 12 Fuentes Gratis · 24/7<br>
+            🌐 Cloudflare AI · 403M+ datos · Wikipedia + jsllm7 + AcadémIA Pro · 12 Fuentes Gratis · 24/7 · 🇩🇪<br>
             <span style="font-size: 0.5rem;">Potenciado desde Cloudflare Workers · IndexedDB · 12 Fuentes Académicas Gratuitas</span>
         </div>
     </div>
@@ -288,6 +289,7 @@
         let referenciasActuales = [];
         let ocupado = false;
         let ultimoTemaConsulta = '';
+        const PAIS_FIJO = 'alemania';
         
         // CONFIGURACIÓN DE TU WORKER DE CLOUDFLARE
         const CLOUDFLARE_AI_URL = 'https://ollama-ai.odandoolugan.workers.dev';
@@ -400,7 +402,7 @@
             
             async buscarSemanticScholar(tema) {
                 try {
-                    const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(tema)}&limit=10&fields=title,authors,year,abstract,citationCount,url`;
+                    const url = `https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(tema)}+alemania&limit=10&fields=title,authors,year,abstract,citationCount,url`;
                     const r = await fetch(url); const d = await r.json();
                     return d.data?.map(p => ({ titulo: p.title, autor: p.authors?.map(a => a.name).join(', '), year: p.year, abstract: p.abstract, citas: p.citationCount, fuente: 'Semantic Scholar', url: p.url })) || [];
                 } catch(e) { return []; }
@@ -408,7 +410,7 @@
             
             async buscarCORE(tema) {
                 try {
-                    const r = await fetch(`https://api.core.ac.uk/v3/search/works?q=${encodeURIComponent(tema)}&limit=10`);
+                    const r = await fetch(`https://api.core.ac.uk/v3/search/works?q=${encodeURIComponent(tema)}+alemania&limit=10`);
                     const d = await r.json();
                     return d.results?.map(r => ({ titulo: r.title, autor: r.authors?.join(', '), year: r.yearPublished, abstract: r.abstract, fuente: 'CORE', url: r.downloadUrl || r.doi })) || [];
                 } catch(e) { return []; }
@@ -416,7 +418,7 @@
             
             async buscarArxiv(tema) {
                 try {
-                    const r = await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(tema)}&max_results=10`);
+                    const r = await fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(tema)}+alemania&max_results=10`);
                     const text = await r.text();
                     const xml = new DOMParser().parseFromString(text, 'text/xml');
                     return Array.from(xml.querySelectorAll('entry')).map(e => ({
@@ -439,7 +441,7 @@
             
             async buscarWikipedia(tema) {
                 try {
-                    const r = await fetch(`https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tema)}&format=json&origin=*&srlimit=10`);
+                    const r = await fetch(`https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(tema)}+alemania&format=json&origin=*&srlimit=10`);
                     const d = await r.json();
                     return d.query?.search?.map(r => ({ titulo: r.title, snippet: r.snippet?.replace(/<\/?[^>]+(>|$)/g, ''), fuente: 'Wikipedia', url: `https://es.wikipedia.org/wiki/${encodeURIComponent(r.title.replace(/\s+/g, '_'))}` })) || [];
                 } catch(e) { return []; }
@@ -456,7 +458,7 @@
             
             async buscarPubMed(tema) {
                 try {
-                    const r = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=${encodeURIComponent(tema)}&retmax=10&retmode=json`);
+                    const r = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term=${encodeURIComponent(tema)}+alemania&retmax=10&retmode=json`);
                     const d = await r.json();
                     const ids = d.esearchresult?.idlist || [];
                     if (ids.length === 0) return [];
@@ -491,11 +493,11 @@
             }
             
             async buscarGoogleScholar(tema) {
-                return [{ titulo: `${tema}: Una revisión sistemática`, autor: 'Autor et al.', year: '2024', fuente: 'Google Scholar', url: '#' }, { titulo: `${tema}: Avances y perspectivas`, autor: 'Investigador', year: '2023', fuente: 'Google Scholar', url: '#' }];
+                return [{ titulo: `${tema}: Una revisión sistemática en Alemania`, autor: 'Autor et al.', year: '2024', fuente: 'Google Scholar', url: '#' }, { titulo: `${tema}: Avances y perspectivas en Alemania`, autor: 'Investigador', year: '2023', fuente: 'Google Scholar', url: '#' }];
             }
             
             async buscarResearchGate(tema) {
-                return [{ titulo: `Research on ${tema}`, autor: 'ResearchGate', year: '2024', fuente: 'ResearchGate', url: '#' }];
+                return [{ titulo: `Research on ${tema} en Alemania`, autor: 'ResearchGate', year: '2024', fuente: 'ResearchGate', url: '#' }];
             }
             
             async buscarTodasLasFuentes(tema) {
@@ -561,7 +563,7 @@
         const fuentes12 = new FuentesGratuitas12();
         
         // ============================================
-        // FUNCIÓN DE LLAMADA A CLOUDFLARE AI (OPTIMIZADA)
+        // FUNCIÓN DE LLAMADA A CLOUDFLARE AI CON PROMPT DE INVESTIGADOR ACADÉMICO
         // ============================================
         async function llamarIAConContexto(prompt, temaBusqueda = '') {
             try {
@@ -569,40 +571,50 @@
                 if (temaBusqueda) {
                     const resultados12 = await fuentes12.buscarTodasLasFuentes(temaBusqueda);
                     if (resultados12.resumen.total_resultados > 0) {
-                        contextoAcademico = '\n\n--- CONTEXTO ACADÉMICO DEL TEMA ---\n';
-                        contextoAcademico += `Se encontraron ${resultados12.resumen.total_resultados} resultados académicos relacionados.\n\n`;
+                        contextoAcademico = '\n\n--- contexto académico sobre el tema ---\n';
+                        contextoAcademico += `se encontraron ${resultados12.resumen.total_resultados} resultados académicos relacionados.\n\n`;
                         const fuentesPrioritarias = ['semanticScholar', 'core', 'arxiv', 'wikipedia'];
                         fuentesPrioritarias.forEach(key => {
                             const f = resultados12.fuentes[key];
                             if (f && f.exito && f.count > 0) {
                                 contextoAcademico += `\n[${key.toUpperCase()} - ${f.count} resultados]:\n`;
                                 f.data.slice(0, 2).forEach(r => {
-                                    contextoAcademico += `• Título: ${r.titulo || 'Sin título'}\n`;
-                                    if (r.abstract) contextoAcademico += `  Resumen: ${r.abstract.substring(0, 200)}...\n`;
+                                    contextoAcademico += `• título: ${r.titulo || 'sin título'}\n`;
+                                    if (r.abstract) contextoAcademico += `  resumen: ${r.abstract.substring(0, 200)}...\n`;
                                 });
                             }
                         });
-                        contextoAcademico += '\n--- FIN CONTEXTO ACADÉMICO ---\n\n';
+                        contextoAcademico += '\n--- fin contexto académico ---\n\n';
                     }
                 }
 
-                // PROMPT OPTIMIZADO PARA RESPUESTAS COMPLETAS
-                const promptCompleto = `${contextoAcademico}
+                // PROMPT DE INVESTIGADOR ACADÉMICO CON ENFOQUE ALEMANIA
+                const promptCompleto = `
+eres un investigador académico especializado. a continuación te presento un contexto y un tema.
 
+contexto:
+${contextoAcademico}
+
+tema:
 ${prompt}
 
-⚠️ INSTRUCCIONES OBLIGATORIAS:
-1. La respuesta DEBE ser COMPLETA y EXTENSA (mínimo 400-600 palabras).
-2. Estructura OBLIGATORIA: 
-   - INTRODUCCIÓN: Presentación del tema y su importancia (2-3 párrafos).
-   - DESARROLLO: Explicación detallada con subtemas (3-5 párrafos).
-   - CONCLUSIÓN: Síntesis de ideas y reflexión final (1-2 párrafos).
-3. NO te detengas hasta haber completado TODA la respuesta.
-4. Usa el contexto académico proporcionado como base fundamental.
-5. Incluye ejemplos, datos o referencias cuando sea posible.
-6. Mantén un tono académico pero accesible.
+instrucción crítica de contextualización:
+para garantizar la máxima calidad (nivel 100%), debes situar tu respuesta en un contexto geográfico o cultural específico. 
+- enfoca tu respuesta en la realidad de ${PAIS_FIJO}.
+- adapta los ejemplos, la legislación o las costumbres mencionadas a dicha región.
 
-RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
+requisitos de formato:
+1. **título:** crea un título académico atractivo.
+2. **cuerpo:** escribe un ensayo extenso y detallado.
+   - **introducción:** contextualización histórica o social con enfoque en ${PAIS_FIJO}.
+   - **cuerpo:** análisis profundo. usa la técnica "claim-evidence-reasoning" (afirmación - evidencia del contexto - razonamiento).
+   - **conclusión:** cierre reflexivo.
+3. **longitud:** no escatimes en detalles. explica el "por qué" y el "cómo" de cada punto. mínimo 400-600 palabras.
+
+comienza tu respuesta ahora:`;
+
+                console.log('📚 enviando prompt de investigador académico a cloudflare ai');
+                console.log('🇩🇪 enfoque geográfico fijo:', PAIS_FIJO);
 
                 const response = await fetch(CLOUDFLARE_AI_URL, {
                     method: 'POST',
@@ -619,10 +631,10 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
                     
                     // Si la respuesta es muy corta (< 250 caracteres), reintentar
                     if (text.length < 250) {
-                        console.warn('⚠️ Respuesta corta, reintentando...');
-                        const retryPrompt = `Responde COMPLETA Y EXTENSAMENTE a esta pregunta: "${temaBusqueda || prompt.substring(0, 50)}". 
-                        Estructura: Introducción, Desarrollo con subtemas, Conclusión.
-                        Extensión mínima: 400 palabras. No te detengas hasta completar.`;
+                        console.warn('⚠️ respuesta corta, reintentando...');
+                        const retryPrompt = `responde completa y extensamente a esta pregunta: "${temaBusqueda || prompt.substring(0, 50)}" con enfoque en ${PAIS_FIJO}. 
+                        estructura: título académico, introducción, cuerpo (claim-evidence-reasoning), conclusión.
+                        extensión mínima: 400 palabras. no te detengas hasta completar.`;
                         const retryResponse = await fetch(CLOUDFLARE_AI_URL, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -631,7 +643,7 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
                         if (retryResponse.ok) {
                             const retryText = await retryResponse.text();
                             if (retryText.length > text.length) {
-                                console.log('✅ Reintento exitoso:', retryText.length, 'caracteres');
+                                console.log('✅ reintento exitoso:', retryText.length, 'caracteres');
                                 return retryText;
                             }
                         }
@@ -639,9 +651,9 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
                     
                     return text;
                 }
-                throw new Error('Respuesta vacía');
+                throw new Error('respuesta vacía');
             } catch(e) {
-                console.warn('⚠️ Error en llamada IA:', e.message);
+                console.warn('⚠️ error en llamada ia:', e.message);
                 document.getElementById('jsllm7Status').textContent = '⚠️ CDN';
                 document.getElementById('jsllm7Status').style.color = '#f59e0b';
                 return null;
@@ -739,30 +751,30 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
             const pregunta = document.getElementById('iaInput').value.trim();
             
             if (!pregunta) {
-                showToast('⚠️ Escribe una pregunta primero', true);
+                showToast('⚠️ escribe una pregunta primero', true);
                 return;
             }
             
             btn.disabled = true;
-            btn.textContent = '⏳ Cargando...';
+            btn.textContent = '⏳ cargando...';
             container.classList.add('visible');
-            textoDiv.innerHTML = '<span class="loading-spinner"></span> Generando análisis avanzado...';
+            textoDiv.innerHTML = '<span class="loading-spinner"></span> generando análisis avanzado...';
             
             try {
-                const prompt = `Genera un análisis académico avanzado sobre: "${pregunta}". 
-                Incluye perspectivas de diferentes disciplinas, referencias a autores clave y una bibliografía sugerida.`;
+                const prompt = `genera un análisis académico avanzado sobre: "${pregunta}" con enfoque en ${PAIS_FIJO}. 
+                incluye perspectivas de diferentes disciplinas, referencias a autores clave y una bibliografía sugerida.`;
                 const analisis = await llamarIAConContexto(prompt, pregunta);
                 if (analisis && analisis.length > 20) {
                     textoDiv.innerHTML = analisis.replace(/\n/g, '<br>');
-                    showToast(`✅ Análisis avanzado · ${analisis.length} caracteres`);
+                    showToast(`✅ análisis avanzado · ${analisis.length} caracteres · 🇩🇪`);
                 } else {
-                    textoDiv.innerHTML = '⚠️ No se pudo generar el análisis avanzado en este momento.';
+                    textoDiv.innerHTML = '⚠️ no se pudo generar el análisis avanzado en este momento.';
                 }
             } catch (e) {
-                textoDiv.innerHTML = '❌ Error al generar análisis avanzado.';
+                textoDiv.innerHTML = '❌ error al generar análisis avanzado.';
             } finally {
                 btn.disabled = false;
-                btn.textContent = '📚 Cargar Análisis Avanzado';
+                btn.textContent = '📚 cargar análisis avanzado';
             }
         };
         
@@ -779,7 +791,7 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
         
         function mostrarModal(titulo, contenido) {
             const modal = document.createElement('div'); modal.className = 'modal-overlay';
-            modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div>${contenido}</div><button class="modal-close">Cerrar</button></div>`;
+            modal.innerHTML = `<div class="modal-content"><h3>${titulo}</h3><div>${contenido}</div><button class="modal-close">cerrar</button></div>`;
             modal.querySelector('.modal-close').onclick = () => modal.remove();
             document.body.appendChild(modal);
         }
@@ -824,7 +836,7 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
             
             const filtrados = ARTICULOS.filter(a => (a.titulo || '').toLowerCase().includes(q) || (a.texto || '').toLowerCase().includes(q));
             
-            if (filtrados.length === 0) { resultadoDiv.style.display = 'block'; resultadoDiv.textContent = '❌ No se encontraron resultados'; container.innerHTML = ''; return; }
+            if (filtrados.length === 0) { resultadoDiv.style.display = 'block'; resultadoDiv.textContent = '❌ no se encontraron resultados'; container.innerHTML = ''; return; }
             
             resultadoDiv.style.display = 'block';
             resultadoDiv.textContent = `📊 ${filtrados.length} resultados encontrados`;
@@ -859,28 +871,28 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
             const respuestaDiv = document.getElementById('iaRespuesta');
             const pregunta = input.value.trim();
             
-            if (!pregunta) { respuestaDiv.innerHTML = '❌ Escribe una pregunta primero.'; return; }
+            if (!pregunta) { respuestaDiv.innerHTML = '❌ escribe una pregunta primero.'; return; }
             
-            respuestaDiv.innerHTML = '🧠 Consultando a la IA de Cloudflare... <span class="loading-spinner"></span>';
+            respuestaDiv.innerHTML = '🧠 consultando a la ia de cloudflare... <span class="loading-spinner"></span>';
             ultimoTemaConsulta = pregunta;
             
             try {
-                const respuesta = await llamarIAConContexto(`Responde detalladamente a esta pregunta: "${pregunta}"`, pregunta);
+                const respuesta = await llamarIAConContexto(`responde detalladamente a esta pregunta: "${pregunta}" con enfoque en ${PAIS_FIJO}.`, pregunta);
                 
                 if (respuesta) {
-                    respuestaDiv.innerHTML = `⚡ <strong>Respuesta de Cloudflare AI</strong><br><br>${respuesta}`;
+                    respuestaDiv.innerHTML = `⚡ <strong>respuesta de cloudflare ai</strong><br><br>${respuesta}`;
                     ultimaRespuestaIA = respuesta;
                     
                     const q = analyzer.analyzeQuality(respuesta);
                     document.getElementById('confidenceFill').style.width = `${q.qualityScore}%`;
                     document.getElementById('confidenceLabel').textContent = `${q.qualityScore}%`;
                     document.getElementById('qualityLabel').textContent = q.qualityScore + '%';
-                    showToast(`✅ Respuesta · ${respuesta.length} caracteres`);
+                    showToast(`✅ respuesta · ${respuesta.length} caracteres · 🇩🇪`);
                 } else {
-                    respuestaDiv.innerHTML = `❌ Error al obtener respuesta de Cloudflare AI.`;
+                    respuestaDiv.innerHTML = `❌ error al obtener respuesta de cloudflare ai.`;
                 }
             } catch (error) {
-                respuestaDiv.innerHTML = `❌ Error: ${error.message}`;
+                respuestaDiv.innerHTML = `❌ error: ${error.message}`;
             }
         }
         
@@ -889,9 +901,9 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
         // ============================================
         // EXPORTACIÓN
         // ============================================
-        function exportarRespuestaLatex() { if (!ultimaRespuestaIA) { alert('⚠️ Realiza una pregunta primero'); return; } descargarArchivo(exporter.toLatex(ultimaRespuestaIA, referenciasActuales), 'respuesta.tex'); }
-        function exportarRespuestaMarkdown() { if (!ultimaRespuestaIA) { alert('⚠️ Realiza una pregunta primero'); return; } descargarArchivo(exporter.toMarkdown(ultimaRespuestaIA, referenciasActuales), 'respuesta.md'); }
-        function copiarRespuesta() { if (!ultimaRespuestaIA) { alert('⚠️ Realiza una pregunta primero'); return; } navigator.clipboard.writeText(ultimaRespuestaIA).then(() => alert('📋 Copiado')); }
+        function exportarRespuestaLatex() { if (!ultimaRespuestaIA) { alert('⚠️ realiza una pregunta primero'); return; } descargarArchivo(exporter.toLatex(ultimaRespuestaIA, referenciasActuales), 'respuesta.tex'); }
+        function exportarRespuestaMarkdown() { if (!ultimaRespuestaIA) { alert('⚠️ realiza una pregunta primero'); return; } descargarArchivo(exporter.toMarkdown(ultimaRespuestaIA, referenciasActuales), 'respuesta.md'); }
+        function copiarRespuesta() { if (!ultimaRespuestaIA) { alert('⚠️ realiza una pregunta primero'); return; } navigator.clipboard.writeText(ultimaRespuestaIA).then(() => alert('📋 copiado')); }
         function descargarArchivo(contenido, nombre) { const blob = new Blob([contenido], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = nombre; a.click(); URL.revokeObjectURL(url); }
         
         // ============================================
@@ -901,7 +913,7 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
             const tema = document.getElementById('searchInput').value.trim() || document.getElementById('iaInput').value.trim() || 'inteligencia artificial';
             if (ocupado) return; ocupado = true;
             
-            document.getElementById('widgetAcademico').innerHTML = '🔍 Buscando en 5 fuentes... <span class="loading-spinner"></span>';
+            document.getElementById('widgetAcademico').innerHTML = '🔍 buscando en 5 fuentes... <span class="loading-spinner"></span>';
             referenciasActuales = await buscarTodasLasFuentes(tema);
             
             const refSection = document.getElementById('referencesSection');
@@ -909,25 +921,25 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
             
             if (referenciasActuales.length > 0) {
                 refSection.style.display = 'block';
-                refList.innerHTML = referenciasActuales.map((ref, i) => `<div class="ref-item"><strong>${i+1}.</strong> ${ref.autor} (${ref.year}). <em>${ref.titulo}</em>. ${ref.fuente}. ${ref.url ? `<br><a href="${ref.url}" target="_blank">🔗 Ver fuente</a>` : ''}</div>`).join('');
+                refList.innerHTML = referenciasActuales.map((ref, i) => `<div class="ref-item"><strong>${i+1}.</strong> ${ref.autor} (${ref.year}). <em>${ref.titulo}</em>. ${ref.fuente}. ${ref.url ? `<br><a href="${ref.url}" target="_blank">🔗 ver fuente</a>` : ''}</div>`).join('');
                 document.getElementById('widgetAcademico').innerHTML = `✅ <strong>${referenciasActuales.length}</strong> referencias en 5 fuentes`;
                 document.getElementById('confidenceFill').style.width = Math.min(70 + referenciasActuales.length * 5, 95) + '%';
                 document.getElementById('confidenceLabel').textContent = Math.min(70 + referenciasActuales.length * 5, 95) + '%';
                 document.getElementById('qualityLabel').textContent = analyzer.analyzeQuality(tema).qualityScore + '%';
             } else {
                 refSection.style.display = 'block';
-                refList.innerHTML = '<div class="ref-item">⚠️ No se encontraron referencias.</div>';
-                document.getElementById('widgetAcademico').innerHTML = '⚠️ Sin resultados';
+                refList.innerHTML = '<div class="ref-item">⚠️ no se encontraron referencias.</div>';
+                document.getElementById('widgetAcademico').innerHTML = '⚠️ sin resultados';
             }
             actualizarEstadisticas(); ocupado = false;
         });
         
         document.getElementById('btn12Fuentes').addEventListener('click', async () => {
             const tema = document.getElementById('searchInput').value.trim() || document.getElementById('iaInput').value.trim() || 'inteligencia artificial';
-            showToast('🔬 Buscando en 12 fuentes gratuitas...');
+            showToast('🔬 buscando en 12 fuentes gratuitas...');
             const resultados = await fuentes12.buscarTodasLasFuentes(tema);
             const html = fuentes12.formatearResultados(resultados);
-            mostrarModal('🔬 12 FUENTES ACADÉMICAS GRATIS', html);
+            mostrarModal('🔬 12 fuentes académicas gratis', html);
             document.getElementById('widgetAcademico').innerHTML = `✅ ${resultados.resumen.total_resultados} resultados de ${resultados.resumen.fuentes_exitosas}/12 fuentes`;
             document.getElementById('confidenceFill').style.width = '92%';
             document.getElementById('confidenceLabel').textContent = '92%';
@@ -936,14 +948,14 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
         });
         
         document.getElementById('btnGenerarAPA').addEventListener('click', () => {
-            if (referenciasActuales.length === 0) { alert('⚠️ Realiza una búsqueda académica primero'); return; }
-            mostrarModal('📝 Referencias APA 7', `<pre style="white-space:pre-wrap;font-size:0.8rem;">${exporter.toAPA(referenciasActuales)}</pre>`);
+            if (referenciasActuales.length === 0) { alert('⚠️ realiza una búsqueda académica primero'); return; }
+            mostrarModal('📝 referencias apa 7', `<pre style="white-space:pre-wrap;font-size:0.8rem;">${exporter.toAPA(referenciasActuales)}</pre>`);
         });
         
         document.getElementById('btnVerificarPlagio').addEventListener('click', () => {
-            if (!ultimaRespuestaIA) { alert('⚠️ Realiza una pregunta primero'); return; }
+            if (!ultimaRespuestaIA) { alert('⚠️ realiza una pregunta primero'); return; }
             const resultado = plagiarismDetector.check(ultimaRespuestaIA, ARTICULOS.map(a => ({ titulo: a.titulo, texto: a.texto })));
-            mostrarModal('⚠️ Verificación de Plagio', `<strong>Riesgo:</strong> ${resultado.overallRisk}<br><strong>Similitud Máx:</strong> ${Math.round(resultado.maxSimilarity * 100)}%<br><br>${resultado.details.map(d => `• ${d.source}: ${Math.round(d.similarity * 100)}%`).join('<br>')}`);
+            mostrarModal('⚠️ verificación de plagio', `<strong>riesgo:</strong> ${resultado.overallRisk}<br><strong>similitud máx:</strong> ${Math.round(resultado.maxSimilarity * 100)}%<br><br>${resultado.details.map(d => `• ${d.source}: ${Math.round(d.similarity * 100)}%`).join('<br>')}`);
         });
         
         document.getElementById('btnExportarLatex').addEventListener('click', exportarRespuestaLatex);
@@ -951,7 +963,7 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
         
         document.getElementById('btnEstado403M').addEventListener('click', () => {
             const total = cache.cacheHits + cache.cacheMisses;
-            mostrarModal('🧠 Estado 403M DECIDE + Cloudflare AI', `=== 403M DECIDE ===\n⚡ Cloudflare AI: ✅ Activo (Sin caídas)\n📊 Decisiones: ${Math.floor(Math.random()*1000)+100}\n💾 Caché: ${total} entradas\n📚 Fuentes: 5 originales + 7 gratis = 12 total\n📈 Hit Rate: ${document.getElementById('cacheHitRate').textContent}`);
+            mostrarModal('🧠 estado 403m decide + cloudflare ai', `=== 403m decide ===\n⚡ cloudflare ai: ✅ activo (sin caídas)\n📊 decisiones: ${Math.floor(Math.random()*1000)+100}\n💾 caché: ${total} entradas\n📚 fuentes: 5 originales + 7 gratis = 12 total\n📈 hit rate: ${document.getElementById('cacheHitRate').textContent}\n🇩🇪 enfoque: ${PAIS_FIJO}`);
         });
         
         // ============================================
@@ -960,14 +972,14 @@ RESPONDE CON LA MÁXIMA EXTENSIÓN Y CALIDAD POSIBLE:`;
         async function verificarJsllm7() {
             try {
                 const r = await fetch('https://wikipedia-403m.odandoolugan.workers.dev/stats');
-                if (r.ok) { document.getElementById('jsllm7Status').textContent = '✅ Conectado'; document.getElementById('jsllm7Status').style.color = '#10b981'; }
-            } catch(e) { document.getElementById('jsllm7Status').textContent = '⚠️ CDN'; document.getElementById('jsllm7Status').style.color = '#f59e0b'; }
+                if (r.ok) { document.getElementById('jsllm7Status').textContent = '✅ conectado'; document.getElementById('jsllm7Status').style.color = '#10b981'; }
+            } catch(e) { document.getElementById('jsllm7Status').textContent = '⚠️ cdn'; document.getElementById('jsllm7Status').style.color = '#f59e0b'; }
         }
         
         verificarJsllm7();
         setInterval(verificarJsllm7, 30000);
         
-        console.log('🚀 Wikipedia 403M + AcadémIA Pro + Cloudflare AI (Sin caídas)');
+        console.log(`🚀 wikipedia 403m + académia pro + cloudflare ai (sin caídas) · 🇩🇪 enfoque ${PAIS_FIJO}`);
     </script>
 </body>
 </html>
