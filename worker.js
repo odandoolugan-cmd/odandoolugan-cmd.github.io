@@ -1,125 +1,97 @@
 export default {
   async fetch(request, env) {
-    if (request.method === 'OPTIONS') {
-      return new Response(null, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type',
-        },
-      });
-    }
+    // Configuración de CORS para que tus páginas web puedan hablar con él
+    const headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Content-Type': 'text/plain;charset=UTF-8'
+    };
+    if (request.method === 'OPTIONS') return new Response(null, { headers });
 
-    if (request.method === 'GET') {
-      return new Response(`<!DOCTYPE html>
-<html>
-<head>
-  <title>🧠 Wikipedia IA - 403M Datos</title>
-  <style>
-    body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; background: #0d1117; color: #f0f6fc; }
-    h1 { color: #58a6ff; }
-    input { width: 70%; padding: 12px; background: #161b22; border: 1px solid #30363d; color: white; border-radius: 6px; font-size: 16px; }
-    button { padding: 12px 24px; background: #238636; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
-    button:hover { background: #2ea043; }
-    #respuesta { margin-top: 20px; padding: 20px; background: #161b22; border-radius: 8px; border: 1px solid #30363d; white-space: pre-wrap; min-height: 100px; }
-    .fuente { color: #58a6ff; }
-    .categoria { color: #f0883e; }
-  </style>
-</head>
-<body>
-  <h1>🧠 Wikipedia IA - 403M+ Datos</h1>
-  <p>Pregunta sobre cualquier tema</p>
-  <div>
-    <input type="text" id="pregunta" placeholder="Ej: ¿Qué es inteligencia artificial?" size="50">
-    <button onclick="preguntar()">Preguntar</button>
-  </div>
-  <div id="respuesta"></div>
-  <script>
-  async function preguntar() {
-    const pregunta = document.getElementById('pregunta').value;
-    const respuestaDiv = document.getElementById('respuesta');
-    if (!pregunta.trim()) return alert('Escribe una pregunta');
-    respuestaDiv.innerHTML = '⏳ Pensando...';
-    try {
-      const response = await fetch('/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: pregunta })
-      });
-      const data = await response.json();
-      if (data.error) {
-        respuestaDiv.innerHTML = '❌ Error: ' + data.error;
-      } else {
-        let html = data.answer || 'No se recibió respuesta';
-        if (data.fuentes && data.fuentes.length > 0) {
-          html += '\\n\\n📚 Fuentes encontradas:\\n';
-          data.fuentes.forEach(f => {
-            html += '  • ' + f.titulo;
-            if (f.categoria) html += ' <span class="categoria">[' + f.categoria + ']</span>';
-            html += '\\n';
-          });
-        }
-        respuestaDiv.innerHTML = html;
-      }
-    } catch (error) {
-      respuestaDiv.innerHTML = '❌ Error: ' + error.message;
-    }
-  }
-  </script>
-</body>
-</html>`, {
-        headers: { 'Content-Type': 'text/html' }
-      });
-    }
+    // 1. OBTENER LA PREGUNTA DEL USUARIO
+    let pregunta = "";
+    let contextoAcademico = "";
 
     if (request.method === 'POST') {
-      try {
-        const { question } = await request.json();
-        let context = '';
-        let fuentes = [];
-
-        if (env.DB) {
-          const results = await env.DB.prepare(
-            'SELECT titulo, contenido, categoria FROM contenido WHERE contenido LIKE ? OR titulo LIKE ? LIMIT 5'
-          ).bind(`%${question}%`, `%${question}%`).all();
-
-          if (results.results && results.results.length > 0) {
-            fuentes = results.results.map(r => ({ titulo: r.titulo, categoria: r.categoria || 'General' }));
-            context = results.results.map(r =>
-              `📌 ${r.titulo}${r.categoria ? ' ('+r.categoria+')' : ''}\\n${r.contenido}`
-            ).join('\\n\\n---\\n\\n');
-          }
-        }
-
-        if (!context) context = 'Usa tu conocimiento general sobre el tema.';
-
-        const systemPrompt = `Eres un asistente experto en Wikipedia con acceso a 403M+ datos.
-
-Contexto disponible:
-${context}
-
-Responde la pregunta de manera clara, educativa y en español.
-Si el contexto tiene información relevante, úsala.
-Si no, usa tu conocimiento general.`;
-
-        const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-          messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: question }],
-          max_tokens: 1000,
-          temperature: 0.7
-        });
-
-        return Response.json({ answer: response.response || 'No se pudo generar respuesta', fuentes: fuentes }, {
-          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-        });
-
-      } catch (error) {
-        return Response.json({ error: error.message }, {
-          status: 500,
-          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' }
-        });
-      }
+      try { 
+        const body = await request.json(); 
+        if (body.pregunta) pregunta = body.pregunta; 
+      } catch(e) {}
+    } else {
+      // Si es GET (tipo /ask?q=...), lo tomamos de la URL
+      const url = new URL(request.url);
+      pregunta = url.searchParams.get('q') || "";
     }
 
-    return new Response('Método no permitido', { status: 405 });
+    if (!pregunta) return new Response("Por favor, escribe una pregunta.", { headers, status: 400 });
+
+    // =====================================================================
+    // 2. EL AGENTE BUSCA EN LAS 12 FUENTES (FASE DE INVESTIGACIÓN)
+    // =====================================================================
+    try {
+      // Búsqueda rápida en 3 fuentes principales para tener contexto académico
+      const resultados = await Promise.allSettled([
+        fetch(`https://api.semanticscholar.org/graph/v1/paper/search?query=${encodeURIComponent(pregunta)}&limit=3&fields=title,abstract`).then(r => r.json()),
+        fetch(`https://api.core.ac.uk/v3/search/works?q=${encodeURIComponent(pregunta)}&limit=3`).then(r => r.json()),
+        fetch(`https://export.arxiv.org/api/query?search_query=all:${encodeURIComponent(pregunta)}&max_results=3`).then(r => r.text())
+      ]);
+
+      // Procesamos los resultados de Semantic Scholar
+      if (resultados[0].status === 'fulfilled' && resultados[0].value.data) {
+        const data = resultados[0].value.data;
+        contextoAcademico += `\n📚 SEMANTIC SCHOLAR (${data.length} resultados):\n`;
+        data.slice(0, 2).forEach(p => {
+          contextoAcademico += `• Título: ${p.title}\n  Resumen: ${p.abstract?.substring(0, 200)}...\n`;
+        });
+      }
+
+      // Procesamos los resultados de CORE
+      if (resultados[1].status === 'fulfilled' && resultados[1].value.results) {
+        const data = resultados[1].value.results;
+        contextoAcademico += `\n📖 CORE PAPERS (${data.length} resultados):\n`;
+        data.slice(0, 2).forEach(p => {
+          contextoAcademico += `• Título: ${p.title}\n  Resumen: ${p.abstract?.substring(0, 200)}...\n`;
+        });
+      }
+
+      // Procesamos los resultados de arXiv (XML)
+      if (resultados[2].status === 'fulfilled') {
+        const xmlText = resultados[2].value;
+        const parser = new DOMParser();
+        const xml = parser.parseFromString(xmlText, 'text/xml');
+        const entries = xml.querySelectorAll('entry');
+        contextoAcademico += `\n📐 ARXIV (${entries.length} resultados):\n`;
+        entries.forEach((entry, i) => {
+          if (i >= 2) return;
+          const title = entry.querySelector('title')?.textContent?.trim() || 'Sin título';
+          const summary = entry.querySelector('summary')?.textContent?.trim()?.substring(0, 200) || '';
+          contextoAcademico += `• Título: ${title}\n  Resumen: ${summary}...\n`;
+        });
+      }
+
+    } catch (e) {
+      contextoAcademico = "\n[Error al consultar fuentes externas, usando conocimiento base.]\n";
+    }
+
+    // =====================================================================
+    // 3. EL AGENTE LE ENVÍA LA INFORMACIÓN A OLLAMA IA (MISTRAL)
+    // =====================================================================
+    const promptFinal = `Contexto académico:\n${contextoAcademico}\n\n---\nPregunta del usuario: ${pregunta}\n---\nInstrucciones OBLIGATORIAS:\n1. Escríbelo TODO en ESPAÑOL.\n2. Estructura la respuesta con: "Introducción:", "Desarrollo:" (con al menos 3 subpuntos numerados 1., 2., 3.) y "Conclusión:".\n3. Incluye citas APA 7 básicas.\n4. Asegúrate de que el texto NO se corte y que la "Conclusión:" esté siempre al final.`;
+
+    const respuestaOllama = await fetch('https://ollama-ai.odandoolugan.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pregunta: promptFinal })
+    });
+
+    if (!respuestaOllama.ok) {
+      return new Response("Error al conectar con Ollama IA", { headers, status: 500 });
+    }
+
+    const textoFinal = await respuestaOllama.text();
+
+    // 4. DEVOLVER LA RESPUESTA A LA PÁGINA WEB
+    return new Response(textoFinal, { headers });
   }
 };
