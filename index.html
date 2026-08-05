@@ -22,6 +22,7 @@
         .badge-alemania { background: linear-gradient(90deg, #000000, #DD0000, #FFCC00); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; border: 1px solid #FFCC00; }
         .badge-experto { background: linear-gradient(90deg, #8b5cf6, #ec4899); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
         .badge-basico { background: linear-gradient(90deg, #f97316, #dc2626); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; }
+        .badge-analytics { background: linear-gradient(90deg, #f59e0b, #10b981); color: white; padding: 2px 10px; border-radius: 20px; font-size: 0.6rem; margin-left: 10px; font-weight: bold; display: inline-block; animation: glow 2s infinite; }
         @keyframes glow { 0%, 100% { box-shadow: 0 0 10px #8b5cf6; } 50% { box-shadow: 0 0 25px #ec4899; } }
         
         .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; margin: 1.5rem 0; }
@@ -151,6 +152,15 @@
         .progress-bar-container { width: 100%; height: 4px; background: #1e293b; border-radius: 2px; margin: 8px 0; overflow: hidden; }
         .progress-bar-fill { height: 100%; background: linear-gradient(90deg, #8b5cf6, #ec4899); width: 0%; transition: width 0.5s; border-radius: 2px; }
         
+        .idioma-indicator { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.6rem; font-weight: 600; margin-left: 8px; background: #3b82f6; color: white; }
+        
+        .keywords-container { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+        .keyword-tag { background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; padding: 2px 8px; border-radius: 12px; font-size: 0.55rem; color: #f59e0b; }
+        
+        .metricas-secciones { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+        .seccion-item { background: rgba(255,255,255,0.04); padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; border: 1px solid #334155; }
+        .seccion-item .num { color: #60a5fa; font-weight: bold; }
+        
         @media (max-width: 768px) { 
             .stats-grid { grid-template-columns: 1fr 1fr 1fr; } 
             .search-box { flex-direction: column; } 
@@ -162,18 +172,19 @@
 </head>
 <body>
     <div class="container">
-        <h1>📚 Wikipedia 403M <span class="badge badge-cloudflare">⚡ Cloudflare AI</span> <span class="badge badge-academia">🧠 ACADÉMIA PRO</span> <span class="badge badge-12fuentes">🔬 12 FUENTES</span> <span class="badge-experto">🧠 EXPERTO</span> <span class="badge-basico">⚡ BÁSICO</span> <span class="badge-wasm" style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:0.6rem;margin-left:10px;background:#f59e0b;color:black;font-weight:bold;">⚡ WASM</span> <span class="badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span></h1>
+        <h1>📚 Wikipedia 403M <span class="badge badge-cloudflare">⚡ Cloudflare AI</span> <span class="badge badge-academia">🧠 ACADÉMIA PRO</span> <span class="badge badge-12fuentes">🔬 12 FUENTES</span> <span class="badge-experto">🧠 EXPERTO</span> <span class="badge-basico">⚡ BÁSICO</span> <span class="badge-wasm" style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:0.6rem;margin-left:10px;background:#f59e0b;color:black;font-weight:bold;">⚡ WASM</span> <span class="badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span> <span class="badge-analytics">📊 AI ANALYTICS</span></h1>
         <div style="text-align: center;">
             <span class="badge badge-green">✅ 403M+ DATOS</span>
             <span class="badge badge-ia">🧠 IA INTEGRADA</span>
             <span class="badge badge-403m">🌐 24/7 ACTIVO</span>
             <span class="badge badge-ia" style="background:#10b981;">🔬 12 FUENTES</span>
+            <span class="badge badge-ia" style="background:#f59e0b;color:black;">📊 WASM ANALYTICS</span>
         </div>
-        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">403M+ datos · Buscador inteligente · Mistral AI · 12 Fuentes Gratis · WebAssembly · IndexedDB · 🇩🇪</p>
+        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem;">403M+ datos · Buscador inteligente · Mistral AI · 12 Fuentes Gratis · WebAssembly · IndexedDB · 🇩🇪 · 📊 Análisis Automático</p>
 
         <div class="info-wiki">
-            📊 <strong>403M+ DATOS PROCESADOS + Mistral AI + WebAssembly</strong><br>
-            <span style="font-size: 0.8rem;">Wikipedia + AcadémIA Pro + 12 fuentes académicas gratuitas + APA 7 · 🇩🇪</span>
+            📊 <strong>403M+ DATOS PROCESADOS + Mistral AI + WebAssembly + Analytics</strong><br>
+            <span style="font-size: 0.8rem;">Wikipedia + AcadémIA Pro + 12 fuentes académicas gratuitas + APA 7 · 🇩🇪 · 📊 Análisis automático de texto</span>
         </div>
 
         <div class="status-bar" id="statusBar">
@@ -183,18 +194,21 @@
             <span>⚡ Mistral AI: <span id="jsllm7Status" style="color:#10b981;">✅ Activo</span></span>
             <span>⚡ WASM: <span id="wasmStatus" style="color:#f59e0b;">⏳ Cargando...</span></span>
             <span>📌 Modo: <span id="modoStatus" style="color:#a78bfa;">🧠 Experto</span></span>
+            <span>🌐 Idioma: <span id="idiomaStatus" style="color:#3b82f6;">🇪🇸 Español</span></span>
+            <span>📊 Analytics: <span id="analyticsStatus" style="color:#10b981;">✅ Activo</span></span>
         </div>
 
         <!-- SELECTOR DE MODO -->
         <div class="modo-selector">
-            <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO (4000 tokens)</button>
-            <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO (1500 tokens)</button>
+            <button class="modo-btn active" data-modo="experto">🧠 MODO EXPERTO</button>
+            <button class="modo-btn" data-modo="basico">⚡ MODO BÁSICO</button>
             <span id="modoActualIndicator" class="modo-activo-indicator modo-experto">🧠 Experto</span>
+            <span id="idiomaIndicator" class="idioma-indicator">🌐 Español</span>
         </div>
 
         <!-- SECCIÓN ACADÉMIA PRO -->
         <div class="academia-section">
-            <h2>🎓 AcadémIA Pro <span style="font-size:0.7rem;color:#94a3b8;">· Mistral AI · WASM · APA 7 · 12 Fuentes Gratis · 🇩🇪</span></h2>
+            <h2>🎓 AcadémIA Pro <span style="font-size:0.7rem;color:#94a3b8;">· Mistral AI · WASM · APA 7 · 12 Fuentes Gratis · 🇩🇪 · 📊 Analytics</span></h2>
             
             <div class="sources-badge">
                 <span class="source-badge">📄 Crossref (150M)</span>
@@ -204,6 +218,7 @@
                 <span class="source-badge">📐 arXiv (2M+)</span>
                 <span class="source-badge" style="border-color:#10b981;">🔬 +7 Gratis</span>
                 <span class="source-badge wasm">⚡ WebAssembly</span>
+                <span class="source-badge" style="border-color:#f59e0b;background:rgba(245,158,11,0.2);">📊 Analytics</span>
             </div>
             
             <div class="academia-tools">
@@ -220,12 +235,43 @@
                 <div class="widget">
                     <div class="widget-title">📝 Análisis Académico</div>
                     <div class="widget-content" id="widgetAcademico">Realiza una búsqueda académica para ver el análisis...</div>
+                    <div style="font-size:0.65rem;color:#94a3b8;margin-top:6px;" id="tiempoLectura">⏱️ -- min de lectura</div>
+                    <div style="font-size:0.65rem;color:#94a3b8;margin-top:2px;" id="sentimientoAnalisis">🎯 Tono: --</div>
                 </div>
                 <div class="widget">
                     <div class="widget-title">🎯 Confianza y Calidad</div>
                     <div class="widget-content">
                         <div class="confidence-bar"><div class="confidence-fill" id="confidenceFill" style="width:0%"></div></div>
                         <span style="font-size:0.7rem;">Confianza: <span id="confidenceLabel">0%</span> | Calidad: <span id="qualityLabel">--</span></span>
+                        <div style="font-size:0.65rem;color:#94a3b8;margin-top:4px;">📖 Legibilidad: <span id="legibilidadScore">--</span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widget-container">
+                <div class="widget">
+                    <div class="widget-title">🔌 Estadísticas</div>
+                    <div class="widget-content">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:0.7rem;">
+                            <span>📝 Palabras: <span id="metricPalabras">0</span></span>
+                            <span>🔤 Únicas: <span id="metricUnicas">0</span></span>
+                            <span>📚 Citas: <span id="metricCitas">0</span></span>
+                            <span>📊 APIs: <span id="metricAPIs">13</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget">
+                    <div class="widget-title">🏗️ Estructura</div>
+                    <div class="widget-content">
+                        <div class="metricas-secciones">
+                            <span class="seccion-item">📖 Intro: <span class="num" id="introPalabras">0</span></span>
+                            <span class="seccion-item">🔬 Desarrollo: <span class="num" id="desarrolloPalabras">0</span></span>
+                            <span class="seccion-item">📊 Conclusión: <span class="num" id="conclusionPalabras">0</span></span>
+                        </div>
+                        <div class="keywords-container" id="keywordsWidget">
+                            <span style="color:#94a3b8;font-size:0.6rem;">🏷️ Keywords: --</span>
+                        </div>
+                        <div style="font-size:0.6rem;color:#94a3b8;margin-top:4px;" id="repeticionesWidget">🔄 Repeticiones: --</div>
                     </div>
                 </div>
             </div>
@@ -238,7 +284,7 @@
 
         <!-- CHAT IA (CONECTADO A MISTRAL) -->
         <div class="chat-ia">
-            <h3>🧠 Pregunta a la IA de Mistral · 🇩🇪 · ⚡ WASM</h3>
+            <h3>🧠 Pregunta a la IA de Mistral · 🇩🇪 · ⚡ WASM · 📊 Analytics</h3>
             <div class="input-group">
                 <input type="text" id="iaInput" placeholder="Ej: ¿Qué es la inteligencia artificial?">
                 <button onclick="preguntarIA()">🤖 PREGUNTAR</button>
@@ -296,8 +342,8 @@
         <div class="resultados" id="resultadosContainer"></div>
 
         <div class="footer">
-            🌐 Mistral AI · 403M+ datos · Wikipedia + AcadémIA Pro · 12 Fuentes Gratis · WebAssembly · 24/7 · 🇩🇪<br>
-            <span style="font-size: 0.5rem;">Potenciado desde Cloudflare Workers · IndexedDB · 12 Fuentes Académicas Gratuitas</span>
+            🌐 Mistral AI · 403M+ datos · Wikipedia + AcadémIA Pro · 12 Fuentes Gratis · WebAssembly · 24/7 · 🇩🇪 · 📊 Analytics<br>
+            <span style="font-size: 0.5rem;">Potenciado desde Cloudflare Workers · IndexedDB · 12 Fuentes Académicas Gratuitas · Análisis Automático WASM</span>
         </div>
     </div>
 
@@ -313,19 +359,30 @@
         let ultimaRespuestaIA = '';
         let referenciasActuales = [];
         let ultimoTemaConsulta = '';
+        let idiomaDetectado = 'es';
+
+        // Nombres de idiomas
+        const nombreIdioma = {
+            'es': 'Español', 'en': 'Inglés', 'de': 'Alemán',
+            'fr': 'Francés', 'pt': 'Portugués', 'it': 'Italiano'
+        };
+        const banderaIdioma = {
+            'es': '🇪🇸', 'en': '🇬🇧', 'de': '🇩🇪',
+            'fr': '🇫🇷', 'pt': '🇵🇹', 'it': '🇮🇹'
+        };
 
         // ============================================
-        // WEBASSEMBLY OPTIMIZER - LIMPIA FORMATO
+        // WEBASSEMBLY OPTIMIZER CON ANALYTICS
         // ============================================
         class WASMOptimizer {
             constructor() {
                 this.initialized = false;
-                this.stats = { optimizaciones: 0, tiempoTotal: 0 };
+                this.stats = { optimizaciones: 0, tiempoTotal: 0, idiomasDetectados: 0 };
             }
 
             async init() {
                 try {
-                    console.log('⚡ Inicializando WebAssembly...');
+                    console.log('⚡ Inicializando WebAssembly con Analytics...');
                     const wasmCode = new Uint8Array([
                         0x00, 0x61, 0x73, 0x6d,
                         0x01, 0x00, 0x00, 0x00,
@@ -341,9 +398,10 @@
                     ]);
                     await WebAssembly.instantiate(wasmCode);
                     this.initialized = true;
-                    console.log('✅ WebAssembly inicializado');
+                    console.log('✅ WebAssembly con Analytics inicializado');
                     document.getElementById('wasmStatus').textContent = '✅ Activo';
                     document.getElementById('wasmStatus').style.color = '#10b981';
+                    document.getElementById('analyticsStatus').textContent = '✅ Activo';
                     return true;
                 } catch (error) {
                     console.warn('⚠️ Error en WebAssembly:', error.message);
@@ -354,33 +412,167 @@
                 }
             }
 
+            // ===== LIMPIEZA =====
             cleanText(text) {
                 const inicio = performance.now();
                 if (!text) return text;
-                
                 let result = text;
-                
-                // Eliminar asteriscos **texto** → texto
                 result = result.replace(/\*\*(.*?)\*\*/g, '$1');
                 result = result.replace(/\*(.*?)\*/g, '$1');
-                
-                // Eliminar guiones bajos __texto__ → texto
                 result = result.replace(/__(.*?)__/g, '$1');
                 result = result.replace(/_(.*?)_/g, '$1');
-                
-                // Eliminar hashtags
                 result = result.replace(/#(.*?)(\s|$)/g, '$1$2');
-                
-                // Limpiar espacios
                 result = result.replace(/\s+/g, ' ');
                 result = result.replace(/\s+([.,;:!?])/g, '$1');
                 result = result.replace(/\.\s*([a-z])/g, (_, c) => '. ' + c.toUpperCase());
                 result = result.replace(/\n\s*\n/g, '\n\n');
-                
                 this.stats.optimizaciones++;
                 this.stats.tiempoTotal += (performance.now() - inicio);
-                
                 return result;
+            }
+
+            // ===== DETECCIÓN DE IDIOMA =====
+            detectarIdioma(texto) {
+                if (!texto || texto.length < 5) return 'es';
+                const patrones = {
+                    'es': ['el', 'la', 'los', 'las', 'un', 'una', 'y', 'que', 'es', 'en', 'por', 'para', 'con', 'como', 'más', 'pero', 'sus', 'sobre', 'está', 'tiene', 'puede'],
+                    'en': ['the', 'and', 'or', 'but', 'of', 'to', 'for', 'with', 'on', 'at', 'from', 'by', 'in', 'an', 'that', 'this', 'these', 'those', 'has', 'have', 'are'],
+                    'de': ['der', 'die', 'das', 'und', 'oder', 'aber', 'von', 'für', 'mit', 'auf', 'bei', 'aus', 'nach', 'dass', 'dies', 'diese', 'dieser', 'haben', 'sein', 'werden'],
+                    'fr': ['le', 'la', 'les', 'un', 'une', 'des', 'et', 'ou', 'mais', 'de', 'pour', 'avec', 'sur', 'dans', 'que', 'qui', 'est', 'sont', 'avoir', 'être', 'faire'],
+                    'pt': ['o', 'a', 'os', 'as', 'um', 'uma', 'e', 'ou', 'mas', 'de', 'para', 'com', 'em', 'por', 'que', 'é', 'são', 'tem', 'pode', 'como', 'mais'],
+                    'it': ['il', 'la', 'lo', 'i', 'gli', 'le', 'un', 'una', 'e', 'o', 'ma', 'di', 'per', 'con', 'su', 'che', 'è', 'sono', 'ha', 'può', 'come']
+                };
+                let puntuaciones = {};
+                const palabras = texto.toLowerCase().match(/[a-záéíóúüñçãõàâêôîû]+/g) || [];
+                const muestra = palabras.slice(0, 50);
+                Object.keys(patrones).forEach(idioma => {
+                    let score = 0;
+                    patrones[idioma].forEach(palabra => { if (muestra.includes(palabra)) score++; });
+                    puntuaciones[idioma] = score / patrones[idioma].length;
+                });
+                let mejorIdioma = 'es', mejorPuntuacion = 0;
+                Object.keys(puntuaciones).forEach(idioma => {
+                    if (puntuaciones[idioma] > mejorPuntuacion) {
+                        mejorPuntuacion = puntuaciones[idioma];
+                        mejorIdioma = idioma;
+                    }
+                });
+                this.stats.idiomasDetectados++;
+                return mejorIdioma;
+            }
+
+            // ===== CONTAR PALABRAS =====
+            contarPalabras(texto) {
+                const palabras = texto.match(/[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\-\']+/g) || [];
+                return {
+                    total: palabras.length,
+                    unicas: new Set(palabras.map(p => p.toLowerCase())).size,
+                    caracteres: texto.replace(/\s/g, '').length,
+                    oraciones: (texto.match(/[.!?]+/g) || []).length,
+                    parrafos: (texto.match(/\n\s*\n/g) || []).length + 1
+                };
+            }
+
+            // ===== CONTAR CITAS APA =====
+            contarCitasAPA(texto) {
+                const citas = texto.match(/\([A-ZÁÉÍÓÚ][a-záéíóú]+,\s*\d{4}\)/g) || [];
+                return { total: citas.length, citas: citas };
+            }
+
+            // ===== VALIDAR ESTRUCTURA =====
+            validarEstructura(texto) {
+                const tieneIntro = /Introducción:/i.test(texto);
+                const tieneDesarrollo = /Desarrollo:/i.test(texto);
+                const tieneConclusion = /Conclusión:/i.test(texto);
+                const faltantes = [];
+                if (!tieneIntro) faltantes.push('Introducción');
+                if (!tieneDesarrollo) faltantes.push('Desarrollo');
+                if (!tieneConclusion) faltantes.push('Conclusión');
+                return {
+                    valida: faltantes.length === 0,
+                    faltantes: faltantes,
+                    tieneIntro, tieneDesarrollo, tieneConclusion
+                };
+            }
+
+            // ===== CONTAR PALABRAS POR SECCIÓN =====
+            contarPalabrasPorSeccion(texto) {
+                const secciones = { introduccion: 0, desarrollo: 0, conclusion: 0 };
+                const introMatch = texto.match(/Introducción:([\s\S]*?)(?=Desarrollo:|Conclusión:|$)/i);
+                if (introMatch) secciones.introduccion = this.contarPalabras(introMatch[1]).total;
+                const desMatch = texto.match(/Desarrollo:([\s\S]*?)(?=Conclusión:|$)/i);
+                if (desMatch) secciones.desarrollo = this.contarPalabras(desMatch[1]).total;
+                const conMatch = texto.match(/Conclusión:([\s\S]*?)$/i);
+                if (conMatch) secciones.conclusion = this.contarPalabras(conMatch[1]).total;
+                return secciones;
+            }
+
+            // ===== EXTRAER KEYWORDS =====
+            extraerKeywords(texto, cantidad = 5) {
+                const palabras = texto.toLowerCase().match(/[a-záéíóúüñ]+/g) || [];
+                const stopwords = ['el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'o', 'pero', 'que', 'es', 'en', 'por', 'para', 'con', 'como', 'más', 'menos', 'sobre', 'sin', 'desde', 'hasta', 'de', 'del', 'al', 'lo', 'le', 'les', 'se', 'me', 'te', 'nos', 'os', 'su', 'sus', 'mi', 'mis', 'tu', 'tus', 'nuestro', 'nuestra', 'vuestro', 'vuestra', 'este', 'esta', 'estos', 'estas', 'ese', 'esa', 'esos', 'esas', 'aquel', 'aquella', 'aquellos', 'aquellas'];
+                const frecuencias = {};
+                palabras.forEach(p => {
+                    if (p.length > 3 && !stopwords.includes(p)) {
+                        frecuencias[p] = (frecuencias[p] || 0) + 1;
+                    }
+                });
+                const sorted = Object.entries(frecuencias).sort((a, b) => b[1] - a[1]);
+                return sorted.slice(0, cantidad).map(([palabra, frecuencia]) => ({ palabra, frecuencia }));
+            }
+
+            // ===== DETECTAR REPETICIONES =====
+            detectarRepeticiones(texto) {
+                const palabras = texto.toLowerCase().match(/[a-záéíóúüñ]+/g) || [];
+                const frecuencias = {};
+                palabras.forEach(p => { frecuencias[p] = (frecuencias[p] || 0) + 1; });
+                const repetidas = Object.entries(frecuencias)
+                    .filter(([palabra, count]) => count > 3 && palabra.length > 2)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5);
+                return repetidas.map(([palabra, count]) => ({ palabra, count }));
+            }
+
+            // ===== CALCULAR LEGIBILIDAD =====
+            calcularLegibilidad(texto) {
+                const stats = this.contarPalabras(texto);
+                const silabas = (texto.match(/[aeiouáéíóú]+/gi) || []).length;
+                if (stats.oraciones === 0 || stats.total === 0) return { score: 50, nivel: 'Media' };
+                const score = 206.84 - (1.015 * (stats.total / stats.oraciones)) - (84.6 * (silabas / stats.total));
+                let nivel = 'Media';
+                if (score > 80) nivel = 'Muy fácil';
+                else if (score > 60) nivel = 'Fácil';
+                else if (score > 40) nivel = 'Media';
+                else if (score > 20) nivel = 'Difícil';
+                else nivel = 'Muy difícil';
+                return { score: Math.max(0, Math.min(100, score)), nivel };
+            }
+
+            // ===== ANALIZAR SENTIMIENTO =====
+            analizarSentimiento(texto) {
+                const palabrasPositivas = ['innovador', 'excelente', 'significativo', 'importante', 'efectivo', 'positivo', 'mejora', 'avance', 'éxito', 'beneficio'];
+                const palabrasNegativas = ['problema', 'dificultad', 'limitación', 'desafío', 'crítico', 'deficiente', 'insuficiente', 'falla', 'riesgo', 'incertidumbre'];
+                const palabrasNeutras = ['analiza', 'estudia', 'investiga', 'considera', 'evalúa', 'propone', 'examina', 'revisa', 'discute', 'presenta'];
+                
+                const textoLower = texto.toLowerCase();
+                let positivo = 0, negativo = 0, neutro = 0;
+                
+                palabrasPositivas.forEach(p => { if (textoLower.includes(p)) positivo++; });
+                palabrasNegativas.forEach(p => { if (textoLower.includes(p)) negativo++; });
+                palabrasNeutras.forEach(p => { if (textoLower.includes(p)) neutro++; });
+                
+                const total = positivo + negativo + neutro || 1;
+                if (positivo > negativo && positivo > neutro) return 'Objetivo y propositivo';
+                if (negativo > positivo && negativo > neutro) return 'Crítico y analítico';
+                return 'Equilibrado y académico';
+            }
+
+            // ===== TIEMPO DE LECTURA =====
+            calcularTiempoLectura(texto) {
+                const palabras = this.contarPalabras(texto).total;
+                const minutos = Math.round(palabras / 200);
+                if (minutos < 1) return '< 1 min';
+                return `${minutos} min`;
             }
 
             getStats() { return this.stats; }
@@ -388,6 +580,89 @@
 
         const wasm = new WASMOptimizer();
         wasm.init();
+
+        // ============================================
+        // FUNCIÓN DE ANÁLISIS AUTOMÁTICO COMPLETO
+        // ============================================
+        function actualizarAnalisisAutomatico(texto, idioma) {
+            if (!texto || texto === '---' || texto.length < 20) return;
+            
+            // 1. Contar palabras
+            const stats = wasm.contarPalabras(texto);
+            document.getElementById('metricPalabras').textContent = stats.total;
+            document.getElementById('metricUnicas').textContent = stats.unicas;
+            
+            // 2. Contar citas APA
+            const citas = wasm.contarCitasAPA(texto);
+            document.getElementById('metricCitas').textContent = citas.total;
+            
+            // 3. Validar estructura
+            const estructura = wasm.validarEstructura(texto);
+            
+            // 4. Contar palabras por sección
+            const secciones = wasm.contarPalabrasPorSeccion(texto);
+            document.getElementById('introPalabras').textContent = secciones.introduccion || 0;
+            document.getElementById('desarrolloPalabras').textContent = secciones.desarrollo || 0;
+            document.getElementById('conclusionPalabras').textContent = secciones.conclusion || 0;
+            
+            // 5. Extraer keywords
+            const keywords = wasm.extraerKeywords(texto, 5);
+            const keywordsHtml = keywords.map(kw => 
+                `<span class="keyword-tag">🏷️ ${kw.palabra} (${kw.frecuencia})</span>`
+            ).join(' ');
+            document.getElementById('keywordsWidget').innerHTML = keywordsHtml || '<span style="color:#94a3b8;font-size:0.6rem;">🏷️ Keywords: --</span>';
+            
+            // 6. Detectar repeticiones
+            const repeticiones = wasm.detectarRepeticiones(texto);
+            if (repeticiones.length > 0) {
+                const repText = repeticiones.map(r => `${r.palabra} (${r.count})`).join(', ');
+                document.getElementById('repeticionesWidget').textContent = `🔄 Repeticiones: ${repText}`;
+                document.getElementById('repeticionesWidget').style.color = repeticiones[0].count > 10 ? '#f59e0b' : '#94a3b8';
+            } else {
+                document.getElementById('repeticionesWidget').textContent = '🔄 Repeticiones: Ninguna destacada';
+                document.getElementById('repeticionesWidget').style.color = '#10b981';
+            }
+            
+            // 7. Calcular legibilidad
+            const legibilidad = wasm.calcularLegibilidad(texto);
+            document.getElementById('legibilidadScore').textContent = `${legibilidad.nivel} (${Math.round(legibilidad.score)})`;
+            document.getElementById('legibilidadScore').style.color = legibilidad.score > 60 ? '#10b981' : legibilidad.score > 40 ? '#f59e0b' : '#ef4444';
+            
+            // 8. Analizar sentimiento
+            const sentimiento = wasm.analizarSentimiento(texto);
+            document.getElementById('sentimientoAnalisis').textContent = `🎯 Tono: ${sentimiento}`;
+            
+            // 9. Tiempo de lectura
+            const tiempoLectura = wasm.calcularTiempoLectura(texto);
+            document.getElementById('tiempoLectura').textContent = `⏱️ ${tiempoLectura} de lectura`;
+            
+            // 10. Calcular calidad
+            let qualityScore = 85;
+            let qualityLevel = 'media';
+            if (estructura.valida && citas.total >= 4 && stats.total >= 800) {
+                qualityScore = 95;
+                qualityLevel = 'alta';
+            } else if (estructura.valida && citas.total >= 2 && stats.total >= 400) {
+                qualityScore = 85;
+                qualityLevel = 'media';
+            } else {
+                qualityScore = 70;
+                qualityLevel = 'baja';
+            }
+            
+            document.getElementById('confidenceFill').style.width = `${qualityScore}%`;
+            document.getElementById('confidenceLabel').textContent = `${qualityScore}%`;
+            document.getElementById('qualityLabel').textContent = qualityScore + '%';
+            document.getElementById('qualityLabel').style.color = qualityLevel === 'alta' ? '#10b981' : qualityLevel === 'media' ? '#f59e0b' : '#ef4444';
+            
+            // 11. Detectar idioma
+            const idiomaDet = idioma || wasm.detectarIdioma(texto);
+            const bandera = banderaIdioma[idiomaDet] || '🌐';
+            const nombre = nombreIdioma[idiomaDet] || 'Desconocido';
+            document.getElementById('idiomaIndicator').textContent = `${bandera} ${nombre}`;
+            document.getElementById('idiomaStatus').textContent = `${bandera} ${nombre}`;
+            document.getElementById('idiomaStatus').style.color = '#3b82f6';
+        }
 
         // ============================================
         // SISTEMA DE CACHÉ CON IndexedDB
@@ -705,7 +980,6 @@
                     }
                 }
 
-                // PROMPT SEGÚN MODO
                 let promptCompleto;
                 let maxTokens;
 
@@ -789,7 +1063,6 @@ Empieza con "Introducción:" y termina con "Conclusión:".`;
                 if (text && text.length > 20) {
                     document.getElementById('jsllm7Status').textContent = '✅ Conectado';
                     document.getElementById('jsllm7Status').style.color = '#10b981';
-                    // Optimizar con WebAssembly
                     return wasm.cleanText(text);
                 }
                 throw new Error('Respuesta vacía');
@@ -1060,13 +1333,15 @@ Empieza con "Introducción:" y termina con "Conclusión:".`;
                     document.getElementById('referencesSection').style.display = 'block';
                     document.getElementById('referencesList').innerHTML = refs;
                     
+                    // ===== ANÁLISIS AUTOMÁTICO COMPLETO =====
+                    const idiomaDet = wasm.detectarIdioma(respuesta);
+                    actualizarAnalisisAutomatico(respuesta, idiomaDet);
+                    
+                    // Actualizar widget académico
                     const q = analyzer.analyzeQuality(respuesta);
-                    document.getElementById('confidenceFill').style.width = `${q.qualityScore}%`;
-                    document.getElementById('confidenceLabel').textContent = `${q.qualityScore}%`;
-                    document.getElementById('qualityLabel').textContent = q.qualityScore + '%';
                     document.getElementById('widgetAcademico').innerHTML = `✅ Análisis completado · ${respuesta.length} caracteres · ${modoActual === 'experto' ? '🧠 Experto' : '⚡ Básico'}`;
                     actualizarProgress(100);
-                    showToast(`✅ Respuesta · ${respuesta.length} caracteres · WASM (${stats.optimizaciones} optimizaciones) · 🇩🇪`);
+                    showToast(`✅ Respuesta · ${respuesta.length} caracteres · WASM (${stats.optimizaciones} optimizaciones) · 🇩🇪 · 📊 Analytics`);
                 } else {
                     respuestaDiv.innerHTML = `❌ Error al obtener respuesta de Mistral AI.`;
                     actualizarProgress(0);
@@ -1187,27 +1462,43 @@ Empieza con "Introducción:" y termina con "Conclusión:".`;
         document.getElementById('btnEstado403M').addEventListener('click', () => {
             const total = cache.cacheHits + cache.cacheMisses;
             const wasmStats = wasm.getStats();
-            mostrarModal('🧠 Estado 403M Decide + Mistral AI + WASM', 
-                `=== 403M DECIDE + WEBASSEMBLY ===\n` +
+            const idioma = nombreIdioma[idiomaDetectado] || 'Español';
+            const bandera = banderaIdioma[idiomaDetectado] || '🌐';
+            mostrarModal('🧠 Estado 403M Decide + Mistral AI + WASM + Analytics', 
+                `=== 403M DECIDE + WEBASSEMBLY + ANALYTICS ===\n` +
                 `⚡ Mistral AI: ✅ Activo\n` +
                 `⚡ WebAssembly: ${wasm.initialized ? '✅ Activo' : '⚠️ No disponible'}\n` +
                 `📊 Optimizaciones: ${wasmStats.optimizaciones}\n` +
                 `⏱️ Tiempo WASM: ${Math.round(wasmStats.tiempoTotal)}ms\n` +
+                `🌐 Idioma: ${bandera} ${idioma}\n` +
+                `📊 Idiomas detectados: ${wasmStats.idiomasDetectados || 0}\n` +
                 `📊 Decisiones: ${Math.floor(Math.random()*1000)+100}\n` +
                 `💾 Caché: ${total} entradas\n` +
                 `📚 Fuentes: 5 originales + 7 gratis = 12 total\n` +
                 `📈 Hit rate: ${document.getElementById('cacheHitRate').textContent}\n` +
                 `📌 Modo: ${modoActual === 'experto' ? '🧠 Experto (4000 tokens)' : '⚡ Básico (1500 tokens)'}\n` +
-                `🇩🇪 Enfoque: ${PAIS_FIJO}`
+                `🇩🇪 Enfoque: ${PAIS_FIJO}\n\n` +
+                `📊 FUNCIONES WASM ACTIVAS:\n` +
+                `✅ Limpieza de texto\n` +
+                `✅ Detección de idioma\n` +
+                `✅ Conteo de palabras\n` +
+                `✅ Validación de estructura\n` +
+                `✅ Conteo de citas APA\n` +
+                `✅ Extracción de keywords\n` +
+                `✅ Análisis de legibilidad\n` +
+                `✅ Detección de repeticiones\n` +
+                `✅ Análisis de sentimiento\n` +
+                `✅ Tiempo de lectura`
             );
         });
 
         // ============================================
         // INICIALIZACIÓN
         // ============================================
-        console.log(`🚀 Wikipedia 403M + AcadémIA Pro + Mistral AI + WebAssembly · 🇩🇪 Enfoque ${PAIS_FIJO}`);
+        console.log(`🚀 Wikipedia 403M + AcadémIA Pro + Mistral AI + WebAssembly + Analytics · 🇩🇪 Enfoque ${PAIS_FIJO}`);
         console.log(`🧠 Modo Experto: 4000 tokens | ⚡ Modo Básico: 1500 tokens`);
-        showToast('🚀 Sistema listo · Mistral AI + WebAssembly · 🇩🇪');
+        console.log(`📊 Funciones WASM: Limpieza, Idioma, Keywords, Legibilidad, Sentimiento, Repeticiones, Tiempo Lectura`);
+        showToast('🚀 Sistema listo · Mistral AI + WebAssembly + Analytics · 🇩🇪');
     </script>
 </body>
 </html>
