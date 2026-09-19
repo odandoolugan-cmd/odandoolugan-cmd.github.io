@@ -195,7 +195,7 @@
             <span class="badge badge-ia" style="background:#ec4899;">♾️ SIN LÍMITES</span>
             <span class="badge badge-ia" style="background:#f59e0b;animation:pulse 1s infinite;">⚡ 50x MÁS RÁPIDO</span>
         </div>
-        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 0.5rem;">WebAssembly Rust REAL · Multi-IA (Mistral + OpenRouter) · Core 403M · Agent-Reach · Fuentes Ilimitadas · 50x más rápido · 100+ funciones · 🇩🇪 · ⚡ 1 sola llamada · ♾️ Sin límites · 🤖 Agente integrado</p>
+        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 0.5rem;">WebAssembly Rust REAL · Multi-IA (9 proveedores) · Core 403M · Agent-Reach · Fuentes Ilimitadas · 50x más rápido · 100+ funciones · 🇩🇪 · ⚡ 1 sola llamada · ♾️ Sin límites · 🤖 Agente integrado</p>
 
         <div class="info-wiki" style="border-color:#ce422b;">
             🦀 <strong>WASM RUST REAL ACTIVO · 50x MÁS RÁPIDO · process_agent_context · cache_response · extract_authors_fast</strong><br>
@@ -402,11 +402,83 @@
         window.rustWASM = rustWASM;
 
         // ============================================
-        // 🔄 MULTI-IA CON FALLBACK
+        // 🔄 MULTI-IA CON FALLBACK — TODOS LOS PROVEEDORES
         // ============================================
         const IA_PROVEEDORES = [
-            { nombre: 'Mistral AI', url: 'https://api.mistral.ai/v1/chat/completions', key: '5qjCySPcH6ltO3ACeYcv8peh8iz252uW', modelos: ['mistral-small-latest', 'mistral-large-latest', 'open-mistral-7b'], color: '#f97316' },
-            { nombre: 'OpenRouter', url: 'https://openrouter.ai/api/v1/chat/completions', key: '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', modelos: ['mistralai/mistral-7b-instruct:free', 'meta-llama/llama-3.1-8b-instruct:free', 'google/gemma-2-9b-it:free', 'qwen/qwen-2.5-7b-instruct:free'], color: '#10b981', extraHeaders: { 'HTTP-Referer': 'https://academia-pro.local', 'X-Title': 'Academia Pro' } }
+            // ---- Google Gemini (Free) ----
+            {
+                nombre: 'Google',
+                url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AQ.Ab8RN6Ly5QrNa2RWh65DS_PRM_AMDE7E_52VaHe1FcdJcurvgw',
+                key: 'AQ.Ab8RN6Ly5QrNa2RWh65DS_PRM_AMDE7E_52VaHe1FcdJcurvgw',
+                modelos: ['gemini-2.0-flash', 'gemini-2.5-flash-preview-04-17'],
+                color: '#4285F4',
+                tipo: 'google'
+            },
+            // ---- Cerebras (Free) ----
+            {
+                nombre: 'Cerebras',
+                url: 'https://api.cerebras.ai/v1/chat/completions',
+                key: 'csk-jntkcrk4ev8vk35fhy6ctf4f6y2hdfp5h4f2khvwtdy82kcv',
+                modelos: ['llama3.1-8b', 'llama-3.3-70b', 'qwen-2.5-32b', 'qwen-2.5-coder-32b'],
+                color: '#FF6B35'
+            },
+            // ---- Z.ai (Free) ----
+            {
+                nombre: 'Z.ai',
+                url: 'https://api.z.ai/api/paas/v4/chat/completions',
+                key: '864fd7b42aa04163821d727cd74fbaea.GaPaxOmiAJUpm2TP',
+                modelos: ['glm-4-flash', 'glm-4.5-flash'],
+                color: '#7C3AED'
+            },
+            // ---- Mistral (Free) ----
+            {
+                nombre: 'Mistral AI',
+                url: 'https://api.mistral.ai/v1/chat/completions',
+                key: '5qjCySPcH6ltO3ACeYcv8peh8iz252uW',
+                modelos: ['mistral-small-latest', 'mistral-large-latest', 'open-mistral-7b'],
+                color: '#f97316'
+            },
+            // ---- GitHub (Free) ----
+            {
+                nombre: 'GitHub',
+                url: 'https://models.inference.ai.azure.com/chat/completions',
+                key: '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',
+                modelos: ['gpt-4o-mini', 'Phi-3.5-mini-instruct', 'Meta-Llama-3.1-8B-Instruct'],
+                color: '#24292E'
+            },
+            // ---- Ollama Cloud (Free) ----
+            {
+                nombre: 'Ollama Cloud',
+                url: 'https://api.ollama.cloud/v1/chat/completions',
+                key: '0edce97e3d3f405fb5e528efef2757f8.v6Xv_n50E_J9aSpdYQJMvaS3',
+                modelos: ['llama3.2', 'mistral', 'gemma2', 'qwen2.5'],
+                color: '#333333'
+            },
+            // ---- Kiro (Free) ----
+            {
+                nombre: 'Kiro',
+                url: 'https://api.kiro.ai/v1/chat/completions',
+                key: 'sk-xt-41b2aae5f67cc4105f017e26f6f5fe48f21d3e2207977139',
+                modelos: ['kiro-chat', 'kiro-pro'],
+                color: '#00A3FF'
+            },
+            // ---- Orca Router (Free) ----
+            {
+                nombre: 'Orca Router',
+                url: 'https://api.orcarouter.ai/v1/chat/completions',
+                key: 'sk-orca-cCg3Kbg7IUyeXhXdzZ41MRPe5kuQShyEiQ7tvlILHuk',
+                modelos: ['orca-mini', 'orca-2-7b', 'orca-2-13b'],
+                color: '#8B5CF6'
+            },
+            // ---- OpenRouter (Free) ----
+            {
+                nombre: 'OpenRouter',
+                url: 'https://openrouter.ai/api/v1/chat/completions',
+                key: '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',
+                modelos: ['mistralai/mistral-7b-instruct:free', 'meta-llama/llama-3.1-8b-instruct:free', 'google/gemma-2-9b-it:free', 'qwen/qwen-2.5-7b-instruct:free'],
+                color: '#10b981',
+                extraHeaders: { 'HTTP-Referer': 'https://academia-pro.local', 'X-Title': 'Academia Pro' }
+            }
         ];
         const PAIS_FIJO = 'Alemania';
         let ocupado = false, modoActual = 'experto', idiomaDetectado = 'es', proveedorActual = null, idiomasTotal = 0;
@@ -448,18 +520,50 @@
                         actualizarFase(`🔄 Consultando ${prov.nombre}...`);
                         const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${prov.key}` };
                         if (prov.extraHeaders) Object.assign(headers, prov.extraHeaders);
+
+                        let body;
+                        let url = prov.url;
+
+                        // ---- Google Gemini ----
+                        if (prov.tipo === 'google') {
+                            url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${prov.key}`;
+                            body = {
+                                contents: messages.map(m => ({
+                                    role: m.role === 'assistant' ? 'model' : m.role,
+                                    parts: [{ text: m.content }]
+                                })),
+                                generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
+                            };
+                        } else {
+                            body = {
+                                model: modelo,
+                                messages: messages,
+                                temperature: 0.7,
+                                max_tokens: maxTokens
+                            };
+                        }
+
                         const ctrl = new AbortController();
                         const tid = setTimeout(() => ctrl.abort(), 60000);
-                        const resp = await fetch(prov.url, { method: 'POST', headers, body: JSON.stringify({ model: modelo, messages, temperature: 0.7, max_tokens: maxTokens }), signal: ctrl.signal });
+                        const resp = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal });
                         clearTimeout(tid);
+
                         if ([401, 403, 429].includes(resp.status)) {
                             console.warn(`⚠️ ${prov.nombre}/${modelo} → ${resp.status}`);
                             ultimoError = `${resp.status} en ${prov.nombre}`;
                             continue;
                         }
                         if (!resp.ok) { const err = await resp.json().catch(() => ({})); ultimoError = err.error?.message || `Error ${resp.status}`; continue; }
+
                         const data = await resp.json();
-                        const texto = data.choices?.[0]?.message?.content || '';
+                        let texto = '';
+
+                        if (prov.tipo === 'google') {
+                            texto = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                        } else {
+                            texto = data.choices?.[0]?.message?.content || '';
+                        }
+
                         if (texto.length < 50) { ultimoError = 'Respuesta muy corta'; continue; }
                         console.log(`✅ ${prov.nombre} (${modelo}): ${texto.length} chars`);
                         proveedorActual = prov.nombre;
@@ -587,7 +691,6 @@
             if (keywords.length > 0) {
                 document.getElementById('widgetAcademico').innerHTML += `<br><div class="keywords-container">${keywords.map(k => `<span class="keyword-tag">🏷️ ${k.palabra} (${k.frecuencia})</span>`).join('')}</div>`;
             }
-            document.getElementById('rustTiempo') && (document.getElementById('rustTiempo').textContent = Math.round(rustWASM.stats.tiempo) + 'ms');
             document.getElementById('wasmCacheSize').textContent = rustWASM.getCacheSize();
             document.getElementById('ultraFunciones').textContent = rustWASM.stats.funciones;
             document.getElementById('ultraTiempo').textContent = Math.round(rustWASM.stats.tiempo) + 'ms';
@@ -696,7 +799,7 @@ REGLAS:
 4. NO uses asteriscos ni formato especial.
 5. Empieza con "Introducción:" y termina con "Conclusión:".`;
 
-                actualizarFase('☁️ Consultando Multi-IA (Mistral → OpenRouter)...');
+                actualizarFase('☁️ Consultando Multi-IA (fallback automático)...');
                 actualizarProgress(85);
                 const maxTokens = modoActual === 'experto' ? 4000 : 1500;
                 const resultado = await llamarIA([
@@ -897,11 +1000,15 @@ REGLAS:
             );
         };
         document.getElementById('btnMultiIA').onclick = () => {
-            mostrarModal('🔄 Multi-IA',
-                `🥇 Mistral AI\n• Modelos: ${IA_PROVEEDORES[0].modelos.join(', ')}\n• Estado: ${proveedorActual === 'Mistral AI' ? '✅ Activo' : '⏳ Espera'}\n\n` +
-                `🥈 OpenRouter (gratis)\n• Modelos: ${IA_PROVEEDORES[1].modelos.join(', ')}\n• Estado: ${proveedorActual === 'OpenRouter' ? '✅ Activo' : '⏳ Espera'}\n\n` +
-                `🔧 Fallback automático si el primero falla`
-            );
+            let info = '🔄 Multi-IA con fallback automático\n\n';
+            IA_PROVEEDORES.forEach((p, i) => {
+                const emoji = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣'][i] || '🔹';
+                info += `${emoji} ${p.nombre}\n`;
+                info += `   • Modelos: ${p.modelos.join(', ')}\n`;
+                info += `   • Estado: ${proveedorActual === p.nombre ? '✅ Activo' : '⏳ Espera'}\n\n`;
+            });
+            info += `🔧 Si un proveedor falla, se prueba automáticamente el siguiente.`;
+            mostrarModal('🔄 Multi-IA — Todos los proveedores', info);
         };
         document.getElementById('btn12Fuentes').onclick = async () => {
             const tema = document.getElementById('topicInput')?.value?.trim() || 'inteligencia artificial';
@@ -1017,6 +1124,7 @@ REGLAS:
         // ============================================
         (async () => {
             console.log('🚀 AcadémIA Pro · WASM Rust + Multi-IA + Core 403M + Agent-Reach');
+            console.log('📊 9 proveedores IA · 13 funciones Rust · 12+ fuentes · 6 idiomas');
             await rustWASM.cargar();
             if (rustWASM.cargado) {
                 actualizarFase('🦀 WASM Rust activo · 🔄 Multi-IA lista · ♾️ Fuentes ilimitadas');
