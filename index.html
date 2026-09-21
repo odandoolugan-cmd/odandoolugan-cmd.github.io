@@ -186,7 +186,7 @@
 <body>
     <div class="container">
         <!-- HEADER -->
-        <h1>📚 AcadémIA Pro <span class="badge badge-academia">🧠 403M DECIDE</span> <span class="badge badge-rustwasm">🦀 WASM RUST</span> <span class="badge badge-multiia">🔄 MULTI-IA</span> <span class="badge badge-ilimitado">♾️ ILIMITADO</span> <span class="badge badge-agente">🤖 AGENTE</span> <span class="badge badge-experto">🧠 EXPERTO</span> <span class="badge badge-basico">⚡ BÁSICO</span> <span class="badge badge-wasm">⚡ WASM EXTREMO</span> <span class="badge badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span> <span class="badge badge-1llamada">⚡ 1 LLAMADA</span> <span class="badge badge-analytics">📊 ANALYTICS</span> <span class="badge badge-100funciones">🚀 100+ FUNCIONES</span></h1>
+        <h1>📚 AcadémIA Pro <span class="badge badge-academia">🧠 403M DECIDE</span> <span class="badge badge-rustwasm">🦀 WASM RUST</span> <span class="badge badge-multiia">🔄 MULTI-IA</span> <span class="badge badge-ilimitado">♾️ ILIMITADO</span> <span class="badge badge-agente">🤖 AGENTE</span> <span class="badge badge-experto">🧠 EXPERTO</span> <span class="badge badge-basico">⚡ BÁSICO</span> <span class="badge badge-wasm">⚡ WASM EXTREMO</span> <span class="badge badge-alemania">🇩🇪 ENFOQUE ALEMÁN</span> <span class="badge badge-1llamada">⚡ PARALELO</span> <span class="badge badge-analytics">📊 ANALYTICS</span> <span class="badge badge-100funciones">🚀 100+ FUNCIONES</span></h1>
         
         <div style="text-align: center;">
             <span class="badge badge-green">✅ 403M+ DATOS</span>
@@ -195,11 +195,11 @@
             <span class="badge badge-ia" style="background:#ec4899;">♾️ SIN LÍMITES</span>
             <span class="badge badge-ia" style="background:#f59e0b;animation:pulse 1s infinite;">⚡ 50x MÁS RÁPIDO</span>
         </div>
-        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 0.5rem;">WebAssembly Rust REAL · Multi-IA (9 proveedores) · Core 403M · Agent-Reach · Fuentes Ilimitadas · 50x más rápido · 100+ funciones · 🇩🇪 · ⚡ 1 sola llamada · ♾️ Sin límites · 🤖 Agente integrado</p>
+        <p style="text-align: center; color: #94a3b8; font-size: 0.8rem; margin-top: 0.5rem;">WebAssembly Rust REAL · Multi-IA (9 proveedores en paralelo) · Core 403M · Agent-Reach · Fuentes Ilimitadas · 50x más rápido · 100+ funciones · 🇩🇪 · ⚡ Promise.any · ♾️ Sin límites · 🤖 Agente integrado</p>
 
         <div class="info-wiki" style="border-color:#ce422b;">
             🦀 <strong>WASM RUST REAL ACTIVO · 50x MÁS RÁPIDO · process_agent_context · cache_response · extract_authors_fast</strong><br>
-            <span style="font-size: 0.8rem;">Compilado en Rust · Cargando desde ./pkg/ · Multi-IA con fallback · Core 403M · Agent-Reach</span>
+            <span style="font-size: 0.8rem;">Compilado en Rust · Cargando desde ./pkg/ · Multi-IA paralelo con Promise.any · Core 403M · Agent-Reach</span>
         </div>
 
         <!-- STATUS BAR -->
@@ -208,6 +208,7 @@
             <span>📊 Funciones: <span id="rustFuncCount">0</span></span>
             <span>📦 Caché: <span id="wasmCacheSize">0</span></span>
             <span>🔄 Multi-IA: <span id="proveedorStatus" class="ok">✅ Activo</span></span>
+            <span>✅ OK: <span id="iaOkCount" class="ok">0</span> · ❌ Fallos: <span id="iaFailsCount" class="err">0</span></span>
             <span>🧬 Core 403M: <span id="coreStatus" class="ok">✅ Activo</span></span>
             <span>🔌 Agent-Reach: <span id="arStatus" class="ok">✅ Activo</span></span>
             <span>♾️ Fuentes: <span id="fuentesStatus" class="ok">✅ Ilimitadas</span></span>
@@ -237,7 +238,7 @@
             <span>🧠 Memoria: <strong id="ultraMemoria">0 KB</strong></span>
             <span>♾️ Fuentes: <strong id="ultraFuentes">0</strong></span>
             <span>🔄 IA: <strong id="ultraProveedor">Multi-IA</strong></span>
-            <span>⚡ <strong class="velocidad">50x MÁS RÁPIDO</strong></span>
+            <span>⚡ <strong class="velocidad">PARALELO 50x</strong></span>
         </div>
 
         <!-- SECCIÓN PRINCIPAL -->
@@ -330,7 +331,7 @@
 
         <!-- CHAT IA -->
         <div class="chat-ia">
-            <h3>🧠 Pregunta a la IA · 🇩🇪 · 🦀 WASM Rust · 🔄 Multi-IA · ♾️ Fuentes ilimitadas · 🤖 Agente</h3>
+            <h3>🧠 Pregunta a la IA · 🇩🇪 · 🦀 WASM Rust · 🔄 Multi-IA paralelo · ♾️ Fuentes ilimitadas · 🤖 Agente</h3>
             <div class="input-group">
                 <input type="text" id="iaInput" placeholder="Ej: ¿Qué es la inteligencia artificial?">
                 <button onclick="preguntarIA()">🤖 PREGUNTAR</button>
@@ -349,7 +350,7 @@
 
         <!-- FOOTER -->
         <div class="footer">
-            🦀 WASM Rust · 🔄 Multi-IA · 🧬 Core 403M · 🔌 Agent-Reach · ♾️ Fuentes Ilimitadas · 📊 100+ Funciones · ⚡ 1 Llamada · 🇩🇪 Enfoque Alemán<br>
+            🦀 WASM Rust · 🔄 Multi-IA paralelo · 🧬 Core 403M · 🔌 Agent-Reach · ♾️ Fuentes Ilimitadas · 📊 100+ Funciones · ⚡ Promise.any · 🇩🇪 Enfoque Alemán<br>
             <span style="font-size: 0.6rem; color: #ff8878;">🦀 WebAssembly REAL compilado en Rust · 50x más rápido · Cargando desde ./pkg/</span>
         </div>
     </div>
@@ -371,7 +372,7 @@
                     await mod.default('./pkg/academia_wasm_bg.wasm');
                     this.wasm = mod;
                     this.cargado = true;
-                    const version = mod.wasm_version();
+                    const version = mod.wasm_version ? mod.wasm_version() : 'unknown';
                     const funcs = ['contar_palabras','contar_caracteres_sin_espacios','contar_oraciones','process_text_full','extract_keywords','extract_authors_fast','detectar_idioma','resumir_texto','process_agent_context','cache_response','get_cached_response','get_cache_size','clear_cache'].filter(f => typeof mod[f] === 'function');
                     console.log(`✅ WASM Rust cargado (Core ${version}M) · ${funcs.length}/13 funciones activas`);
                     document.getElementById('rustStatus').textContent = '✅ Activo';
@@ -402,27 +403,24 @@
         window.rustWASM = rustWASM;
 
         // ============================================
-        // 🔄 MULTI-IA CON FALLBACK — TODOS LOS PROVEEDORES
+        // 🔄 MULTI-IA — 9 PROVEEDORES + MODELOS FREE
         // ============================================
         const IA_PROVEEDORES = [
-            // ---- Google Gemini (Free) ----
             {
                 nombre: 'Google',
-                url: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AQ.Ab8RN6Ly5QrNa2RWh65DS_PRM_AMDE7E_52VaHe1FcdJcurvgw',
+                url: 'https://generativelanguage.googleapis.com/v1beta/models',
                 key: 'AQ.Ab8RN6Ly5QrNa2RWh65DS_PRM_AMDE7E_52VaHe1FcdJcurvgw',
                 modelos: ['gemini-2.0-flash', 'gemini-2.5-flash-preview-04-17'],
                 color: '#4285F4',
                 tipo: 'google'
             },
-            // ---- Cerebras (Free) ----
             {
                 nombre: 'Cerebras',
                 url: 'https://api.cerebras.ai/v1/chat/completions',
                 key: 'csk-jntkcrk4ev8vk35fhy6ctf4f6y2hdfp5h4f2khvwtdy82kcv',
-                modelos: ['llama3.1-8b', 'llama-3.3-70b', 'qwen-2.5-32b', 'qwen-2.5-coder-32b'],
+                modelos: ['llama3.1-8b', 'llama-3.3-70b', 'qwen-2.5-32b'],
                 color: '#FF6B35'
             },
-            // ---- Z.ai (Free) ----
             {
                 nombre: 'Z.ai',
                 url: 'https://api.z.ai/api/paas/v4/chat/completions',
@@ -430,15 +428,13 @@
                 modelos: ['glm-4-flash', 'glm-4.5-flash'],
                 color: '#7C3AED'
             },
-            // ---- Mistral (Free) ----
             {
                 nombre: 'Mistral AI',
                 url: 'https://api.mistral.ai/v1/chat/completions',
                 key: '5qjCySPcH6ltO3ACeYcv8peh8iz252uW',
-                modelos: ['mistral-small-latest', 'mistral-large-latest', 'open-mistral-7b'],
+                modelos: ['mistral-small-latest', 'open-mistral-7b', 'mistral-tiny', 'open-mistral-nemo'],
                 color: '#f97316'
             },
-            // ---- GitHub (Free) ----
             {
                 nombre: 'GitHub',
                 url: 'https://models.inference.ai.azure.com/chat/completions',
@@ -446,54 +442,73 @@
                 modelos: ['gpt-4o-mini', 'Phi-3.5-mini-instruct', 'Meta-Llama-3.1-8B-Instruct'],
                 color: '#24292E'
             },
-            // ---- Ollama Cloud (Free) ----
             {
                 nombre: 'Ollama Cloud',
                 url: 'https://api.ollama.cloud/v1/chat/completions',
                 key: '0edce97e3d3f405fb5e528efef2757f8.v6Xv_n50E_J9aSpdYQJMvaS3',
-                modelos: ['llama3.2', 'mistral', 'gemma2', 'qwen2.5'],
+                modelos: ['llama3.2', 'mistral', 'gemma2'],
                 color: '#333333'
             },
-            // ---- Kiro (Free) ----
             {
                 nombre: 'Kiro',
                 url: 'https://api.kiro.ai/v1/chat/completions',
                 key: 'sk-xt-41b2aae5f67cc4105f017e26f6f5fe48f21d3e2207977139',
-                modelos: ['kiro-chat', 'kiro-pro'],
+                modelos: ['kiro-chat'],
                 color: '#00A3FF'
             },
-            // ---- Orca Router (Free) ----
             {
                 nombre: 'Orca Router',
                 url: 'https://api.orcarouter.ai/v1/chat/completions',
                 key: 'sk-orca-cCg3Kbg7IUyeXhXdzZ41MRPe5kuQShyEiQ7tvlILHuk',
-                modelos: ['orca-mini', 'orca-2-7b', 'orca-2-13b'],
+                modelos: ['orca-mini', 'orca-2-7b'],
                 color: '#8B5CF6'
             },
-            // ---- OpenRouter (Free) ----
             {
                 nombre: 'OpenRouter',
                 url: 'https://openrouter.ai/api/v1/chat/completions',
                 key: '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',
-                modelos: ['mistralai/mistral-7b-instruct:free', 'meta-llama/llama-3.1-8b-instruct:free', 'google/gemma-2-9b-it:free', 'qwen/qwen-2.5-7b-instruct:free'],
+                modelos: [
+                    'mistralai/mistral-7b-instruct:free',
+                    'meta-llama/llama-3.1-8b-instruct:free',
+                    'google/gemma-2-9b-it:free',
+                    'qwen/qwen-2.5-7b-instruct:free'
+                ],
                 color: '#10b981',
                 extraHeaders: { 'HTTP-Referer': 'https://academia-pro.local', 'X-Title': 'Academia Pro' }
             }
         ];
+
+        const TIMEOUT_IA = 25000;
+        const TIMEOUT_TOTAL_ANALISIS = 60000;
+
         const PAIS_FIJO = 'Alemania';
         let ocupado = false, modoActual = 'experto', idiomaDetectado = 'es', proveedorActual = null, idiomasTotal = 0;
+        let iaOkCount = 0, iaFailsCount = 0;
 
-        const nombreIdioma = { 'es': 'Español', 'en': 'Inglés', 'de': 'Alemán', 'fr': 'Francés', 'pt': 'Portugués', 'it': 'Italiano' };
-        const banderaIdioma = { 'es': '🇪🇸', 'en': '🇬🇧', 'de': '🇩🇪', 'fr': '🇫🇷', 'pt': '🇵🇹', 'it': '🇮🇹' };
-        const autoresPorIdioma = {
-            'es': ['García, J.', 'Martínez, L.', 'López, M.', 'Fernández, R.', 'Gómez, P.', 'Sánchez, C.'],
-            'en': ['Smith, J.', 'Johnson, R.', 'Williams, M.', 'Brown, D.', 'Jones, P.', 'Miller, S.'],
-            'de': ['Müller, J.', 'Schmidt, H.', 'Weber, K.', 'Fischer, L.', 'Wagner, M.', 'Becker, R.'],
-            'fr': ['Martin, J.', 'Bernard, H.', 'Dubois, K.', 'Thomas, L.', 'Robert, M.', 'Richard, P.'],
-            'pt': ['Silva, J.', 'Santos, H.', 'Oliveira, K.', 'Souza, L.', 'Rodrigues, M.', 'Ferreira, P.'],
-            'it': ['Rossi, J.', 'Russo, H.', 'Ferrari, K.', 'Esposito, L.', 'Bianchi, M.', 'Romano, P.']
+        // ============================================
+        // 🔍 DIAGNÓSTICO
+        // ============================================
+        const Diagnostico = {
+            contador: 0,
+            log(mensaje, tipo = 'info') {
+                this.contador++;
+                const icono = tipo === 'ok' ? '✅' : tipo === 'warn' ? '⚠️' : tipo === 'error' ? '❌' : 'ℹ️';
+                console.log(`[${tipo.toUpperCase()}] ${icono} ${mensaje}`);
+            }
         };
 
+        // ============================================
+        // 🔧 FETCH CON TIMEOUT
+        // ============================================
+        function fetchConTimeout(url, opciones = {}, timeoutMs = 8000) {
+            const ctrl = new AbortController();
+            const tid = setTimeout(() => ctrl.abort(), timeoutMs);
+            return fetch(url, { ...opciones, signal: ctrl.signal }).finally(() => clearTimeout(tid));
+        }
+
+        // ============================================
+        // 🔄 ACTUALIZAR PROVEEDOR
+        // ============================================
         function actualizarProveedor(nombre, color) {
             const ind = document.getElementById('proveedorIndicator');
             const prov = document.getElementById('proveedorStatus');
@@ -509,71 +524,117 @@
                 prov.className = 'ok';
                 document.getElementById('ultraProveedor').textContent = 'Multi-IA';
             }
+            document.getElementById('iaOkCount').textContent = iaOkCount;
+            document.getElementById('iaFailsCount').textContent = iaFailsCount;
         }
 
+        // ============================================
+        // 🔄 MULTI-IA EN PARALELO (Promise.any)
+        // ============================================
         async function llamarIA(messages, maxTokens = 3000) {
-            let ultimoError = null;
+            Diagnostico.log(`Lanzando ${IA_PROVEEDORES.length} proveedores · ${IA_PROVEEDORES.reduce((a, p) => a + p.modelos.length, 0)} modelos en paralelo…`, 'info');
+            actualizarFase('🤖 Multi-IA procesando en paralelo…');
+            actualizarProveedor(null);
+
+            const promesas = [];
             for (const prov of IA_PROVEEDORES) {
                 for (const modelo of prov.modelos) {
-                    try {
-                        console.log(`🔄 Probando ${prov.nombre} (${modelo})...`);
-                        actualizarFase(`🔄 Consultando ${prov.nombre}...`);
-                        const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${prov.key}` };
-                        if (prov.extraHeaders) Object.assign(headers, prov.extraHeaders);
+                    promesas.push(
+                        (async () => {
+                            const t0 = Date.now();
+                            try {
+                                const headers = {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${prov.key}`
+                                };
+                                if (prov.extraHeaders) Object.assign(headers, prov.extraHeaders);
 
-                        let body;
-                        let url = prov.url;
+                                let url = prov.url;
+                                let body;
 
-                        // ---- Google Gemini ----
-                        if (prov.tipo === 'google') {
-                            url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${prov.key}`;
-                            body = {
-                                contents: messages.map(m => ({
-                                    role: m.role === 'assistant' ? 'model' : m.role,
-                                    parts: [{ text: m.content }]
-                                })),
-                                generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
-                            };
-                        } else {
-                            body = {
-                                model: modelo,
-                                messages: messages,
-                                temperature: 0.7,
-                                max_tokens: maxTokens
-                            };
-                        }
+                                if (prov.tipo === 'google') {
+                                    url = `${prov.url}/${modelo}:generateContent?key=${prov.key}`;
+                                    delete headers['Authorization'];
+                                    body = {
+                                        contents: messages.map(m => ({
+                                            role: m.role === 'assistant' ? 'model' : m.role,
+                                            parts: [{ text: m.content }]
+                                        })),
+                                        generationConfig: { maxOutputTokens: maxTokens, temperature: 0.7 }
+                                    };
+                                } else {
+                                    body = {
+                                        model: modelo,
+                                        messages,
+                                        temperature: 0.7,
+                                        max_tokens: maxTokens
+                                    };
+                                }
 
-                        const ctrl = new AbortController();
-                        const tid = setTimeout(() => ctrl.abort(), 60000);
-                        const resp = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body), signal: ctrl.signal });
-                        clearTimeout(tid);
+                                const resp = await fetchConTimeout(
+                                    url,
+                                    { method: 'POST', headers, body: JSON.stringify(body) },
+                                    TIMEOUT_IA
+                                );
+                                const dur = ((Date.now() - t0) / 1000).toFixed(1);
 
-                        if ([401, 403, 429].includes(resp.status)) {
-                            console.warn(`⚠️ ${prov.nombre}/${modelo} → ${resp.status}`);
-                            ultimoError = `${resp.status} en ${prov.nombre}`;
-                            continue;
-                        }
-                        if (!resp.ok) { const err = await resp.json().catch(() => ({})); ultimoError = err.error?.message || `Error ${resp.status}`; continue; }
+                                if ([401, 403, 429].includes(resp.status)) {
+                                    const errTxt = resp.status === 429 ? 'rate limit' : resp.status === 401 ? 'key inválida' : `HTTP ${resp.status}`;
+                                    Diagnostico.log(`${prov.nombre}/${modelo}: ${errTxt} (${dur}s)`, 'error');
+                                    iaFailsCount++;
+                                    document.getElementById('iaFailsCount').textContent = iaFailsCount;
+                                    throw new Error(`${prov.nombre}/${modelo}: ${errTxt}`);
+                                }
+                                if (!resp.ok) {
+                                    Diagnostico.log(`${prov.nombre}/${modelo}: HTTP ${resp.status} (${dur}s)`, 'error');
+                                    iaFailsCount++;
+                                    document.getElementById('iaFailsCount').textContent = iaFailsCount;
+                                    throw new Error(`${prov.nombre}/${modelo}: HTTP ${resp.status}`);
+                                }
 
-                        const data = await resp.json();
-                        let texto = '';
+                                const data = await resp.json();
+                                let texto = '';
+                                if (prov.tipo === 'google') {
+                                    texto = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                                } else {
+                                    texto = data.choices?.[0]?.message?.content || '';
+                                }
 
-                        if (prov.tipo === 'google') {
-                            texto = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-                        } else {
-                            texto = data.choices?.[0]?.message?.content || '';
-                        }
+                                if (texto.length < 50) {
+                                    Diagnostico.log(`${prov.nombre}/${modelo}: respuesta corta (${texto.length})`, 'warn');
+                                    iaFailsCount++;
+                                    document.getElementById('iaFailsCount').textContent = iaFailsCount;
+                                    throw new Error(`${prov.nombre}/${modelo}: respuesta corta`);
+                                }
 
-                        if (texto.length < 50) { ultimoError = 'Respuesta muy corta'; continue; }
-                        console.log(`✅ ${prov.nombre} (${modelo}): ${texto.length} chars`);
-                        proveedorActual = prov.nombre;
-                        actualizarProveedor(prov.nombre, prov.color);
-                        return { texto, proveedor: prov.nombre, modelo };
-                    } catch(e) { console.warn(`⚠️ ${prov.nombre}/${modelo}:`, e.message); ultimoError = e.name === 'AbortError' ? 'Timeout' : e.message; }
+                                Diagnostico.log(`${prov.nombre}/${modelo}: ${texto.length} chars en ${dur}s`, 'ok');
+                                iaOkCount++;
+                                document.getElementById('iaOkCount').textContent = iaOkCount;
+                                return { texto, proveedor: prov.nombre, modelo };
+                            } catch (e) {
+                                if (e.name === 'AbortError') {
+                                    Diagnostico.log(`${prov.nombre}/${modelo}: Timeout ${TIMEOUT_IA / 1000}s`, 'error');
+                                    iaFailsCount++;
+                                    document.getElementById('iaFailsCount').textContent = iaFailsCount;
+                                }
+                                throw e;
+                            }
+                        })()
+                    );
                 }
             }
-            actualizarProveedor(null);
-            throw new Error(`Todos los proveedores fallaron. Último: ${ultimoError}`);
+
+            try {
+                const resultado = await Promise.any(promesas);
+                proveedorActual = resultado.proveedor;
+                actualizarProveedor(resultado.proveedor, IA_PROVEEDORES.find(p => p.nombre === resultado.proveedor)?.color);
+                Diagnostico.log(`🏆 GANADOR: ${resultado.proveedor} (${resultado.modelo})`, 'ok');
+                return resultado;
+            } catch (e) {
+                Diagnostico.log('❌ Todos los proveedores IA fallaron', 'error');
+                actualizarProveedor(null);
+                throw new Error('Todos los proveedores IA fallaron');
+            }
         }
 
         // ============================================
@@ -678,6 +739,70 @@
         const core403M = new Core403M();
 
         // ============================================
+        // 🧠 FALLBACK ACADÉMICO
+        // ============================================
+        function generarFallbackAcademico(tema, fuentes, idioma = 'es') {
+            const totalFuentes =
+                (fuentes?.semantic?.length || 0) +
+                (fuentes?.arxiv?.length || 0) +
+                (fuentes?.crossref?.length || 0) +
+                (fuentes?.openalex?.length || 0);
+            if (totalFuentes === 0) return null;
+
+            const todas = [
+                ...(fuentes.semantic || []).map(f => ({ ...f, origen: 'Semantic Scholar' })),
+                ...(fuentes.arxiv || []).map(f => ({ ...f, origen: 'arXiv' })),
+                ...(fuentes.crossref || []).map(f => ({ ...f, origen: 'Crossref' })),
+                ...(fuentes.openalex || []).map(f => ({ ...f, origen: 'OpenAlex' }))
+            ];
+            const autoresUnicos = [...new Set(todas.flatMap(f => (f.autores || '').split(',').map(a => a.trim()).filter(Boolean)))].slice(0, 6);
+            const origenesUnicos = [...new Set(todas.map(f => f.origen))];
+
+            let texto = '';
+            texto += `Introducción:\n\n`;
+            texto += `El presente trabajo aborda el tema "${tema}" desde una perspectiva académica integral. `;
+            texto += `La investigación se fundamenta en ${totalFuentes} publicaciones científicas recopiladas `;
+            texto += `de bases de datos internacionales reconocidas (${origenesUnicos.join(', ')}). `;
+            texto += `El análisis se enmarca en el contexto académico alemán, caracterizado por su rigor metodológico `;
+            texto += `y su énfasis en la fundamentación teórica sólida.\n\n`;
+
+            texto += `Desarrollo:\n\n`;
+            texto += `Sub-tema 1: Estado del arte\n\n`;
+            todas.slice(0, 4).forEach(f => {
+                texto += `\n• ${f.autores || 'Autor desconocido'} (${f.año || 's.f.'}). "${f.titulo}". Fuente: ${f.origen}.`;
+            });
+            texto += `\n\nEstas publicaciones constituyen la base teórica fundamental.\n\n`;
+
+            texto += `Sub-tema 2: Autores clave y contribuciones\n\n`;
+            if (autoresUnicos.length > 0) {
+                texto += `Los principales autores identificados son: ${autoresUnicos.join(', ')}. `;
+            }
+            texto += `Sus contribuciones permiten trazar la evolución conceptual del tema.\n\n`;
+
+            texto += `Sub-tema 3: Metodologías y aplicaciones\n\n`;
+            texto += `La literatura emplea metodologías cuantitativas, cualitativas y mixtas, `;
+            texto += `con aplicaciones desde contextos educativos hasta industriales.\n\n`;
+
+            texto += `Sub-tema 4: Desafíos y perspectivas futuras\n\n`;
+            texto += `Destacan la necesidad de mayor evidencia empírica, enfoques interdisciplinarios `;
+            texto += `y consideración de contextos locales.\n\n`;
+
+            texto += `Conclusión:\n\n`;
+            texto += `El análisis de ${totalFuentes} publicaciones sobre "${tema}" permite concluir que se trata `;
+            texto += `de un campo dinámico, con fundamentos sólidos y aplicaciones crecientes. `;
+            texto += `La combinación de ${autoresUnicos.length} autores clave y ${origenesUnicos.length} `;
+            texto += `bases de datos confiere robustez a esta revisión.\n\n`;
+
+            texto += `─────────────────────────────────────\n`;
+            texto += `⚠️ AVISO DE MODO FALLBACK\n`;
+            texto += `Los ${IA_PROVEEDORES.length} proveedores de IA no respondieron en el tiempo límite.\n`;
+            texto += `Análisis generado con ${totalFuentes} publicaciones reales de ${origenesUnicos.length} bases de datos.\n`;
+            texto += `🔄 Reintenta para obtener análisis generado por IA.\n`;
+            texto += `─────────────────────────────────────`;
+            return texto;
+        }
+
+        // ============================================
         // 📊 ANÁLISIS AUTOMÁTICO
         // ============================================
         function actualizarAnalisis(texto, idioma, modo) {
@@ -738,6 +863,8 @@
             const btn = document.querySelector('#topicInput + button'); btn.disabled = true;
             actualizarFase('🔍 Iniciando investigación con WASM Rust + Multi-IA...');
             actualizarProgress(10);
+            let resultadosFuentes = { semantic: [], arxiv: [], crossref: [], openalex: [] };
+            let totalFuentes = 0;
             try {
                 idiomaDetectado = rustWASM.idioma(query);
                 const idiomaPrompt = nombreIdioma[idiomaDetectado] || 'Español';
@@ -757,8 +884,9 @@
 
                 actualizarFase('🔬 Buscando en fuentes académicas + Agent-Reach...');
                 actualizarProgress(25);
-                const [resultadosFuentes, resultadosAgent] = await Promise.all([fuentes.buscar(query), agentReach.buscar(query)]);
-                const totalFuentes = resultadosFuentes.semantic.length + resultadosFuentes.arxiv.length + resultadosFuentes.crossref.length + resultadosFuentes.openalex.length + resultadosAgent.github.length + resultadosAgent.reddit.length + resultadosAgent.wiki.length;
+                const [resultadosFuentesLocal, resultadosAgent] = await Promise.all([fuentes.buscar(query), agentReach.buscar(query)]);
+                resultadosFuentes = resultadosFuentesLocal;
+                totalFuentes = resultadosFuentes.semantic.length + resultadosFuentes.arxiv.length + resultadosFuentes.crossref.length + resultadosFuentes.openalex.length + resultadosAgent.github.length + resultadosAgent.reddit.length + resultadosAgent.wiki.length;
                 document.getElementById('ultraFuentes').textContent = totalFuentes;
                 actualizarFase(`📊 Consolidando ${totalFuentes} resultados...`);
                 actualizarProgress(50);
@@ -799,13 +927,29 @@ REGLAS:
 4. NO uses asteriscos ni formato especial.
 5. Empieza con "Introducción:" y termina con "Conclusión:".`;
 
-                actualizarFase('☁️ Consultando Multi-IA (fallback automático)...');
+                actualizarFase('☁️ Consultando Multi-IA en paralelo…');
                 actualizarProgress(85);
                 const maxTokens = modoActual === 'experto' ? 4000 : 1500;
-                const resultado = await llamarIA([
+
+                // --- RACE: IA vs timeout global ---
+                const timeoutGlobal = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT_GLOBAL')), TIMEOUT_TOTAL_ANALISIS));
+                const tareaIA = llamarIA([
                     { role: 'system', content: `Eres investigador académico. Responde en ${idiomaPrompt}. NO uses asteriscos.` },
                     { role: 'user', content: prompt }
                 ], maxTokens);
+
+                let resultado;
+                try {
+                    resultado = await Promise.race([tareaIA, timeoutGlobal]);
+                } catch (iaError) {
+                    Diagnostico.log(`IA falló: ${iaError.message}`, 'error');
+                    Diagnostico.log('🧠 Activando FALLBACK ACADÉMICO…', 'warn');
+                    actualizarFase('🧠 Componiendo con fuentes reales…');
+                    const fallback = generarFallbackAcademico(query, resultadosFuentes, idiomaDetectado);
+                    if (!fallback) throw iaError;
+                    resultado = { texto: fallback, proveedor: 'Fallback Académico', modelo: 'datos-reales' };
+                    showToast(`🧠 Fallback · ${totalFuentes} fuentes reales`, true);
+                }
 
                 const textoLimpio = rustWASM.cleanText(resultado.texto);
                 actualizarProgress(95);
@@ -856,10 +1000,23 @@ REGLAS:
 
                 actualizarProgress(50);
                 const maxTokens = modoActual === 'experto' ? 4000 : 1500;
-                const resultado = await llamarIA([
+
+                const timeoutGlobal = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT_GLOBAL')), TIMEOUT_TOTAL_ANALISIS));
+                const tareaIA = llamarIA([
                     { role: 'system', content: `Eres investigador académico. Responde en ${idiomaPrompt}. NO uses asteriscos.` },
                     { role: 'user', content: prompt }
                 ], maxTokens);
+
+                let resultado;
+                try {
+                    resultado = await Promise.race([tareaIA, timeoutGlobal]);
+                } catch (iaError) {
+                    Diagnostico.log(`Pregunta IA falló: ${iaError.message}`, 'error');
+                    Diagnostico.log('🧠 Activando FALLBACK básico…', 'warn');
+                    const textoFallback = `Introducción:\n\nEl tema "${pregunta}" requiere análisis académico. Los proveedores de IA no respondieron en el tiempo límite. Puedes reintentar la operación.\n\nDesarrollo:\n\nSe recomienda reformular la pregunta o intentar más tarde.\n\nConclusión:\n\nReintenta la operación.`;
+                    resultado = { texto: textoFallback, proveedor: 'Fallback', modelo: 'local' };
+                    showToast('🧠 Fallback activado', true);
+                }
 
                 const textoLimpio = rustWASM.cleanText(resultado.texto);
                 document.getElementById('iaRespuesta').innerHTML = `⚡ <strong>Respuesta de ${resultado.proveedor} + WASM Rust · 🌐 ${idiomaPrompt}</strong><br><br>${textoLimpio}`;
@@ -924,10 +1081,23 @@ REGLAS:
                 actualizarIndicadorIdioma(idiomaWord);
                 actualizarProgress(40);
                 const prompt = `Analiza y resuelve el siguiente contenido académico. Idioma: ${idiomaPrompt}. Responde en el MISMO idioma.\n\n${contenidoWord.substring(0, 3000)}`;
-                const resultado = await llamarIA([
+
+                const timeoutGlobal = new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT_GLOBAL')), TIMEOUT_TOTAL_ANALISIS));
+                const tareaIA = llamarIA([
                     { role: 'system', content: `Eres investigador académico experto. Responde en ${idiomaPrompt}. NO uses asteriscos.` },
                     { role: 'user', content: prompt }
                 ], maxTokens);
+
+                let resultado;
+                try {
+                    resultado = await Promise.race([tareaIA, timeoutGlobal]);
+                } catch (iaError) {
+                    Diagnostico.log(`Word falló: ${iaError.message}`, 'error');
+                    Diagnostico.log('🧠 Activando FALLBACK básico…', 'warn');
+                    resultado = { texto: `Introducción:\n\nNo se pudo procesar el documento con IA. Los proveedores no respondieron en el tiempo límite.\n\nDesarrollo:\n\nSe recomienda verificar la conexión y reintentar.\n\nConclusión:\n\nReintenta la operación.`, proveedor: 'Fallback', modelo: 'local' };
+                    showToast('🧠 Fallback activado', true);
+                }
+
                 actualizarProgress(80);
                 const textoLimpio = rustWASM.cleanText(resultado.texto);
                 document.getElementById('iaRespuesta').innerHTML = `⚡ <strong>Word resuelto con ${resultado.proveedor} + WASM Rust · 🌐 ${idiomaPrompt}</strong><br><br>${textoLimpio}`;
@@ -979,7 +1149,7 @@ REGLAS:
             const funcs = mod ? ['contar_palabras','contar_caracteres_sin_espacios','contar_oraciones','process_text_full','extract_keywords','extract_authors_fast','detectar_idioma','resumir_texto','process_agent_context','cache_response','get_cached_response','get_cache_size','clear_cache'].filter(f => typeof mod[f] === 'function') : [];
             mostrarModal('🦀 Estado WASM Rust',
                 `Estado: ${rustWASM.cargado ? '✅ Cargado' : '❌ Fallback JS'}\n` +
-                `Versión Core: ${rustWASM.cargado ? mod.wasm_version() : 'N/A'}\n` +
+                `Versión Core: ${rustWASM.cargado && mod.wasm_version ? mod.wasm_version() : 'N/A'}\n` +
                 `Funciones: ${funcs.length}/13\n\n📋 ${funcs.map(f => '• ' + f).join('\n')}\n\n` +
                 `⚡ Ejecutadas: ${rustWASM.stats.funciones}\n⏱️ Tiempo: ${Math.round(rustWASM.stats.tiempo)}ms\n📦 Caché: ${rustWASM.getCacheSize()}`
             );
@@ -1000,14 +1170,16 @@ REGLAS:
             );
         };
         document.getElementById('btnMultiIA').onclick = () => {
-            let info = '🔄 Multi-IA con fallback automático\n\n';
+            let info = '🔄 Multi-IA — 9 proveedores en paralelo con Promise.any\n\n';
             IA_PROVEEDORES.forEach((p, i) => {
                 const emoji = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣'][i] || '🔹';
                 info += `${emoji} ${p.nombre}\n`;
                 info += `   • Modelos: ${p.modelos.join(', ')}\n`;
                 info += `   • Estado: ${proveedorActual === p.nombre ? '✅ Activo' : '⏳ Espera'}\n\n`;
             });
-            info += `🔧 Si un proveedor falla, se prueba automáticamente el siguiente.`;
+            info += `📊 Estadísticas:\n✅ OK: ${iaOkCount}\n❌ Fallos: ${iaFailsCount}\n\n`;
+            info += `🔧 Timeout: ${TIMEOUT_IA / 1000}s por proveedor · ${TIMEOUT_TOTAL_ANALISIS / 1000}s global\n`;
+            info += `🏆 Gana el proveedor que responde primero.`;
             mostrarModal('🔄 Multi-IA — Todos los proveedores', info);
         };
         document.getElementById('btn12Fuentes').onclick = async () => {
@@ -1049,7 +1221,7 @@ REGLAS:
         document.getElementById('btnDecisionStatus').onclick = () => {
             mostrarModal('🧠 403M Decide',
                 `🦀 WASM Rust: ${rustWASM.cargado ? '✅' : '⚠️'}\n📊 Funciones: ${rustWASM.stats.funciones}\n⏱️ Tiempo: ${Math.round(rustWASM.stats.tiempo)}ms\n\n` +
-                `🔄 Multi-IA: ${proveedorActual || 'En espera'}\n🧬 Core 403M: ${core403M.consultas} consultas\n🔌 Agent-Reach: G${agentReach.stats.github} R${agentReach.stats.reddit} W${agentReach.stats.wiki}\n\n` +
+                `🔄 Multi-IA: ${proveedorActual || 'En espera'}\n✅ OK: ${iaOkCount} · ❌ Fallos: ${iaFailsCount}\n🧬 Core 403M: ${core403M.consultas} consultas\n🔌 Agent-Reach: G${agentReach.stats.github} R${agentReach.stats.reddit} W${agentReach.stats.wiki}\n\n` +
                 `📌 Modo: ${modoActual}\n🌐 Idioma: ${nombreIdioma[idiomaDetectado]}`
             );
         };
@@ -1062,7 +1234,8 @@ REGLAS:
             mostrarModal('🔌 Estado del Sistema',
                 `🦀 WASM Rust: ${rustWASM.cargado ? '✅ Activo (Rust real)' : '⚠️ Fallback JS'}\n` +
                 `📊 Funciones: ${rustWASM.stats.funciones}\n⏱️ Tiempo WASM: ${Math.round(rustWASM.stats.tiempo)}ms\n📦 Caché: ${rustWASM.getCacheSize()}\n\n` +
-                `🔄 Multi-IA: ${proveedorActual || 'En espera'}\n🧬 Core 403M: ${core403M.consultas} consultas\n🔌 Agent-Reach: G${agentReach.stats.github} R${agentReach.stats.reddit} W${agentReach.stats.wiki}\n\n` +
+                `🔄 Multi-IA: ✅ Paralelo con Promise.any\n🏆 Proveedor actual: ${proveedorActual || 'En espera'}\n✅ OK: ${iaOkCount} · ❌ Fallos: ${iaFailsCount}\n⏱️ Timeout: ${TIMEOUT_IA / 1000}s por proveedor · ${TIMEOUT_TOTAL_ANALISIS / 1000}s global\n\n` +
+                `🧬 Core 403M: ${core403M.consultas} consultas\n🔌 Agent-Reach: G${agentReach.stats.github} R${agentReach.stats.reddit} W${agentReach.stats.wiki}\n\n` +
                 `📌 Modo: ${modoActual}\n🌐 Idioma: ${nombreIdioma[idiomaDetectado]}`
             );
         };
@@ -1078,14 +1251,14 @@ REGLAS:
                 `📝 Palabras: ${stats.palabras}\n🔄 Únicas: ${stats.unicas}\n📖 Oraciones: ${stats.oraciones}\n📚 Citas APA: ${citas}\n\n` +
                 `📖 Introducción: ${intro ? rustWASM.contarPalabras(intro[1]).palabras : 0} palabras\n🔬 Desarrollo: ${des ? rustWASM.contarPalabras(des[1]).palabras : 0} palabras\n📊 Conclusión: ${con ? rustWASM.contarPalabras(con[1]).palabras : 0} palabras\n\n` +
                 `🌐 Idioma: ${rustWASM.idioma(contenido)}\n📚 Riqueza léxica: ${stats.palabras > 0 ? Math.round(stats.unicas / stats.palabras * 100) : 0}%\n\n` +
-                `🦀 WASM Rust: 50x más rápido`
+                `⚡ Multi-IA: ${iaOkCount} OK · ${iaFailsCount} fallos\n🦀 WASM Rust: 50x más rápido`
             );
         };
 
         // Herramientas
         document.getElementById('btnExamen').onclick = () => {
             const q = document.getElementById('topicInput')?.value?.trim() || 'tema actual';
-            mostrarModal('🎯 Examen Académico', `📝 Examen sobre: "${q}"\n\n1. Define el concepto principal.\n2. Menciona 3 autores clave.\n3. Aplicaciones prácticas.\n4. Metodología adecuada.\n5. Conclusión crítica.\n\nEstructura: Introducción, Desarrollo, Conclusión.`);
+            mostrarModal('🎯 Examen Académico', `📝 Examen sobre: "${q}"\n\n1. Define el concepto principal.\n2. Menciona 3 autores clave.\n3. Aplicaciones prácticas.\n4. Metodología adecuada.\n5. Conclusión crítica.\n\nEstructura: Introducción, Desarrollo, Conclusión.\n\n⚡ Multi-IA paralelo · 🦀 WASM Rust`);
         };
         document.getElementById('btnAbstract').onclick = () => {
             const c = document.getElementById('iaRespuesta')?.innerText || 'Sin contenido';
@@ -1123,16 +1296,21 @@ REGLAS:
         // 🚀 INICIALIZACIÓN
         // ============================================
         (async () => {
-            console.log('🚀 AcadémIA Pro · WASM Rust + Multi-IA + Core 403M + Agent-Reach');
-            console.log('📊 9 proveedores IA · 13 funciones Rust · 12+ fuentes · 6 idiomas');
+            console.log('🚀 AcadémIA Pro · WASM Rust + Multi-IA paralelo + Core 403M + Agent-Reach');
+            Diagnostico.log(`🚀 AcadémIA Pro iniciando…`, 'info');
+            Diagnostico.log(`📊 ${IA_PROVEEDORES.length} proveedores · ${IA_PROVEEDORES.reduce((a, p) => a + p.modelos.length, 0)} modelos free`, 'info');
+            Diagnostico.log(`⏱️ Timeout IA: ${TIMEOUT_IA / 1000}s · Timeout global: ${TIMEOUT_TOTAL_ANALISIS / 1000}s`, 'info');
+            Diagnostico.log('🔄 Estrategia: Promise.any (paralelo) + fallback académico', 'info');
+
             await rustWASM.cargar();
             if (rustWASM.cargado) {
-                actualizarFase('🦀 WASM Rust activo · 🔄 Multi-IA lista · ♾️ Fuentes ilimitadas');
-                showToast('🦀 WASM Rust cargado · 🔄 Multi-IA lista · ⚡ 50x más rápido');
+                actualizarFase('🦀 WASM Rust activo · 🔄 Multi-IA paralelo listo · ♾️ Fuentes ilimitadas');
+                showToast('🦀 WASM Rust cargado · 🔄 Multi-IA paralelo · ⚡ 50x más rápido');
             } else {
                 actualizarFase('⚠️ WASM Rust no disponible · Usando fallback JS');
                 showToast('⚠️ WASM Rust no cargado · Usando fallback JS', true);
             }
+            actualizarProveedor(null);
         })();
     </script>
 </body>
