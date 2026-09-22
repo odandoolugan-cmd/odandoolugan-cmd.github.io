@@ -10,6 +10,29 @@ export function cache_response(key, value) {
     wasm.cache_response(ptr0, len0, ptr1, len1);
 }
 
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function calcular_hash_simhash(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.calcular_hash_simhash(retptr, ptr0, len0);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
 export function clear_cache() {
     wasm.clear_cache();
 }
@@ -49,6 +72,17 @@ export function contar_palabras(texto) {
 
 /**
  * @param {string} texto
+ * @returns {number}
+ */
+export function contar_silabas_espanol(texto) {
+    const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.contar_silabas_espanol(ptr0, len0);
+    return ret >>> 0;
+}
+
+/**
+ * @param {string} texto
  * @returns {string}
  */
 export function detectar_idioma(texto) {
@@ -59,6 +93,29 @@ export function detectar_idioma(texto) {
         const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
         const len0 = WASM_VECTOR_LEN;
         wasm.detectar_idioma(retptr, ptr0, len0);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function detectar_muletillas_ia(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.detectar_muletillas_ia(retptr, ptr0, len0);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
         var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
         deferred2_0 = r0;
@@ -118,6 +175,75 @@ export function extract_keywords(texto, cantidad) {
 }
 
 /**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function extraer_emails(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.extraer_emails(retptr, ptr0, len0);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function extraer_fechas(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.extraer_fechas(retptr, ptr0, len0);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function extraer_urls(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.extraer_urls(retptr, ptr0, len0);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
  * @returns {number}
  */
 export function get_cache_size() {
@@ -137,6 +263,29 @@ export function get_cached_response(key) {
         const ptr0 = passStringToWasm0(key, wasm.__wbindgen_export, wasm.__wbindgen_export2);
         const len0 = WASM_VECTOR_LEN;
         wasm.get_cached_response(retptr, ptr0, len0);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function normalizar_texto(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.normalizar_texto(retptr, ptr0, len0);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
         var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
         deferred2_0 = r0;
@@ -234,6 +383,67 @@ export function resumir_texto(texto, num_oraciones) {
         wasm.__wbindgen_add_to_stack_pointer(16);
         wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
     }
+}
+
+/**
+ * @param {string} texto
+ * @param {number} num_frases
+ * @returns {string}
+ */
+export function resumir_tfidf(texto, num_frases) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.resumir_tfidf(retptr, ptr0, len0, num_frases);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function sentimiento_espanol(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.sentimiento_espanol(retptr, ptr0, len0);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        deferred2_0 = r0;
+        deferred2_1 = r1;
+        return getStringFromWasm0(r0, r1);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+        wasm.__wbindgen_export3(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto1
+ * @param {string} texto2
+ * @returns {number}
+ */
+export function similitud_coseno(texto1, texto2) {
+    const ptr0 = passStringToWasm0(texto1, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+    const len0 = WASM_VECTOR_LEN;
+    const ptr1 = passStringToWasm0(texto2, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+    const len1 = WASM_VECTOR_LEN;
+    const ret = wasm.similitud_coseno(ptr0, len0, ptr1, len1);
+    return ret;
 }
 
 /**
