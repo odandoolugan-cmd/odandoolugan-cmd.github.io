@@ -125,6 +125,25 @@ export function detectar_topicos(texto) {
  * @param {string} texto
  * @returns {string}
  */
+export function analizar_originalidad(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.analizar_originalidad(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
 export function process_text_full(texto) {
     let deferred2_0;
     let deferred2_1;
@@ -178,6 +197,25 @@ export function extraer_emails(texto) {
  * @param {string} texto
  * @returns {string}
  */
+export function sugerir_titulos(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.sugerir_titulos(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
 export function extraer_citas_apa(texto) {
     let deferred2_0;
     let deferred2_1;
@@ -204,6 +242,25 @@ export function detectar_discurso_odio(texto) {
         const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
         const ret = wasm.detectar_discurso_odio(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function resumen_ejecutivo(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.resumen_ejecutivo(ptr0, len0);
         deferred2_0 = ret[0];
         deferred2_1 = ret[1];
         return getStringFromWasm0(ret[0], ret[1]);
@@ -337,6 +394,25 @@ export function normalizar_texto(texto) {
         const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
         const len0 = WASM_VECTOR_LEN;
         const ret = wasm.normalizar_texto(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function extraer_conceptos_clave(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.extraer_conceptos_clave(ptr0, len0);
         deferred2_0 = ret[0];
         deferred2_1 = ret[1];
         return getStringFromWasm0(ret[0], ret[1]);
@@ -499,6 +575,25 @@ export function extraer_fechas(texto) {
 
 /**
  * @param {string} texto
+ * @returns {string}
+ */
+export function generar_bibliografia(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.generar_bibliografia(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
  * @param {number} num_frases
  * @returns {string}
  */
@@ -633,6 +728,25 @@ export function sanitizar_texto(texto) {
 
 /**
  * @param {string} texto
+ * @returns {string}
+ */
+export function corregir_ortografia_basica(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.corregir_ortografia_basica(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
+}
+
+/**
+ * @param {string} texto
  * @returns {number}
  */
 export function densidad_lexica(texto) {
@@ -676,6 +790,25 @@ export function similitud_coseno(texto1, texto2) {
     const len1 = WASM_VECTOR_LEN;
     const ret = wasm.similitud_coseno(ptr0, len0, ptr1, len1);
     return ret;
+}
+
+/**
+ * @param {string} texto
+ * @returns {string}
+ */
+export function detectar_tesis(texto) {
+    let deferred2_0;
+    let deferred2_1;
+    try {
+        const ptr0 = passStringToWasm0(texto, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.detectar_tesis(ptr0, len0);
+        deferred2_0 = ret[0];
+        deferred2_1 = ret[1];
+        return getStringFromWasm0(ret[0], ret[1]);
+    } finally {
+        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+    }
 }
 
 /**
