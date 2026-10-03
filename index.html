@@ -298,6 +298,10 @@
                 <button class="academia-btn nuevo" id="btnDensidad">📝 Densidad</button>
                 <button class="academia-btn nuevo" id="btnEntidades">👤 Entidades</button>
                 <button class="academia-btn nuevo" id="btnAnalisisTextual">🔍 Análisis Textual</button>
+                <button class="academia-btn nuevo" id="btnEstructuraAcademica">🎓 Estructura Académica</button>
+                <button class="academia-btn nuevo" id="btnFeedbackIA">📊 Feedback IA</button>
+                <button class="academia-btn nuevo" id="btnCitasAPA">📚 Citas APA</button>
+                <button class="academia-btn nuevo" id="btnSecciones">🗂️ Secciones</button>
             </div>
             
             <!-- INPUT PRINCIPAL -->
@@ -1418,6 +1422,85 @@ REGLAS:
                 );
             } catch(e) { showToast('❌ ' + e.message, true); }
         };
+
+// ═══════════════════════════════════════════════════════════
+// 🎓 v4 BOTONES NUEVOS
+// ═══════════════════════════════════════════════════════════
+
+document.getElementById('btnEstructuraAcademica').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM Rust no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const e = JSON.parse(rustWASM.wasm.analizar_estructura_academica(texto));
+        const emoji = e.puntuacion >= 80 ? '🟢' : e.puntuacion >= 60 ? '🟡' : '🔴';
+        const barra = '█'.repeat(Math.floor(e.puntuacion / 10)) + '░'.repeat(10 - Math.floor(e.puntuacion / 10));
+        mostrarModal('🎓 Estructura Académica',
+            `${emoji} PUNTUACIÓN: ${e.puntuacion}/100\n${barra}\n\n` +
+            `━━━ 📊 PALABRAS POR SECCIÓN ━━━\n` +
+            `📝 Total: ${e.palabras_total}${e.cumple_3000 ? ' ✅' : ' (faltan ' + (3000 - e.palabras_total) + ' para 3000)'}\n\n` +
+            `${e.tiene_intro ? '✅' : '❌'} Introducción: ${e.palabras_intro} palabras (${e.porcentaje_intro.toFixed(1)}%)\n` +
+            `${e.tiene_desarrollo ? '✅' : '❌'} Desarrollo: ${e.palabras_desarrollo} palabras (${e.porcentaje_desarrollo.toFixed(1)}%)\n` +
+            `${e.tiene_conclusion ? '✅' : '❌'} Conclusión: ${e.palabras_conclusion} palabras (${e.porcentaje_conclusion.toFixed(1)}%)\n\n` +
+            `━━━ 💬 FEEDBACK ━━━\n` +
+            e.feedback.map(f => '• ' + f).join('\n')
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnFeedbackIA').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM Rust no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const fb = JSON.parse(rustWASM.wasm.feedback_ia(texto));
+        mostrarModal('📊 Feedback IA',
+            `📝 ANÁLISIS AUTOMÁTICO\n\n` +
+            `Se detectaron ${fb.length} puntos de mejora:\n\n` +
+            fb.map((f, i) => `${i + 1}. ${f}`).join('\n\n') +
+            `\n\n━━━ 💡 RECOMENDACIONES ━━━\n` +
+            `• Apunta a 3000+ palabras\n` +
+            `• Usa 5+ citas APA\n` +
+            `• Estructura: Introducción / Desarrollo / Conclusión\n` +
+            `• Vocabulario rico y variado (40-60% único)`
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnCitasAPA').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM Rust no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const citas = JSON.parse(rustWASM.wasm.extraer_citas_apa(texto));
+        if (citas.length === 0) {
+            mostrarModal('📚 Citas APA', `⚠️ No se detectaron citas.\n\n💡 Formato esperado:\n• (Autor, 2024)\n• (García, 2023)\n• (Martínez et al., 2024)\n\n📌 Asegúrate de usar el formato APA 7.`);
+            return;
+        }
+        mostrarModal('📚 Citas APA',
+            `📊 Total: ${citas.length} citas\n\n` +
+            `━━━ 📖 LISTADO ━━━\n` +
+            citas.map((c, i) => `${i + 1}. ${c}`).join('\n')
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnSecciones').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM Rust no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const secs = JSON.parse(rustWASM.wasm.detectar_secciones(texto));
+        if (secs.length === 0) {
+            mostrarModal('🗂️ Secciones', `⚠️ No se detectaron secciones.\n\n💡 Secciones reconocidas:\n• Introducción\n• Desarrollo\n• Conclusión\n• Resumen / Abstract\n• Metodología\n• Resultados\n• Discusión\n• Bibliografía / Referencias`);
+            return;
+        }
+        mostrarModal('🗂️ Secciones Detectadas',
+            `📊 Total: ${secs.length} secciones\n\n` +
+            secs.map(s => '✅ ' + s).join('\n')
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
 
         // Herramientas
         document.getElementById('btnExamen').onclick = () => {
