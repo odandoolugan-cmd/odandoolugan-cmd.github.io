@@ -302,6 +302,13 @@
                 <button class="academia-btn nuevo" id="btnFeedbackIA">📊 Feedback IA</button>
                 <button class="academia-btn nuevo" id="btnCitasAPA">📚 Citas APA</button>
                 <button class="academia-btn nuevo" id="btnSecciones">🗂️ Secciones</button>
+                <button class="academia-btn nuevo" id="btnGenerarBib">📖 Generar Bibliografía</button>
+              <button class="academia-btn nuevo" id="btnDetectarTesis">🎓 Detectar Tesis</button>
+              <button class="academia-btn nuevo" id="btnCorregirOrt">✏️ Corregir Ortografía</button>
+              <button class="academia-btn nuevo" id="btnSugerirTitulos">💡 Sugerir Títulos</button>
+              <button class="academia-btn nuevo" id="btnResumenEjecutivo">📄 Resumen Ejecutivo</button>
+              <button class="academia-btn nuevo" id="btnOriginalidad">🔍 Originalidad</button>
+              <button class="academia-btn nuevo" id="btnConceptosClave">🎯 Conceptos Clave</button>
             </div>
             
             <!-- INPUT PRINCIPAL -->
@@ -1537,6 +1544,130 @@ document.getElementById('btnSecciones').onclick = () => {
     } catch(err) { showToast('❌ ' + err.message, true); }
 };
 
+// ═══════════════════════════════════════════════════════════
+// 🎓 v5 BOTONES AVANZADOS
+// ═══════════════════════════════════════════════════════════
+
+document.getElementById('btnGenerarBib').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const refs = JSON.parse(rustWASM.wasm.generar_bibliografia(texto));
+        if (refs.length === 0) {
+            mostrarModal('📖 Bibliografía', `⚠️ No se detectaron citas en el formato (Autor, Año).\n\n💡 Ejemplos válidos:\n• (García, 2023)\n• (Martínez et al., 2024)`);
+            return;
+        }
+        mostrarModal('📖 Bibliografía Generada',
+            `📊 Total: ${refs.length} referencias\n\n` +
+            `━━━ 📚 REFERENCIAS ━━━\n` +
+            refs.map((r, i) => `${i + 1}. ${r}`).join('\n\n') +
+            `\n\n💡 Formato APA 7 básico`
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnDetectarTesis').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const t = JSON.parse(rustWASM.wasm.detectar_tesis(texto));
+        const emoji = t.puntuacion >= 80 ? '🏆' : t.puntuacion >= 60 ? '🎓' : t.puntuacion >= 40 ? '📘' : '📄';
+        mostrarModal('🎓 Detección de Tesis',
+            `${emoji} VEREDICTO: ${t.veredicto.toUpperCase()}\n` +
+            `📊 Puntuación: ${t.puntuacion}/100\n\n` +
+            `━━━ 📋 CRITERIOS ━━━\n` +
+            `📝 Palabras: ${t.palabras}\n` +
+            `📚 Citas: ${t.citas}\n` +
+            `${t.tiene_intro ? '✅' : '❌'} Introducción\n` +
+            `${t.tiene_conclusion ? '✅' : '❌'} Conclusión\n` +
+            `${t.tiene_metodologia ? '✅' : '❌'} Metodología\n` +
+            `${t.tiene_bibliografia ? '✅' : '❌'} Bibliografía`
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnCorregirOrt').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const c = JSON.parse(rustWASM.wasm.corregir_ortografia_basica(texto));
+        if (c.length === 0) {
+            mostrarModal('✏️ Corrección Ortográfica', `✅ ¡No se detectaron errores comunes!\n\n💡 El texto parece estar bien escrito.`);
+            return;
+        }
+        mostrarModal('✏️ Correcciones Sugeridas',
+            `📊 Total: ${c.length} sugerencias\n\n` +
+            c.map((e, i) => `${i + 1}. ❌ "${e[0]}" → ✅ "${e[1]}"`).join('\n')
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnSugerirTitulos').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const t = JSON.parse(rustWASM.wasm.sugerir_titulos(texto));
+        if (t.length === 0) {
+            mostrarModal('💡 Sugerir Títulos', `⚠️ No hay suficiente texto para sugerir títulos.`);
+            return;
+        }
+        mostrarModal('💡 Títulos Sugeridos',
+            `📊 ${t.length} opciones basadas en el contenido:\n\n` +
+            t.map((tit, i) => `${i + 1}. ${tit}`).join('\n\n')
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnResumenEjecutivo').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const r = JSON.parse(rustWASM.wasm.resumen_ejecutivo(texto));
+        mostrarModal('📄 Resumen Ejecutivo',
+            `⏱️ Tiempo de lectura: ${r.tiempo_lectura_min} min\n` +
+            `📊 ${r.palabras} palabras\n\n` +
+            `━━━ 📝 RESUMEN ━━━\n${r.resumen}`
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnOriginalidad').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const o = JSON.parse(rustWASM.wasm.analizar_originalidad(texto));
+        const emoji = o.porcentaje > 2 ? '🤖' : o.porcentaje > 1 ? '⚠️' : '✅';
+        let html = `${emoji} ${o.veredicto}\n\n` +
+            `📊 Muletillas IA: ${o.muletillas}\n` +
+            `📈 Porcentaje: ${o.porcentaje.toFixed(2)}%\n` +
+            `📝 Palabras: ${o.palabras}\n\n`;
+        if (o.detalle && o.detalle.length > 0) {
+            html += `━━━ 🚩 FRASES DETECTADAS ━━━\n` +
+                o.detalle.slice(0, 10).map((d, i) => `${i + 1}. "${d.frase}" ×${d.count}`).join('\n');
+        }
+        mostrarModal('🔍 Análisis de Originalidad', html);
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
+
+document.getElementById('btnConceptosClave').onclick = () => {
+    if (!rustWASM.cargado) { showToast('⚠️ WASM no cargado', true); return; }
+    const texto = obtenerTextoActivo();
+    if (!texto) { showToast('⚠️ Escribe un tema o genera contenido primero', true); return; }
+    try {
+        const c = JSON.parse(rustWASM.wasm.extraer_conceptos_clave(texto));
+        mostrarModal('🎯 Conceptos Clave',
+            `📊 Total: ${c.length} conceptos\n\n` +
+            `━━━ 📌 CONCEPTOS ━━━\n` +
+            c.map((x, i) => `${i + 1}. ${x.palabra} (×${x.frecuencia})${x.tipo === 'concepto_compuesto' ? ' 🔗' : ''}`).join('\n')
+        );
+    } catch(err) { showToast('❌ ' + err.message, true); }
+};
         // Herramientas
         document.getElementById('btnExamen').onclick = () => {
             const q = document.getElementById('topicInput')?.value?.trim() || 'tema actual';
