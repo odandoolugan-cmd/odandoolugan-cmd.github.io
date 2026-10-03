@@ -494,7 +494,42 @@
         const PAIS_FIJO = 'Alemania';
         let ocupado = false, modoActual = 'experto', idiomaDetectado = 'es', proveedorActual = null, idiomasTotal = 0;
         let iaOkCount = 0, iaFailsCount = 0;
+        
+        // ═══════════════════════════════════════════════════════════
+// 🌐 IDIOMAS — Definiciones necesarias
+// ═══════════════════════════════════════════════════════════
 
+const nombreIdioma = {
+    'es': 'Español', 'en': 'English', 'fr': 'Français', 'de': 'Deutsch',
+    'it': 'Italiano', 'pt': 'Português', 'ru': 'Русский', 'zh': '中文',
+    'ja': '日本語', 'ar': 'العربية', 'nl': 'Nederlands', 'pl': 'Polski',
+    'tr': 'Türkçe', 'sv': 'Svenska', 'ko': '한국어'
+};
+
+const banderaIdioma = {
+    'es': '🇪🇸', 'en': '🇬🇧', 'fr': '🇫🇷', 'de': '🇩🇪',
+    'it': '🇮🇹', 'pt': '🇵🇹', 'ru': '🇷🇺', 'zh': '🇨🇳',
+    'ja': '🇯🇵', 'ar': '🇸🇦', 'nl': '🇳🇱', 'pl': '🇵🇱',
+    'tr': '🇹🇷', 'sv': '🇸🇪', 'ko': '🇰🇷'
+};
+
+const autoresPorIdioma = {
+    'es': ['García, J.', 'Martínez, M.', 'López, A.', 'Rodríguez, P.', 'Fernández, C.', 'González, R.'],
+    'en': ['Smith, J.', 'Johnson, M.', 'Williams, R.', 'Brown, K.', 'Jones, D.', 'Miller, S.'],
+    'fr': ['Dubois, P.', 'Martin, M.', 'Bernard, L.', 'Petit, J.', 'Robert, C.', 'Richard, A.'],
+    'de': ['Müller, H.', 'Schmidt, K.', 'Weber, F.', 'Fischer, J.', 'Meyer, W.', 'Wagner, P.'],
+    'it': ['Rossi, M.', 'Ferrari, G.', 'Bianchi, L.', 'Romano, A.', 'Ricci, P.', 'Marino, S.'],
+    'pt': ['Silva, J.', 'Santos, M.', 'Oliveira, A.', 'Souza, C.', 'Pereira, R.', 'Costa, L.'],
+    'ru': ['Ivanov, A.', 'Petrov, V.', 'Sidorov, M.', 'Kuznetsov, S.', 'Smirnov, N.', 'Popov, D.'],
+    'zh': ['Wang, L.', 'Li, M.', 'Zhang, W.', 'Liu, C.', 'Chen, X.', 'Yang, Z.'],
+    'ja': ['Tanaka, K.', 'Suzuki, H.', 'Takahashi, Y.', 'Watanabe, S.', 'Ito, M.', 'Yamamoto, T.'],
+    'ar': ['Ahmed, M.', 'Hassan, A.', 'Ali, S.', 'Ibrahim, K.', 'Khalil, R.', 'Mahmoud, F.'],
+    'nl': ['de Vries, J.', 'Jansen, M.', 'van den Berg, P.', 'Bakker, R.', 'Visser, C.', 'Smit, D.'],
+    'pl': ['Nowak, A.', 'Kowalski, P.', 'Wiśniewski, J.', 'Wójcik, M.', 'Kamiński, T.', 'Lewandowski, S.'],
+    'tr': ['Yılmaz, A.', 'Kaya, M.', 'Demir, S.', 'Şahin, R.', 'Çelik, K.', 'Yıldız, N.'],
+    'sv': ['Andersson, P.', 'Johansson, M.', 'Karlsson, L.', 'Nilsson, S.', 'Eriksson, A.', 'Larsson, K.'],
+    'ko': ['Kim, J.', 'Lee, M.', 'Park, S.', 'Choi, H.', 'Jung, Y.', 'Kang, D.']
+};
         // ============================================
         // 🔍 DIAGNÓSTICO
         // ============================================
