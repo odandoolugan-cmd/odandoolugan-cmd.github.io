@@ -1711,6 +1711,89 @@ document.getElementById('btnConceptosClave').onclick = () => {
                 mostrarModal('Analisis de Sesgos', h);
             } catch(err) { showToast('Error: ' + err.message, true); }
         };
+
+        // v7 HANDLER 2: PREGUNTAS
+        document.getElementById('btnPreguntas').onclick = function() {
+            if (!rustWASM.cargado) { showToast('WASM no cargado', true); return; }
+            var texto = obtenerTextoActivo();
+            if (!texto) { showToast('Escribe un tema primero', true); return; }
+            try {
+                var p = JSON.parse(rustWASM.wasm.generar_preguntas(texto, 8));
+                if (p.length === 0) { mostrarModal('Preguntas', 'No hay suficiente texto'); return; }
+                var h = p.length + ' preguntas generadas:\n\n';
+                p.forEach(function(q, i) {
+                    h += (i + 1) + '. ' + q.pregunta + '\n\n';
+                });
+                mostrarModal('Preguntas de Examen', h);
+            } catch(err) { showToast('Error: ' + err.message, true); }
+        };
+
+        // v7 HANDLER 3: FALACIAS
+        document.getElementById('btnFalacias').onclick = function() {
+            if (!rustWASM.cargado) { showToast('WASM no cargado', true); return; }
+            var texto = obtenerTextoActivo();
+            if (!texto) { showToast('Escribe un tema primero', true); return; }
+            try {
+                var f = JSON.parse(rustWASM.wasm.detectar_falacias(texto));
+                var emoji = f.total === 0 ? '[OK]' : f.total <= 2 ? '[!]' : '[X]';
+                var h = emoji + ' NIVEL: ' + f.nivel + '\n';
+                h += 'Falacias detectadas: ' + f.total + '\n\n';
+                if (f.total > 0) {
+                    f.falacias.forEach(function(x, i) {
+                        h += (i + 1) + '. ' + x.tipo.toUpperCase().replace('_', ' ') + '\n';
+                        h += '   Patron: "' + x.patron + '"\n';
+                        h += '   ' + x.descripcion + '\n\n';
+                    });
+                } else {
+                    h += 'No se detectaron falacias logicas comunes';
+                }
+                mostrarModal('Deteccion de Falacias', h);
+            } catch(err) { showToast('Error: ' + err.message, true); }
+        };
+
+        // v7 HANDLER 4: COMPARAR TEXTOS
+        document.getElementById('btnCompararTextos').onclick = function() {
+            if (!rustWASM.cargado) { showToast('WASM no cargado', true); return; }
+            var texto1 = obtenerTextoActivo();
+            if (!texto1) { showToast('Genera contenido primero', true); return; }
+            var texto2 = prompt('Pega el segundo texto para comparar:');
+            if (!texto2) return;
+            try {
+                var c = JSON.parse(rustWASM.wasm.comparar_textos(texto1, texto2));
+                var emoji = c.similitud > 0.6 ? '[X]' : c.similitud > 0.4 ? '[!]' : '[OK]';
+                var h = emoji + ' SIMILITUD: ' + c.porcentaje.toFixed(2) + '%\n';
+                h += c.interpretacion + '\n\n';
+                h += '--- ESTADISTICAS ---\n';
+                h += 'Texto 1: ' + c.palabras_texto1 + ' palabras\n';
+                h += 'Texto 2: ' + c.palabras_texto2 + ' palabras\n';
+                h += 'Palabras comunes: ' + c.palabras_comunes + '\n';
+                h += 'Solo en texto 1: ' + c.palabras_solo_texto1 + '\n';
+                h += 'Solo en texto 2: ' + c.palabras_solo_texto2 + '\n\n';
+                if (c.ejemplos_comunes && c.ejemplos_comunes.length > 0) {
+                    h += 'PALABRAS COMUNES:\n' + c.ejemplos_comunes.join(', ');
+                }
+                mostrarModal('Comparacion de Textos', h);
+            } catch(err) { showToast('Error: ' + err.message, true); }
+        };
+
+        // v7 HANDLER 5: HIPOTESIS
+        document.getElementById('btnHipotesis').onclick = function() {
+            if (!rustWASM.cargado) { showToast('WASM no cargado', true); return; }
+            var texto = obtenerTextoActivo();
+            if (!texto) { showToast('Escribe un tema primero', true); return; }
+            try {
+                var h2 = JSON.parse(rustWASM.wasm.extraer_hipotesis(texto));
+                if (h2.total === 0) {
+                    mostrarModal('Hipotesis', 'No se detectaron hipotesis explicitas.');
+                    return;
+                }
+                var h = h2.total + ' hipotesis detectadas:\n\n';
+                h2.hipotesis.forEach(function(x, i) {
+                    h += (i + 1) + '. [' + x.tipo + ']\n"' + x.texto + '"\n\n';
+                });
+                mostrarModal('Hipotesis Extraidas', h);
+            } catch(err) { showToast('Error: ' + err.message, true); }
+        };
         // Herramientas
         document.getElementById('btnExamen').onclick = () => {
             const q = document.getElementById('topicInput')?.value?.trim() || 'tema actual';
