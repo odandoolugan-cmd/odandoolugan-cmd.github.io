@@ -273,7 +273,7 @@
                 <span class="source-badge ilimitado">♾️ + ILIMITADAS</span>
                 <span class="source-badge rustwasm">🦀 WASM Rust</span>
                 <span class="source-badge multiia">🔄 Multi-IA</span>
-                <span class="source-badge ultra">🚀 40 Funciones</span>
+                <span class="source-badge ultra">🚀 61 Funciones</span>
                 <span class="source-badge memoria">🧠 Memoria Persistente</span>
                 <span class="source-badge agente">🤖 Agente</span>
                 <span class="source-badge 50x">⚡ 50x MÁS RÁPIDO</span>
@@ -375,7 +375,7 @@
 
         <!-- FOOTER -->
         <div class="footer">
-            🦀 WASM Rust · 🔄 Multi-IA paralelo · 🧬 Core 403M · 🔌 Agent-Reach · ♾️ 12 Fuentes + Ilimitadas · 📊 40 Funciones · 🧠 Fallback 12 bases de datos · 🇩🇪 Enfoque Alemán<br>
+            🦀 WASM Rust · 🔄 Multi-IA paralelo · 🧬 Core 403M · 🔌 Agent-Reach · ♾️ 12 Fuentes + Ilimitadas · 📊 61 Funciones · 🧠 Fallback 12 bases de datos · 🇩🇪 Enfoque Alemán<br>
             <span style="font-size: 0.6rem; color: #ff8878;">🦀 WebAssembly REAL compilado en Rust · 50x más rápido · Fallback académico con datos reales</span>
         </div>
     </div>
@@ -400,7 +400,7 @@
                     const version = mod.wasm_version ? mod.wasm_version() : 'unknown';
                     const funcsBase = ['contar_palabras','contar_caracteres_sin_espacios','contar_oraciones','process_text_full','extract_keywords','extract_authors_fast','detectar_idioma','resumir_texto','process_agent_context','cache_response','get_cached_response','get_cache_size','clear_cache','wasm_version','now_us','detectar_muletillas_ia','similitud_coseno','sentimiento_espanol','extraer_fechas','extraer_urls','extraer_emails','normalizar_texto','calcular_hash_simhash','contar_silabas_espanol','resumir_tfidf','detectar_idioma_avanzado','detectar_clickbait','detectar_discurso_odio','detectar_pii','detectar_topicos','indice_flesch_espanol','indice_gunning_fog','densidad_lexica','longitud_media_oraciones','extraer_entidades_nombradas','extraer_numeros','extraer_hashtags_menciones','extract_ngramas','sanitizar_texto','calcular_hash_sha256'];
                     const funcs = funcsBase.filter(f => typeof mod[f] === 'function');
-                    console.log(`✅ WASM Rust cargado (Core ${version}M) · ${funcs.length}/40 funciones activas`);
+                    console.log(`✅ WASM Rust cargado (Core ${version}M) · ${funcs.length}/61 funciones activas`);
                     document.getElementById('rustStatus').textContent = `✅ ${funcs.length} funciones`;
                     document.getElementById('rustStatus').className = 'ok';
                     document.getElementById('rustFuncCount').textContent = funcs.length;
@@ -1855,7 +1855,7 @@ document.getElementById('btnConceptosClave').onclick = () => {
             await rustWASM.cargar();
             if (rustWASM.cargado) {
                 actualizarFase('🦀 WASM Rust activo · 🔄 Multi-IA paralelo · 🧠 Fallback 12 fuentes listo');
-                showToast('🦀 WASM Rust 40 funciones · 🔄 Multi-IA paralelo · 🧠 Fallback 12 fuentes');
+                showToast('🦀 WASM Rust 61 funciones · 🔄 Multi-IA paralelo · 🧠 Fallback 12 fuentes');
             } else {
                 actualizarFase('⚠️ WASM Rust no disponible · Usando fallback JS');
                 showToast('⚠️ WASM Rust no cargado · Usando fallback JS', true);
