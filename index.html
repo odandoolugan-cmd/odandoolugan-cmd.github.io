@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📚 AcadémIA Pro · WASM Rust · Multi-IA · Core 403M · Agent-Reach</title>
     <meta name="theme-color" content="#0a0f1e">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AcadémIA Pro">
+    <meta name="mobile-web-app-capable" content="yes">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(135deg, #0a0f1e 0%, #0c1222 50%, #0a0f1e 100%); color: #eef2ff; min-height: 100vh; padding: 1rem; }
@@ -1704,6 +1709,17 @@ document.getElementById('btnConceptosClave').onclick = () => {
             URL.revokeObjectURL(url);
             showToast('📤 Exportado');
         };
+
+        // ============================================
+        // 📱 PWA: Service Worker
+        // ============================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function(reg) { console.log('PWA SW registrado:', reg.scope); })
+                    .catch(function(err) { console.warn('PWA SW fallo:', err); });
+            });
+        }
 
         // ============================================
         // 🚀 INICIALIZACIÓN
