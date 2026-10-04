@@ -1678,6 +1678,39 @@ document.getElementById('btnConceptosClave').onclick = () => {
         );
     } catch(err) { showToast('❌ ' + err.message, true); }
 };
+
+        // ═══════════════════════════════════════════════════════════
+        // v7 HANDLER 1: SESGOS
+        // ═══════════════════════════════════════════════════════════
+
+        document.getElementById('btnSesgos').onclick = function() {
+            if (!rustWASM.cargado) { showToast('WASM no cargado', true); return; }
+            var texto = obtenerTextoActivo();
+            if (!texto) { showToast('Escribe un tema primero', true); return; }
+            try {
+                var s = JSON.parse(rustWASM.wasm.analizar_sesgos(texto));
+                var emoji = s.nivel === 'Neutro' ? '[OK]' : s.nivel === 'Bajo' ? '[+]' : s.nivel === 'Medio' ? '[!]' : '[X]';
+                var h = emoji + ' NIVEL DE SESGO: ' + s.nivel + '\n';
+                h += 'Porcentaje: ' + s.porcentaje.toFixed(2) + '%\n';
+                h += 'Marcadores: ' + s.total_marcadores + '\n';
+                h += 'Palabras: ' + s.palabras + '\n\n';
+                if (s.detalle && s.detalle.length > 0) {
+                    h += '--- DETALLE ---\n';
+                    var porCat = {};
+                    s.detalle.forEach(function(d) {
+                        if (!porCat[d.categoria]) porCat[d.categoria] = [];
+                        porCat[d.categoria].push(d);
+                    });
+                    Object.keys(porCat).forEach(function(cat) {
+                        h += '\n' + cat.toUpperCase() + '\n';
+                        porCat[cat].forEach(function(d) {
+                            h += '   * "' + d.patron + '" x' + d.count + ' - ' + d.descripcion + '\n';
+                        });
+                    });
+                }
+                mostrarModal('Analisis de Sesgos', h);
+            } catch(err) { showToast('Error: ' + err.message, true); }
+        };
         // Herramientas
         document.getElementById('btnExamen').onclick = () => {
             const q = document.getElementById('topicInput')?.value?.trim() || 'tema actual';
